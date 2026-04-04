@@ -1,0 +1,3 @@
+Hi
+This is a test to try out Git
+Hopefully i wont accidentally upload some weird shit into github

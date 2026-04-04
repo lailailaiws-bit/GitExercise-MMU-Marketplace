@@ -1,0 +1,2 @@
+It's currently working as i intended it to
+But im probably not gonna push to gtihub yet

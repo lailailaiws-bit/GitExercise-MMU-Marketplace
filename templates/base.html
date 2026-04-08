@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     {% block head %}
-    
+
     {% endblock %}
 </head>
 <body>
-    
+
+    <nav class="navigation">
+        <ul>
+            <li><a href= "{{url_for('home') }}">Home</a></li>
+            <li><a href= "{{url_for('account') }}">Account</a></li>
+        </ul>
+    </nav>
+
     <div class="nav">
-        <img src="{{ url_for('static', filename='photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
+        <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         <div class="search_bar">
             <input type="text" class="search-input" placeholder="Search...">
             <button class="search-button">
-                <img src="{{ url_for('static', filename='photos/search-icon.png') }}" alt="Search Icon" style="width:20px;height:20px;">
+                <img src="{{ url_for('static', filename='css/photos/search-icon.png') }}" alt="Search Icon" style="width:20px;height:20px;">
             </button>
         </div>
         
         <div class="portfolio">
-            <img src="{{ url_for('static', filename='photos/user_profile-icon.png') }}" alt="Profile Icon">
+            <img src="{{ url_for('static', filename='css/photos/user_profile-icon.png') }}" alt="Profile Icon">
         </div>
         
     </div>

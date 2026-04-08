@@ -4,8 +4,26 @@ h1{
 
 .navigation ul{
     list-style-type: none;
-    color: gray;
-    padding: 0%;
+    background-color: rgb(77, 74, 74);
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.navigation a{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    text-align: center;
+}
+
+.navigation a:hover{
+    background-color: rgb(46, 43, 43);
+}
+
+.navigation li{
+    float: right;
 }
 
 body{
@@ -26,7 +44,7 @@ body{
     justify-content: left;
     display: flex;
     justify-content: center;
-    width: 150px;
+    width: 170px;
     height: 52px;
     margin-bottom: 0px;
 }

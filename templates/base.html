@@ -9,8 +9,22 @@
     {% endblock %}
 </head>
 <body>
-    {% block body %}
     
+    <div class="nav">
+        <img src="{{ url_for('static', filename='photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
+        <div class="search_bar">
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-button">
+                <img src="{{ url_for('static', filename='photos/search-icon.png') }}" alt="Search Icon" style="width:20px;height:20px;">
+            </button>
+        </div>
+        
+        <div class="portfolio">
+            <img src="{{ url_for('static', filename='photos/user_profile-icon.png') }}" alt="Profile Icon">
+        </div>
+        
+    </div>
+    {% block body %}
     {% endblock %}
 </body>
 </html>

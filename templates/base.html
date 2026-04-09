@@ -10,14 +10,8 @@
 </head>
 <body>
 
-    <nav class="navigation">
-        <ul>
-            <li><a href= "{{url_for('home') }}">Home</a></li>
-            <li><a href= "{{url_for('account') }}">Account</a></li>
-        </ul>
-    </nav>
-
     <div class="nav">
+
         <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         <div class="search_bar">
             <input type="text" class="search-input" placeholder="Search...">
@@ -26,10 +20,19 @@
             </button>
         </div>
         
-        <div class="portfolio">
-            <img src="{{ url_for('static', filename='css/photos/user_profile-icon.png') }}" alt="Profile Icon">
-        </div>
-        
+        <nav class="navigation">
+            <ul>
+                <li><a href= "{{url_for('home') }}">Home</a></li>
+                <li>
+                    <div class="portfolio">
+                        <a href="{{url_for('account') }}">
+                            <img src="{{ url_for('static', filename='css/photos/user_profile-icon.png') }}" alt="Profile Icon">
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
     </div>
     {% block body %}
     {% endblock %}

@@ -12,15 +12,22 @@
     
     <div class="nav">
         <img src="{{ url_for('static', filename='photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
-        <div class="search_bar">
-            <input type="text" class="search-input" placeholder="Search...">
-            <button class="search-button">
-                <img src="{{ url_for('static', filename='photos/search-icon.png') }}" alt="Search Icon" style="width:20px;height:20px;">
-            </button>
-        </div>
         
-        <div class="portfolio">
-            <img src="{{ url_for('static', filename='photos/user_profile-icon.png') }}" alt="Profile Icon">
+        <form class="search_bar" action="{{ url_for('search') }}" method="get">
+            <input type="text" name="q" placeholder="Search..." class="search-input">
+            <button class="search-button">
+                <img src="{{ url_for('static', filename='photos/search.png') }}" alt="Search Icon" style="width:30px;height:30px;">
+            </button>
+        </form>
+        
+        <div class="user-portfolio">
+            <a href="/profile" class="user-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='photos/user-icon.png') }}" alt="Profile Icon">
+            </a>
+
+            <a href="/cart" class="shopping-bag" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='photos/shopping-bag.png') }}" alt="Cart Icon">
+            </a>
         </div>
         
     </div>

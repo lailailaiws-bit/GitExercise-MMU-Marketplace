@@ -9,7 +9,7 @@ body{
 .nav{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 0px;
 }
 
 .logo {
@@ -37,22 +37,40 @@ body{
 
 .search-button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #aed0f4;
     color: white;
     border: none;
     border-radius: 0 50px 50px 0;
     cursor: pointer;
+    width: 50px0;
+    height: 50px;
     
 }
 
 .search-button:hover {
-    background-color: #0458b1;
+    background-color: #94b9e1;
 }
 
-.portfolio {
+.user-portfolio {
     display: flex;
     justify-content: right;
+    justify-content: center;
+    margin-left: auto;
+}
+.user-icon {
+    display: flex;
+    justify-content: right;
+    justify-content: center;
     width: 30px;
     height: 30px;
-    margin-left: 15%;
+    padding: 20px;
+}
+
+.shopping-bag{
+    display: flex;
+    justify-content: right;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 20px;
 }

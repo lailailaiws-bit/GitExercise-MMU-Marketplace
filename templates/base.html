@@ -16,16 +16,10 @@
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
 
-        <!-- <div class="search_bar">
-            <input type="text" class="search-input" placeholder="Search...">
-            <button class="search-button">
-                <img src="{{ url_for('static', filename='css/photos/search-icon.png') }}" alt="Search Icon" style="width:20px;height:20px;">
-            </button>
-        </div> -->
         
 
         <div class="marketplace-search-bar">
-            <form action="/search" method="GET">
+            <form class="search_bar" action="/search" method="GET">
                 <select name="category" class="category-select">
                     <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
@@ -34,22 +28,33 @@
                 </select>
                 <input type="search" name="q"  placeholder="Search for items, brands, or shops..." aria-label="Search marketplace"required>
                 <button type="submit" class="search-button">
-                    <span class="search-icon">🔍</span>
+                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="width:17px;height:17px;">
                  </button>
             </form>
+        
+        
+        <div class="user-portfolio">
+            <a href="chat.html" class="chat-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
+            </a>
+
+            <a href="/profile" class="user-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
+            </a>
+
         </div>
 
         
-        <nav class="navigation">
+        <!-- <nav class="navigation">
             <ul>
                 <li><a href= "{{url_for('home') }}">Home</a></li>
-                <!-- <li>
+                <li>
                     <div></div>
                     <a href= "chat.html">
                             <img src="{{ url_for('static', filename='css/photos/chat-icon.png')}}" alt="Chat Icon">
                     </a>
                 </li> -->
-                <li>
+                <!-- <li>
                     <div class="portfolio">
                         <a href="{{url_for('account') }}">
                             <img src="{{ url_for('static', filename='css/photos/user_profile-icon.png') }}" alt="Profile Icon">
@@ -57,7 +62,7 @@
                     </div>
                 </li>
             </ul>
-        </nav>
+        </nav> -->
 
     </div>
     {% block body %}

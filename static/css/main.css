@@ -74,3 +74,81 @@ body{
     height: 30px;
     padding: 20px;
 }
+
+.auth-container {
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 50px;   
+    font-family:'Times New Roman', Times, serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff6e7;
+    height: 400px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 30px;   
+}
+
+.form-group input {
+    font-family: 'Veldana', serif;
+    font-weight: bold;
+    padding: 10px;
+    background-color: whitesmoke;
+    border: none;
+    border-radius: 10px;
+}
+.toggle_btn_1 {
+    text-decoration: none;
+    color: black;
+    line-height: normal;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    background-color: #93c2e2;
+    border-radius: 50px;
+}
+.toggle_btn_2 {
+    text-decoration: none;
+    color: black;
+    line-height: normal;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+a.toggle_btn_active {
+    color: #8ebbeb;
+}
+
+.toggle {
+    background-color: #c8e3f5;
+    display: flex;
+    border-radius: 30px;
+    gap: 20px; 
+    padding: 10px 20px;
+}
+.flashes {
+    background-color: #99bf8e;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+.submit-button {
+    background-color: #8ebbeb;
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border: none;
+    border-radius: 30px;
+    size: 20px;
+    justify-items: center;
+    display: flex;
+    padding: 10px 20px;
+    cursor: pointer;
+}

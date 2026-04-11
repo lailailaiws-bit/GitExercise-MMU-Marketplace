@@ -15,9 +15,9 @@ login_manager.login_view = 'login'
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(256), nullable=False)
+    password_hash = db.Column(db.String(100), nullable=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -83,6 +83,7 @@ def register():
         new_user = User(username=username, email=email)
         new_user.set_password(password)
         db.session.add(new_user)
+        # db.create_all()
         db.session.commit()
 
         return redirect(url_for('login'))

@@ -61,3 +61,28 @@ body{
     height: 30px;
     padding: 20px;
 }
+
+.logout_button{
+    border: 2px solid black;
+    margin-right: 95%;
+    position: fixed;
+    left: 20px;
+    bottom: 15px;
+    margin-left: 20px;
+}
+
+.logout_style{
+    margin: 10px;
+    color: red;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+.user-icon2{
+    width: 200px;
+    margin-left: 25px;
+    border: solid black;
+    border-radius: 15px;
+    border-width: 5px;
+    padding: 5px;
+}

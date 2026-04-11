@@ -18,7 +18,7 @@
         
 
         <div class="marketplace-search-bar">
-            <form class="search_bar" action="/search" method="GET">
+            <form class="search_bar" action="/search" method="GET" type="column">
                 <select name="category" class="category-select">
                     <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
@@ -27,8 +27,8 @@
                 </select>
                 <input type="search" name="q"  placeholder="Search for items, brands, or shops..." aria-label="Search marketplace"required>
                 <button type="submit" class="search-button">
-                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="width: 15px; height: 15px;">
-                 </button>
+                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="width: 20px; height: 17.5px;">
+                </button>
             </form>
         
         
@@ -42,26 +42,6 @@
             </a>
 
         </div>
-
-        
-        <!-- <nav class="navigation">
-            <ul>
-                <li><a href= "{{url_for('home') }}">Home</a></li>
-                <li>
-                    <div></div>
-                    <a href= "chat.html">
-                            <img src="{{ url_for('static', filename='css/photos/chat-icon.png')}}" alt="Chat Icon">
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <div class="portfolio">
-                        <a href="{{url_for('account') }}">
-                            <img src="{{ url_for('static', filename='css/photos/user_profile-icon.png') }}" alt="Profile Icon">
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </nav> -->
 
     </div>
     {% block body %}

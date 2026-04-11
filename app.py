@@ -55,7 +55,7 @@ def profile():
              print(f"User ID: {user_id}")
         # Handle form submission
         pass
-    return render_template('profile.html')
+    return render_template('profile.html', user=current_user)
 
 @app.route('/cart')
 def cart():
@@ -74,20 +74,22 @@ def register():
 
         # Check if user already exists
         if User.query.filter_by(username=username).first():
-            return "Username already exists"
+            flash('Username already exist.')
+            return redirect(url_for('register'))
 
         if User.query.filter_by(email=email).first():
-            return "Email already registered"
+            flash('This email has already been registered for an account')
+            return redirect(url_for('register'))
 
         # Create new user
         new_user = User(username=username, email=email)
         new_user.set_password(password)
         db.session.add(new_user)
-        # db.create_all()
         db.session.commit()
 
         return redirect(url_for('login'))
-    return render_template('register.html')
+    else:
+        return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

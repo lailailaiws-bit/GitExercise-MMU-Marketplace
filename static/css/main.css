@@ -127,13 +127,13 @@ button{
 .user-portfolio {
     display: flex;
     justify-content: right;
-    justify-content: center;
+
     margin-left: auto;
 }
 .user-icon {
     display: flex;
     justify-content: right;
-    justify-content: center;
+
     width: 30px;
     height: 30px;
     padding: 20px;

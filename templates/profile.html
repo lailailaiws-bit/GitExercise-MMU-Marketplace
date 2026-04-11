@@ -1,10 +1,28 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+    <title>Profile</title>
+</head>
+<body>
+    <div class="nav">
+        <a href="home.html">
+            <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
+        </a>
 
-{% block head %}
-    <title>User Portfolio</title>
-{% endblock %}
+        <div class="user-portfolio">
+        <a href="chat.html" class="chat-icon" style="text-decoration: none;">
+            <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
+        </a>
 
-{% block body %}
-    <h1>User Portfolio</h1>
-    
-{% endblock %}
+        <a href="/profile" class="user-icon" style="text-decoration: none;">
+            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
+        </a>
+
+        </div>
+    </div>
+
+</body>
+</html>

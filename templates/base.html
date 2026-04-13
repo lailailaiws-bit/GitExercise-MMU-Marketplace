@@ -17,17 +17,17 @@
 
         
 
-        <div class="marketplace-search-bar">
-            <form class="search_bar" action="/search" method="GET">
+        <div class="marketplace-ui-bar">
+            <form action="/search" method="GET">
                 <select name="category" class="category-select">
                     <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
                     <option value="home">Home & Garden</option>
                 </select>
-                <input type="search" name="q"  placeholder="Search for items, brands, or shops..." aria-label="Search marketplace"required>
+                <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace"required autocomplete="off">
                 <button type="submit" class="search-button">
-                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" >
+                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="display: inline-flex; height: 20px;">
                 </button>
             </form>
         

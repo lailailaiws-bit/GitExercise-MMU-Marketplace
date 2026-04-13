@@ -57,9 +57,9 @@ def profile():
         pass
     return render_template('profile.html', user=current_user)
 
-@app.route('/cart')
+@app.route('/chat')
 def cart():
-    return render_template('cart.html')
+    return render_template('chat.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

@@ -5,6 +5,7 @@ from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -74,6 +75,8 @@ def search():
     print(f"Search query: {query}")
     return redirect(url_for('index'))
 
+messages = []
+
 @app.route('/chat', methods=['GET', 'POST'])
 # @login_required 
 def chat():
@@ -89,11 +92,6 @@ def chat():
     
     # Render the HTML page and pass the messages list to it
     return render_template('chat.html', messages=messages)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-3. templates/chat.html
-
 
 
 @app.route('/profile', methods=['GET', 'POST'])

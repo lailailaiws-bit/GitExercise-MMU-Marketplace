@@ -115,6 +115,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/profile_edit')
+@login_required
+def profile_edit():
+    return render_template('profile_edit.html', user=current_user)
 
 if __name__ == '__main__':
     with app.app_context():

@@ -129,7 +129,7 @@ h1{
     color: rgb(47, 41, 41);
     font-family: sans-serif;
     padding: 20px;
-    margin-top: -12%;
+    margin-top: -11%;
 }
 
 div .bio{
@@ -150,4 +150,13 @@ div .bio border{
     width: 1000px;
     padding-top: 5px;
     padding-left: 5px;
+}
+
+.edit_btn{
+    color: black;
+    display: flex;
+    position: fixed;
+    left: 84%;
+    top: 77%;
+    font-size: larger;
 }

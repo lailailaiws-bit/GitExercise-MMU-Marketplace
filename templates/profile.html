@@ -7,23 +7,8 @@
     <title>Profile</title>
 </head>
 <body>
-    <div class="nav">
-        <a href="home.html">
-            <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
-        </a>
-
-        <div class="user-portfolio">
-        <a href="chat.html" class="chat-icon" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
-        </a>
-
-        <a href="/profile" class="user-icon" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
-        </a>
-
-        </div>
-    </div>
-
+{% include 'header.html' %}
+    
     <div>
         <div>
             <h1>My Account</h1>
@@ -58,6 +43,8 @@
             </nav>
         </div>
     </div>
+
+    <a href="{{url_for('profile_edit')}}" class="edit_btn">Edit your profile</a>
 
 </body>
 </html>

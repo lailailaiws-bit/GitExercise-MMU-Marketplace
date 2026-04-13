@@ -1,3 +1,6 @@
+import json
+import os
+
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -29,6 +32,30 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+#chat system
+chat_history = 'chat_history.json'
+
+def load_messages ():
+    if not os.path.exists(chat_history):
+        return []
+    with open(chat_history, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+        
+
+def save_message(username, content):
+    messages = load_messages()
+    messages.append({'username': username, 'content': content, 'time': datetime.now().strftime("%H:%M:%S")})
+    
+    # Keep only the last 100 messages to prevent the file from getting too large
+    # messages = messages[-100:]
+
+    with open(chat_history, 'w') as f:
+        json.dump(messages, f, indent=4)
+
+
 @app.route('/')
 def index():
     return render_template('base.html')
@@ -47,6 +74,28 @@ def search():
     print(f"Search query: {query}")
     return redirect(url_for('index'))
 
+@app.route('/chat', methods=['GET', 'POST'])
+# @login_required 
+def chat():
+    if request.method == 'POST':
+        # Get the message from the HTML form
+        content = request.form.get('content')
+        if content:
+            # Append it to our list with a hardcoded test username
+            messages.append({'username': 'TestUser', 'content': content})
+        
+        # Redirect to prevent form resubmission on page refresh
+        return redirect(url_for('chat'))
+    
+    # Render the HTML page and pass the messages list to it
+    return render_template('chat.html', messages=messages)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+3. templates/chat.html
+
+
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -57,9 +106,6 @@ def profile():
         pass
     return render_template('profile.html', user=current_user)
 
-@app.route('/chat')
-def cart():
-    return render_template('chat.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -91,6 +137,7 @@ def register():
     else:
         return render_template('register.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -106,6 +153,7 @@ def login():
             flash('Invalid username or password', 'error')
 
     return render_template('login.html')
+
 
 @app.route('/logout')
 @login_required

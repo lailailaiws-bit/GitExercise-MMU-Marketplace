@@ -1,0 +1,29 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+</head>
+<body>
+
+    <div class="chat-container">
+        <h2>Chat UI Test</h2>
+        
+        <div class="chat-box">
+            {% for msg in messages %}
+                <p class="message"><strong>{{ msg.username }}:</strong> {{ msg.content }}</p>
+            {% else %}
+                <p class="empty">No messages yet. Send one to test!</p>
+            {% endfor %}
+        </div>
+
+        <form action="/" method="POST">
+            <input type="text" name="content" placeholder="Type a test message..." required autocomplete="off" autofocus>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+</body>
+</html>

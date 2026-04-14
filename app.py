@@ -18,6 +18,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password_hash = db.Column(db.String(100), nullable=False)
+    contact_number = db.Column(db.String(20), nullable=True)
+    bio = db.Column(db.String(300), nullable=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -116,6 +118,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/profile_edit')
+@login_required
+def profile_edit():
+    return render_template('profile_edit.html', user=current_user)
 
 if __name__ == '__main__':
     with app.app_context():

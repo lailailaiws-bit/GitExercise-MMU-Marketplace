@@ -1,18 +1,34 @@
-{% extends "base.html" %}
-
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
-    <title>Profile</title>
-{% endblock %}
-
-{% block body %}
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<title>Profile</title>
+{% include 'header.html' %}
+</head>
+<body>
 
     <div>
         <div>
             <h1>My Account</h1>
             <img src=" {{url_for('static', filename='css/photos/user-icon.png')}}" style="width: 250px;height: 250px;">
             <div class="profile_acc">
-                <h1>Username:<h2>{{ user.username }}</h2></h1>
+                <h1>Username:</h1>
+                <h2>{{ user.username }}</h2>
+                <h1 style="margin-top: -4%;">Contact number:</h1>
+                <h2>{% if user.contact_number %}
+                        {{ user.contact_number }}
+                    {% else %}
+                        No contact number is added
+                    {% endif %}
+                </h2>
+                <div class="bio">
+                    <h1>Description</h1>
+                    <border>
+                        {% if user.bio %}
+                            {{user.bio}}
+                        {% else %}
+                            No bio is added
+                        {% endif %}
+                    </border>
+                </div>
             </div>
 
             <nav class="logout_button">
@@ -24,4 +40,7 @@
         </div>
     </div>
 
-{% endblock %}
+    <a href="{{url_for('profile_edit')}}" class="edit_btn">Edit your profile</a>
+
+</body>
+</html>

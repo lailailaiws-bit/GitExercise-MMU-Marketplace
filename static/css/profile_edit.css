@@ -1,0 +1,10 @@
+.customer_account{
+    max-width: 1000px;
+}
+
+a.back_btn{
+    display: flex;
+    position: fixed;
+    color: black;
+    left: 4%;
+}

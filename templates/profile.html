@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <title>Profile</title>
+<<<<<<< HEAD
 </head>
 <body>
 {% include 'header.html' %}
     
+=======
+{% endblock %}
+
+{% block body %}
+
+>>>>>>> 649a2a5f2698882fd34aaed0e4440d70b7d844d5
     <div>
         <div>
             <h1>My Account</h1>
-            <img src=" {{url_for('static', filename='css/photos/user-icon.png')}}" class="user-icon2">
+            <img src=" {{url_for('static', filename='css/photos/user-icon.png')}}" style="width: 250px;height: 250px;">
             <div class="profile_acc">
                 <h1>Username:</h1>
                 <h2>{{ user.username }}</h2>
@@ -44,7 +49,11 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <a href="{{url_for('profile_edit')}}" class="edit_btn">Edit your profile</a>
 
 </body>
 </html>
+=======
+{% endblock %}
+>>>>>>> 649a2a5f2698882fd34aaed0e4440d70b7d844d5

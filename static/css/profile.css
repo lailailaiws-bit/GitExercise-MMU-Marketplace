@@ -96,12 +96,10 @@ h1{
 }
 
 .user-icon2{
-    width: 150px;
+    width: 30px;
+    height: 30px;
     margin-left: 15px;
-    border: solid black;
-    border-radius: 15px;
-    border-width: 5px;
-    padding: 5px;
+    object-fit: cover;
 }
 
 .logout_style svg{

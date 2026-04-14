@@ -57,9 +57,10 @@ def profile():
         pass
     return render_template('profile.html', user=current_user)
 
-@app.route('/cart')
-def cart():
-    return render_template('cart.html')
+@app.route('/chat')
+@login_required
+def chat():
+    return render_template('chat.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -106,6 +107,8 @@ def login():
             flash('Invalid username or password', 'error')
 
     return render_template('login.html')
+
+
 
 @app.route('/logout')
 @login_required

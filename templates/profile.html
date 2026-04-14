@@ -1,33 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+{% extends "base.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <title>Profile</title>
-</head>
-<body>
-    <div class="nav">
-        <a href="home.html">
-            <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
-        </a>
+{% endblock %}
 
-        <div class="user-portfolio">
-        <a href="chat.html" class="chat-icon" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
-        </a>
-
-        <a href="/profile" class="user-icon" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
-        </a>
-
-        </div>
-    </div>
+{% block body %}
 
     <div>
         <div>
             <h1>My Account</h1>
-            <img src=" {{url_for('static', filename='css/photos/user-icon.png')}}" class="user-icon2">
+            <img src=" {{url_for('static', filename='css/photos/user-icon.png')}}" style="width: 250px;height: 250px;">
             <div class="profile_acc">
                 <h1>Username:<h2>{{ user.username }}</h2></h1>
             </div>
@@ -41,5 +24,4 @@
         </div>
     </div>
 
-</body>
-</html>
+{% endblock %}

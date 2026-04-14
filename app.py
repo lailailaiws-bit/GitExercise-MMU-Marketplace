@@ -37,7 +37,8 @@ def index():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    ad_images = [ 'volbees01.jpeg', 'volbees02.jpeg', 'oarsmmucyber01.jpeg' ]
+    return render_template('home.html', ad_images=ad_images)
 
 @app.route('/acc')
 def account():

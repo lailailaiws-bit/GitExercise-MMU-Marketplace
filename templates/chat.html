@@ -1,27 +1,41 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Chat</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+    <title>My Private Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
     <div class="chat-container">
-        <h2>Chat UI Test</h2>
-        
+        <div class="chat-header">
+            <h2>Personal Chat History</h2>
+            <p>Private space for: <strong>{{ current_user.username }}</strong></p>
+            <div class="header-actions">
+                <a href="{{ url_for('chat') }}" class="btn refresh-btn">🔄 Refresh Messages</a>
+                <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+
         <div class="chat-box">
             {% for msg in messages %}
-                <p class="message"><strong>{{ msg.username }}:</strong> {{ msg.content }}</p>
+                <div class="message my-message">
+                    <div class="message-meta">
+                        <span class="time">{{ msg.time }}</span>
+                    </div>
+                    <div class="message-content">
+                        {{ msg.content }}
+                    </div>
+                </div>
             {% else %}
-                <p class="empty">No messages yet. Send one to test!</p>
+                <p class="empty-state">No personal notes yet. Send a message to start your private history!</p>
             {% endfor %}
         </div>
 
-        <form action="/" method="POST">
-            <input type="text" name="content" placeholder="Type a test message..." required autocomplete="off" autofocus>
-            <button type="submit">Send</button>
+        <form action="{{ url_for('chat') }}" method="POST" class="chat-form">
+            <input type="text" name="content" placeholder="Type a private message..." required autocomplete="off" autofocus>
+            <button type="submit" class="btn send-btn">Send</button>
         </form>
     </div>
 

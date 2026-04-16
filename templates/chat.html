@@ -3,41 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Private Chat</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+
 </head>
+
 <body>
+    <div class="nav">
+        <a href="/home">
+            <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
+        </a>
 
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>Personal Chat History</h2>
-            <p>Private space for: <strong>{{ current_user.username }}</strong></p>
-            <div class="header-actions">
-                <a href="{{ url_for('chat') }}" class="btn refresh-btn">🔄 Refresh Messages</a>
-                <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
-            </div>
+        <div class="user-portfolio">
+            <a href="/chat" class="chat-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
+            </a>
+
+            <a href="/profile" class="user-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
+            </a>
+
         </div>
-
-        <div class="chat-box">
-            {% for msg in messages %}
-                <div class="message my-message">
-                    <div class="message-meta">
-                        <span class="time">{{ msg.time }}</span>
-                    </div>
-                    <div class="message-content">
-                        {{ msg.content }}
-                    </div>
-                </div>
-            {% else %}
-                <p class="empty-state">No personal notes yet. Send a message to start your private history!</p>
-            {% endfor %}
-        </div>
-
-        <form action="{{ url_for('chat') }}" method="POST" class="chat-form">
-            <input type="text" name="content" placeholder="Type a private message..." required autocomplete="off" autofocus>
-            <button type="submit" class="btn send-btn">Send</button>
-        </form>
-    </div>
+</div>
 
 </body>
 </html>

@@ -1,9 +1,23 @@
 {% include 'header.html' %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile_edit.css') }}">
 
-<div class="customer_account">
-    <div>
-        <h1>My Account</h1>
-        <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
+<div class="wrapper">
+
+    <div class="customer_account">
+        <div>
+            <h1>My Account</h1>
+            <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
+        </div>
     </div>
+
+    <div class="edit_block">
+        <h2>Account Details</h2>
+        <div class="column1">
+            <div class="contact">
+            <input type="text" name="contact_number" id="contact_number" placeholder="">
+            <label>Contact Number</label>
+            </div>
+        </div>
+    </div>
+
 </div>

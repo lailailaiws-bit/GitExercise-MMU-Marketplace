@@ -35,8 +35,8 @@
         <div class="message-container">
             {% for msg in messages %}
                 <div class="message sender-message">
-                    <span style="font-size: 0.8em; color: black; display: block; margin-bottom: 5px;">{{ msg.time }}</span>
                     {{ msg.content }}
+                    <span class="time">{{ msg.time }}</span>
                 </div>
             {% else %}
                 <div class="message receiver-message">No chats yet. Type below to start!</div>

@@ -136,3 +136,17 @@ p{
     font-family: monospace;
     padding: 10px;
 }
+
+.flashes {
+    position: absolute;
+    background-color: burlywood;
+    border-radius: 5px;
+    top: 22%;
+    font-family: -webkit-body;
+    font-weight: bold;
+    left: 42%;
+    width: 20%;
+    padding-bottom: 0px;
+    padding-left: 100px;
+    padding-top: 10px;
+}

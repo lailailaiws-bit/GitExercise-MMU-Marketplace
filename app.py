@@ -115,11 +115,22 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile_edit')
+@app.route('/profile_edit/', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
-    return render_template('profile_edit.html', user=current_user)
-
+    if request.method == 'POST':
+        current_user.contact_number = request.form['contact_number']
+        current_user.bio = request.form['bio']
+        try:
+            db.session.commit()
+            flash("Update successful")
+            return redirect(url_for("profile_edit"))
+        except:
+            flash("Error")
+            return redirect(url_for("profile_edit"))
+    else:
+        return render_template('profile_edit.html', user=current_user)
+        
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

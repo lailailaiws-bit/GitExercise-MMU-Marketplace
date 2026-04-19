@@ -10,11 +10,22 @@
         </div>
     </div>
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flashes">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/profile_edit" method="POST">
     <div class="edit_block">
         <h2>Account Details</h2>
         <div class="column1">
             <div class="contact">
-                <input type="text" name="contact_number" id="contact_number" placeholder="">
+                <input type="tel" name="contact_number" id="contact_number" placeholder="(e.g 01234567890)" pattern="[0-9]{10,11}">
                 <label class="contact_label">Phone</label>
             </div>
         </div>
@@ -30,5 +41,6 @@
     <p class="submit-button">
         <input type="submit" class="button" value="Submit">
     </p>
+    </form>
 
 </div>

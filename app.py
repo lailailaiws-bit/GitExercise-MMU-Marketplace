@@ -38,26 +38,34 @@ def load_user(user_id):
 #chat system
 chat_history = 'chat_history.json'
 
-def load_messages ():
+def load_all_chats():
     if not os.path.exists(chat_history):
-        return []
+        return {}
     with open(chat_history, 'r') as f:
         try:
             return json.load(f)
         except json.JSONDecodeError:
-            return []
-        
+            return {}
+
+def load_messages(username):
+    chats = load_all_chats()
+    # Simply return the user's list of messages, or an empty list if none exist
+    return chats.get(username, [])
 
 def save_message(username, content):
-    messages = load_messages()
-    messages.append({'username': username, 'content': content, 'time': datetime.now().strftime("%H:%M:%S")})
-    
-    # Keep only the last 100 messages to prevent the file from getting too large
-    # messages = messages[-100:]
+    chats = load_all_chats()
+    if username not in chats:
+        chats[username] = []
+
+    # Save the exact text the user typed
+    chats[username].append({
+        'content': content, 
+        'time': datetime.now().strftime("%H:%M:%S")
+    })
 
     with open(chat_history, 'w') as f:
-        json.dump(messages, f, indent=4)
-
+        json.dump(chats, f, indent=4)
+        
 
 @app.route('/')
 def index():
@@ -77,23 +85,19 @@ def search():
     print(f"Search query: {query}")
     return redirect(url_for('index'))
 
-messages = []
 
 @app.route('/chat', methods=['GET', 'POST'])
-# @login_required 
+@login_required 
 def chat():
     if request.method == 'POST':
-        # Get the message from the HTML form
         content = request.form.get('content')
         if content:
-            # Append it to our list with a hardcoded test username
-            messages.append({'username': 'TestUser', 'content': content})
-        
-        # Redirect to prevent form resubmission on page refresh
+            save_message(current_user.username, content)
         return redirect(url_for('chat'))
     
-    # Render the HTML page and pass the messages list to it
-    return render_template('chat.html', messages=messages)
+    # Load private messages for this specific user
+    user_messages = load_messages(current_user.username)
+    return render_template('chat.html', messages=user_messages)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

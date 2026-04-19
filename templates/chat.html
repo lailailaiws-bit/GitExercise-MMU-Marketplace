@@ -29,18 +29,25 @@
 
 <body>
     <div class="chat-container">
+        <div style="text-align: right; padding: 10px;">
+            <a href="{{ url_for('chat') }}" style="text-decoration: none; background: #007bff; color: white; padding: 5px 10px; border-radius: 5px;">🔄 Refresh</a>
+        </div>
+
         <div class="message-container">
-            <div class="message sender-message">Hello there!</div>
-            <div class="message receiver-message">Hi! How can I help you today?</div>
-            <div class="message sender-message">I have a question about your products.</div>
-            <div class="message receiver-message">Sure, feel free to ask!</div>
+            {% for msg in messages %}
+                <div class="message sender-message">
+                    <span style="font-size: 0.8em; color: #ddd; display: block; margin-bottom: 5px;">{{ msg.time }}</span>
+                    {{ msg.content }}
+                </div>
+            {% else %}
+                <div class="message receiver-message">No chats yet. Type below to start!</div>
+            {% endfor %}
         </div>
         
-        <div class="message">
-            <input type="text" 
-                placeholder="Type your message...">
-            <button>Send</button>
-        </div>
+        <form action="{{ url_for('chat') }}" method="POST" class="message">
+            <input type="text" name="content" placeholder="Type your message..." required autocomplete="off" autofocus style="flex-grow: 1;">
+            <button type="submit">Send</button>
+        </form>
     </div>
 
 

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
 </head>
 
@@ -30,13 +29,13 @@
 <body>
     <div class="chat-container">
         <div style="text-align: right; padding: 10px;">
-            <a href="{{ url_for('chat') }}" style="text-decoration: none; background: #007bff; color: white; padding: 5px 10px; border-radius: 5px;">🔄 Refresh</a>
+            <a href="{{ url_for('chat') }}" class="refresh-button">🔄 Refresh</a>
         </div>
 
         <div class="message-container">
             {% for msg in messages %}
                 <div class="message sender-message">
-                    <span style="font-size: 0.8em; color: #ddd; display: block; margin-bottom: 5px;">{{ msg.time }}</span>
+                    <span style="font-size: 0.8em; color: black; display: block; margin-bottom: 5px;">{{ msg.time }}</span>
                     {{ msg.content }}
                 </div>
             {% else %}

@@ -64,6 +64,9 @@ def save_message(username, content):
     with open(chat_history, 'w') as f:
         json.dump(chats, f, indent=4)
         
+# users = user.query.all()
+# for user in users:
+#     print()
 
 @app.route('/')
 def index():
@@ -96,6 +99,9 @@ def chat():
     # Load private messages for this specific user
     user_messages = load_messages(current_user.username)
     return render_template('chat.html', messages=user_messages)
+
+
+@app.route('/chat/<name>')
 
 
 @app.route('/profile', methods=['GET', 'POST'])

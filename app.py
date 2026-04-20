@@ -9,8 +9,6 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-
-
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
@@ -60,7 +58,7 @@ def save_message(username, content):
     # Save the exact text the user typed
     chats[username].append({
         'content': content, 
-        'time': datetime.now().strftime("%H:%M:%S")
+        'time': datetime.now().strftime("%H:%M")
     })
 
     with open(chat_history, 'w') as f:

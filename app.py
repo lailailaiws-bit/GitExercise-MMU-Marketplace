@@ -119,8 +119,8 @@ def logout():
 @login_required
 def profile_edit():
     if request.method == 'POST':
-        current_user.contact_number = request.form['contact_number']
-        current_user.bio = request.form['bio']
+        current_user.contact_number = request.form.get('contact_number')
+        current_user.bio = request.form.get('bio')
         try:
             db.session.commit()
             flash("Update successful")
@@ -130,6 +130,19 @@ def profile_edit():
             return redirect(url_for("profile_edit"))
     else:
         return render_template('profile_edit.html', user=current_user)
+    
+@app.route('/delete')
+@login_required
+def delete():
+    try:
+        db.session.delete(current_user)
+        db.session.commit()
+        flash('Account Deleted!')
+        return redirect (url_for('index'))
+
+    except:
+        flash('Error...Process Unsuccessful!')
+        return redirect (url_for('index'))
         
 if __name__ == '__main__':
     with app.app_context():

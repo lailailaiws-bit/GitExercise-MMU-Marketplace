@@ -139,9 +139,9 @@ p{
 
 .flashes {
     position: absolute;
-    background-color: burlywood;
+    background-color: green;
     border-radius: 5px;
-    top: 22%;
+    top: 37%;
     font-family: -webkit-body;
     font-weight: bold;
     left: 42%;

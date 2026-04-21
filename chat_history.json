@@ -1,20 +1,16 @@
 {
-    "hi": [
+    "cal": [
         {
             "content": "hi",
-            "time": "00:04:52"
+            "time": "18:48"
+        },
+        {
+            "content": "bye",
+            "time": "18:48"
         },
         {
             "content": "i am caleb",
-            "time": "00:05:05"
-        },
-        {
-            "content": "how are you?",
-            "time": "00:05:16"
-        },
-        {
-            "content": "thanks",
-            "time": "00:05:44"
+            "time": "18:48"
         }
     ]
 }

@@ -101,9 +101,6 @@ def chat():
     return render_template('chat.html', messages=user_messages)
 
 
-@app.route('/chat/<name>')
-
-
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():

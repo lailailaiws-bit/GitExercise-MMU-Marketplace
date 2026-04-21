@@ -2,11 +2,17 @@ from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.utils import secure_filename
+import uuid
+import os
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+UPLOAD_FOLDER = 'static/css/photos'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -20,6 +26,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(100), nullable=False)
     contact_number = db.Column(db.String(20), nullable=True)
     bio = db.Column(db.String(300), nullable=True)
+    profile_pic = db.Column(db.String(), nullable=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -55,9 +62,13 @@ def profile():
     if request.method == 'POST':
         if user_id := request.form.get('user_id'):
              print(f"User ID: {user_id}")
-        # Handle form submission
+        
         pass
-    return render_template('profile.html', user=current_user)
+        return redirect(url_for('profile'))
+    
+    else:
+        return render_template('profile.html', user=current_user)
+
 
 @app.route('/cart')
 def cart():
@@ -121,6 +132,16 @@ def profile_edit():
     if request.method == 'POST':
         current_user.contact_number = request.form.get('contact_number')
         current_user.bio = request.form.get('bio')
+        
+        if 'profile_pic' in request.files:
+            profile_pic = request.files.get('profile_pic')
+
+            if profile_pic and profile_pic.filename != '':
+                pic_filename = secure_filename(profile_pic.filename)
+                pic_name = str(uuid.uuid1()) + '_' + pic_filename
+                profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER']), pic_name)
+                current_user.profile_pic = pic_name
+
         try:
             db.session.commit()
             flash("Update successful")

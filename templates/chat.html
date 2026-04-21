@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    {% block head %}
 
+    {% endblock %}
 </head>
 
 
@@ -48,8 +50,8 @@
             <button type="submit">Send</button>
         </form>
     </div>
-
-
+    {% block body %}
+    {% endblock %}
 
 </body>
 </html>

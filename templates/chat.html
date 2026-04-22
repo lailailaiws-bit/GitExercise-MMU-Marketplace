@@ -43,6 +43,7 @@
                 </div>
             {% else %}
                 <div class="message receiver-message">No chats yet. Type below to start!</div>
+                <img src = "{{url_for('static', filename='css/photos/user-icon.png')}}" alt="Profile icon" class="avatar">
             {% endfor %}
         </div>
         

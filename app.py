@@ -33,6 +33,7 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+
 #chat system
 chat_history = 'chat_history.json'
 
@@ -63,6 +64,7 @@ def save_message(username, content):
 
     with open(chat_history, 'w') as f:
         json.dump(chats, f, indent=4)
+
         
 @app.route('/')
 def index():
@@ -82,7 +84,13 @@ def search():
     print(f"Search query: {query}")
     return redirect(url_for('index'))
 
-@app.route('/chat', methods=['GET', 'POST'])
+app.route('/chat', methods=['GET'])
+@login_required
+def chat_list() :
+
+
+
+@app.route('/chat/<user_username>', methods=['GET', 'POST'])
 @login_required 
 def chat():
     if request.method == 'POST':

@@ -36,7 +36,8 @@
 
         <div class="message-container">
             {% for msg in messages %}
-                <div class="message sender-message">
+                <div class="message sender-message" >
+                    <img src = "{{url_for('static', filename='css/photos/user-icon.png')}}" alt="Profile icon" class="avatar">
                     {{ msg.content }}
                     <span class="time">{{ msg.time }}</span>
                 </div>

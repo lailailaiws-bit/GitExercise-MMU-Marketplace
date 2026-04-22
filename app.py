@@ -139,7 +139,7 @@ def profile_edit():
             if profile_pic and profile_pic.filename != '':
                 pic_filename = secure_filename(profile_pic.filename)
                 pic_name = str(uuid.uuid1()) + '_' + pic_filename
-                profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER']), pic_name)
+                profile_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], pic_name))
                 current_user.profile_pic = pic_name
 
         try:

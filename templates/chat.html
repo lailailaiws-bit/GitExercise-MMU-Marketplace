@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    {% block head %}
-
-    {% endblock %}
+    <title>{% block title %}Chat with {{ target_username }}{% endblock %}</title>
+    {% block head %}{% endblock %}
 </head>
-
 
 <body>
     <div class="nav">
@@ -26,9 +24,9 @@
             </a>
 
         </div>
-</div>
+    </div>
 
-<body>
+    {% block content %}
     <div class="chat-container">
         <div style="text-align: right; padding: 10px;">
             <a href="{{ url_for('chat') }}" class="refresh-button">🔄 Refresh</a>
@@ -52,7 +50,6 @@
             <button type="submit">Send</button>
         </form>
     </div>
-    {% block body %}
     {% endblock %}
 
 </body>

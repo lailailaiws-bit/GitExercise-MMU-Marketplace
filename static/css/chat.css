@@ -191,3 +191,9 @@ body{
     padding: 5px 10px; 
     border-radius: 5px;
 }
+
+/* chat_list part */
+.list {
+    list-style-type: none; 
+    padding: 0;
+}

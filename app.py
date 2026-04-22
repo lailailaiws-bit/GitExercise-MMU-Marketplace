@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -35,7 +36,24 @@ def load_user(user_id):
 
 
 #chat system
-chat_history = 'chat_history.json'
+CHAT_DIR = 'chat folder'
+os.makedirs(CHAT_DIR, exist_ok=True)
+
+def load_user_data(username):
+    file_path = get_user_file(username)
+    if not os.path.exists(file_path):
+        return {} 
+    
+    with open(file_path, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+
+def save_user_data(username, data):
+    file_path = get_user_file(username)
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
 
 def load_all_chats():
     if not os.path.exists(chat_history):
@@ -45,25 +63,45 @@ def load_all_chats():
             return json.load(f)
         except json.JSONDecodeError:
             return {}
+        
+def save_user_data(username, data):
+    file_path = get_user_file(username)
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
 
-def load_messages(username):
-    chats = load_all_chats()
-    # Simply return the user's list of messages, or an empty list if none exist
-    return chats.get(username, [])
+def load_messages(current_user, target_user):
+    user_data = load_user_data(current_user)
+    return user_data.get(target_user, [])
 
-def save_message(username, content):
-    chats = load_all_chats()
-    if username not in chats:
-        chats[username] = []
-
-    # Save the exact text the user typed
-    chats[username].append({
+def save_message(sender, receiver, content):
+    message_obj = {
+        'sender': sender,
         'content': content, 
         'time': datetime.now().strftime("%H:%M")
-    })
+    }
 
-    with open(chat_history, 'w') as f:
-        json.dump(chats, f, indent=4)
+def save_message(sender, receiver, content):
+    message_obj = {
+        'sender': sender,
+        'content': content, 
+        'time': datetime.now().strftime("%H:%M")
+    }
+
+    # Save to sender's file
+    sender_data = load_user_data(sender)
+    if receiver not in sender_data:
+        sender_data[receiver] = []
+    sender_data[receiver].append(message_obj)
+    save_user_data(sender, sender_data)
+
+    # Save to receiver's file
+    if sender != receiver:
+        receiver_data = load_user_data(receiver)
+        if sender not in receiver_data:
+            receiver_data[sender] = []
+        receiver_data[sender].append(message_obj)
+        save_user_data(receiver, receiver_data)
+
 
         
 @app.route('/')
@@ -87,6 +125,8 @@ def search():
 app.route('/chat', methods=['GET'])
 @login_required
 def chat_list() :
+    users = User.query.filter(User.id != current_user.id).all()
+    return render_template('chat_list.html', users=users)
 
 
 

@@ -1,7 +1,13 @@
+import os
+
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from data import MOCK_PRODUCTS
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -38,7 +44,7 @@ def index():
 @app.route('/home')
 def home():
     ad_images = [ 'volbees01.jpeg', 'volbees02.jpeg', 'oarsmmucyber01.jpeg' ]
-    return render_template('home.html', ad_images=ad_images)
+    return render_template('home.html', ad_images=ad_images, products=MOCK_PRODUCTS)
 
 @app.route('/acc')
 def account():
@@ -118,6 +124,23 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    selected_product = None
+    
+    for product in MOCK_PRODUCTS:
+        if product['id'] == product_id:
+            selected_product = product
+            break
+
+    if selected_product is None:
+        return "Error: Product not found", 404
+
+    token = os.getenv('MAPBOX_TOKEN')
+
+    return render_template('product_detail.html', product=selected_product, mapbox_token=token)
 
 @app.route('/profile_edit')
 @login_required

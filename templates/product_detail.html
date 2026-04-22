@@ -1,0 +1,78 @@
+{% extends 'base.html'%}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.21.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.21.0/mapbox-gl.js"></script>
+<style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    #map { 
+        width: 100%; 
+        height: 400px;
+        margin-top: 20px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="product-detail-page">
+    {% set product_images = product.images if product.images else [product.image] %}
+    <div class="product_detail_layout">
+        <div class="product_image_container">
+            <img src="{{ url_for('static', filename='css/product/' + product_images[0]) }}" alt="{{ product.name }}" class="product_image" id="mainProductImage">
+
+            {% if product_images|length > 1 %}
+            <div class="product-gallery">
+                {% for image in product_images %}
+                <img src="{{ url_for('static', filename='css/product/' + image) }}" alt="{{ product.name }} photo {{ loop.index }}" class="product-thumb{% if loop.first %} active{% endif %}" data-full-src="{{ url_for('static', filename='css/product/' + image) }}">
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="description">
+            <h1>{{ product.name }}</h1>
+            <h2 class="product-price">RM{{ "%.2f"|format(product.price) }}</h2>
+            <p class="seller-info"><strong>Seller: </strong> {{ product.seller }}</p>
+            <p><strong>Product Description:</strong> This is where you can write a detailed description of the product, or display more placeholder data...</p>
+
+            <button class="contact-button">
+                Contact Seller
+            </button>
+
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+<script>
+    const mainImage = document.getElementById('mainProductImage');
+    const thumbnails = document.querySelectorAll('.product-thumb');
+
+    thumbnails.forEach((thumbnail) => {
+        thumbnail.addEventListener('click', () => {
+            mainImage.src = thumbnail.dataset.fullSrc;
+
+            thumbnails.forEach((item) => item.classList.remove('active'));
+            thumbnail.classList.add('active');
+        });
+    });
+
+    mapboxgl.accessToken = '{{ mapbox_token }}';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: {{ product.coordinates | tojson }},
+        zoom: 16
+    });
+    new mapboxgl.Marker()
+        .setLngLat({{ product.coordinates | tojson }})
+        .addTo(map);
+</script>
+
+{% endblock %}

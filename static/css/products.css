@@ -1,0 +1,101 @@
+.description {
+    flex: 1;
+    min-width: 250px;
+    margin-top: 0;
+    text-align: left;
+}
+
+.seller-info {
+    font-size: 18px;
+    color: black;
+}
+
+
+.product-detail-page {
+    font-family: sans-serif;
+    padding: 20px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: blue;
+    background-color: #f3f6fb;
+}
+
+.back-link:hover {
+    background-color: #e7eefb;
+}
+
+.back-arrow-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.product_detail_layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-top: 30px;
+    flex-wrap: nowrap;
+}
+
+.product_image_container {
+    flex: 0 0 420px;
+}
+
+.product_image {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 8px;
+    display: block;
+}
+
+.product-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.product-thumb {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #d9dfe8;
+    cursor: pointer;
+    opacity: 0.75;
+}
+
+.product-thumb:hover, .product-thumb.active {
+    opacity: 1;
+    border-color: black;
+}
+
+
+.product-price {
+    font-size: 24px;
+    color: rgb(12, 41, 113);
+}
+
+.contact-button {
+    padding: 10px 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.map-container #map {
+    width: 90%;
+    height: 400px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}

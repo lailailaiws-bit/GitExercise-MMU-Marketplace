@@ -36,71 +36,10 @@ def load_user(user_id):
 
 
 #chat system
-CHAT_DIR = 'chat folder'
-os.makedirs(CHAT_DIR, exist_ok=True)
+# CHAT_DIR = 'chat folder'
+# os.makedirs(CHAT_DIR, exist_ok=True)
 
-def load_user_data(username):
-    file_path = get_user_file(username)
-    if not os.path.exists(file_path):
-        return {} 
-    
-    with open(file_path, 'r') as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return {}
 
-def save_user_data(username, data):
-    file_path = get_user_file(username)
-    with open(file_path, 'w') as f:
-        json.dump(data, f, indent=4)
-
-def load_all_chats():
-    if not os.path.exists(chat_history):
-        return {}
-    with open(chat_history, 'r') as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return {}
-        
-def save_user_data(username, data):
-    file_path = get_user_file(username)
-    with open(file_path, 'w') as f:
-        json.dump(data, f, indent=4)
-
-def load_messages(current_user, target_user):
-    user_data = load_user_data(current_user)
-    return user_data.get(target_user, [])
-
-def save_message(sender, receiver, content):
-    message_obj = {
-        'sender': sender,
-        'content': content, 
-        'time': datetime.now().strftime("%H:%M")
-    }
-
-def save_message(sender, receiver, content):
-    message_obj = {
-        'sender': sender,
-        'content': content, 
-        'time': datetime.now().strftime("%H:%M")
-    }
-
-    # Save to sender's file
-    sender_data = load_user_data(sender)
-    if receiver not in sender_data:
-        sender_data[receiver] = []
-    sender_data[receiver].append(message_obj)
-    save_user_data(sender, sender_data)
-
-    # Save to receiver's file
-    if sender != receiver:
-        receiver_data = load_user_data(receiver)
-        if sender not in receiver_data:
-            receiver_data[sender] = []
-        receiver_data[sender].append(message_obj)
-        save_user_data(receiver, receiver_data)
 
 
         
@@ -122,26 +61,43 @@ def search():
     print(f"Search query: {query}")
     return redirect(url_for('index'))
 
-app.route('/chat', methods=['GET'])
-@login_required
-def chat_list() :
+@app.route('/chat')
+@login_required 
+def chat_list():
+    # This grabs all real registered users from your database, except you!
     users = User.query.filter(User.id != current_user.id).all()
     return render_template('chat_list.html', users=users)
 
+@app.route('/chat/<target_username>')
+@login_required
+def chat_with(target_username):
+    return f"""
+    <div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+        <h1>Pretending to open chat with: {target_username}</h1>
+        <a href="/chat" style="padding: 10px 20px; background: blue; color: white; text-decoration: none; border-radius: 5px;">⬅ Go Back to List</a>
+    </div>
+    """
+
+# app.route('/chat', methods=['GET'])
+# @login_required
+# def chat_list() :
+#     users = User.query.filter(User.id != current_user.id).all()
+#     return render_template('chat_list.html', users=users)
 
 
-@app.route('/chat/<user_username>', methods=['GET', 'POST'])
-@login_required 
-def chat():
-    if request.method == 'POST':
-        content = request.form.get('content')
-        if content:
-            save_message(current_user.username, content)
-        return redirect(url_for('chat'))
+
+# @app.route('/chat/<user_username>', methods=['GET', 'POST'])
+# @login_required 
+# def chat():
+#     if request.method == 'POST':
+#         content = request.form.get('content')
+#         if content:
+#             save_message(current_user.username, content)
+#         return redirect(url_for('chat'))
     
-    # Load private messages for this specific user
-    user_messages = load_messages(current_user.username)
-    return render_template('chat.html', messages=user_messages)
+#     # Load private messages for this specific user
+#     user_messages = load_messages(current_user.username)
+#     return render_template('chat.html', messages=user_messages)
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required

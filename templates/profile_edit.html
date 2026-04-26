@@ -1,7 +1,7 @@
 {% include 'header.html' %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile_edit.css') }}">
 
-<div class="wrapper">
+<div class="wrapper2">
 
     <div class="customer_account">
         <div>
@@ -9,16 +9,6 @@
             <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
         </div>
     </div>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flashes">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
 
     <form action="/profile_edit" method="POST" enctype="multipart/form-data">
     <div class="edit_block">
@@ -40,7 +30,7 @@
     </div>
     
     <h3>Add a profile picture!</h3>
-    <div class="profile_block">
+    <div class="profile_block2">
         <input type="file" name="profile_pic" id="profile_pic">
     </div>
 

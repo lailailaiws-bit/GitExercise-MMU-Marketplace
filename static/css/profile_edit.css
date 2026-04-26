@@ -1,4 +1,4 @@
-div.wrapper{
+div.wrapper2{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,7 +31,7 @@ h2{
     font-size: x-large;
     font-weight: bold;
     left: -43px;
-    top: 73px;
+    top: 80px;
 }
 
 div.customer_account{
@@ -53,7 +53,7 @@ div.edit_block{
     border-radius: 20px;
     padding: 10px;
     width: 700px;
-    padding-top: 22px;
+    padding-top: 30px;
     margin-bottom: 106px;
 }
 
@@ -97,7 +97,9 @@ div.column2{
     position: relative;
     height: 180px;
     resize: none;
-    padding-top: 23px;
+    padding-top: 25px;
+    margin-top: 40px;
+    margin-left: -15px;
 }
 
 .bio_label{
@@ -107,6 +109,7 @@ div.column2{
     top: 7px;
     letter-spacing: 0.64px;
     pointer-events: none;
+    margin-top: 37px;
 }
 
 div.bio_block{
@@ -131,7 +134,7 @@ p{
     border-radius: 64px;
     background-color: rgb(18, 18, 103);
     color: white;
-    left: 606px;
+    left: 276px;
     bottom: 138px;
     font-family: monospace;
     padding: 10px;
@@ -155,12 +158,19 @@ h3{
     display: flex;
     position: relative;
     bottom: 91px;
-    left: -34px;
+    left: -308px;
 }
 
-.profile_block{
+.profile_block2{
     display: flex;
     position: relative;
     bottom: 91px;
-    left: -34px;
+    left: -280px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    column-gap: 20px;
 }

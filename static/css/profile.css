@@ -72,98 +72,6 @@ nav{
     padding: 20px;
 }
 
-/* .logout_button{
-    border: 2px solid black;
-    position: relative;
-    left: -2px;
-    bottom: 530px;
-    margin-left: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    display: flex;
-    align-items: center;
-    width: max-content;
-}
-
-.logout_style{
-    color: black;
-    list-style-type: none;
-    text-decoration: underline;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    gap: 10px;
-}
-
-.user-icon2{
-    width: 150px;
-    margin-left: 15px;
-    border: solid black;
-    border-radius: 15px;
-    border-width: 5px;
-    padding: 5px;
-}
-
-.logout_style svg{
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
-}
-
-.a svg{
-    width: 16px;
-    margin-bottom: -0.48px;
-    margin-right: 16px;
-    fill: currentColor;
-    color: currentColor;
-}
-
-.profile_acc h1{
-    padding-bottom: 10%;
-    color: darkslateblue;
-    font-size: xx-large;
-}
-
-.profile_acc h2{
-    display: flex;
-    color: rgb(47, 41, 41);
-    font-family: sans-serif;
-    padding: 20px;
-    margin-top: -11%;
-}
-
-div .bio{
-    position: relative;
-    top: -520px;
-    left: 400px;
-}
-div .bio h1{
-    color: darkslategray;
-}
-
-div .bio border{
-    display: flex;
-    position: relative;
-    left: 10px;
-    border: solid gray;
-    height: 300px;
-    width: 1000px;
-    padding-top: 5px;
-    padding-left: 5px;
-    border-radius: 5px;
-    top: -141px;
-}
-
-.edit_btn{
-    color: rgb(18, 18, 103);
-    display: flex;
-    position: relative;
-    left: 87%;
-    font-size: larger;
-    bottom: 690px;
-}
-
 a.delete_btn{
     color: white;
     border: solid red;
@@ -176,7 +84,8 @@ a.delete_btn{
     bottom: 600px;
     padding-left: 10px;
     padding-right: 10px;
-} */
+} 
+
 a.profile_title{
     font-size: xx-large;
     font-weight: bold;
@@ -220,12 +129,13 @@ div.profile_pic{
     position: static;
     inset: auto;
     margin-right: 10px;
-    margin-top: -45px;
-    margin-left: -10px;
+    margin-top: -30px;
+    margin-left: 5px;
 }
 
 div.info_block{
-    display: block;
+    display: grid;
+    grid-column: 2;
     background-color: rgb(250, 243, 243);
     border-radius: 5px;
     width: 100%;
@@ -244,14 +154,18 @@ div.username_block{
 }
 
 div.wrapper{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 226px 1fr; 
+    column-gap: 10px;
+    row-gap: 15px;
 }
 
 label.username_label{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    font-weight: bold;
+    font-size: larger;
 }
 
 div.contact_block{
@@ -267,4 +181,85 @@ label.contact_label{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    font-weight: bold;
+    font-size: larger;
+}
+
+div.bio_box{
+    display: grid;
+    grid-column: 2;
+    background-color: gainsboro;
+    border-radius: 5px;
+    width: 100%;
+    height: 150px;
+    align-items: center;
+    box-shadow: 2px 0.5px 2px gray;
+    margin-top: 5px;
+}
+
+div.bio_block{
+    display: block;
+    margin: 3px;
+    width: 100%;
+    max-width: 160px;
+    padding-left: 15px;
+    margin-top: -40px;
+}
+
+label.bio_label{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.logout_style{
+    color: black;
+    list-style-type: none;
+    text-decoration: underline;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 4px;
+    margin-top: 33px;
+}
+
+.logout_style svg{
+    width: 30px;
+    height: 20px;
+    flex-shrink: 0;
+}
+ .edit_style{
+    color: black;
+    list-style-type: none;
+    text-decoration: underline;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-top: -40px;
+    margin-left: 620px;
+ }
+
+ .edit_style svg{
+    width: 30px;
+    height: 20px;
+    flex-shrink: 0;
+ }
+
+ .user-icon2{
+    width: 150px;
+    margin-left: 15px;
+    border: solid black;
+    border-radius: 15px;
+    border-width: 5px;
+    padding: 5px;
+}
+
+.user-icon1{
+    width: 150px;
+    margin-left: 15px;
+    border: solid black;
+    border-radius: 15px;
+    border-width: 5px;
+    padding: 5px;
 }

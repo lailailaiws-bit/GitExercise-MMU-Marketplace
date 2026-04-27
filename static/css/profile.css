@@ -21,16 +21,17 @@ h1{
     justify-content: space-between;
     padding: 10px 20px;
     background-color: whitesmoke;
-    border-radius: 50px;
+    border-radius: 15px;
 }
 
 .logo {
     justify-content: left;
     display: flex;
     justify-content: center;
-    width: 170px;
-    height: 52px;
-    margin-bottom: 0px;
+    width: 180px;
+    height: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .portfolio {
@@ -50,23 +51,24 @@ h1{
 
 .user-portfolio {
     display: flex;
-    justify-content: right;
     margin-left: auto;
+    gap: 40px;
 }
 
 .user-icon {
     display: flex;
-    justify-content: right;
+    justify-items: center;
     width: 30px;
     height: 30px;
+    margin-right: 10px;
     padding: 20px;
 }
 
 .chat-icon {
     display: flex;
-    justify-content: right;
-    width: 30px;
-    height: 30px;
+    justify-items: center;
+    width: 32px;
+    height: 32px;
     padding: 20px;
 }
 

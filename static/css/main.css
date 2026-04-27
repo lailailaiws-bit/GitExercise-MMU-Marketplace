@@ -129,25 +129,23 @@ button{
 
 .user-portfolio {
     display: flex;
-    justify-content: right;
     margin-left: auto;
+    gap: 40px;
 }
 
 .user-icon {
     display: flex;
-    justify-content: right;
+    justify-items: center;
     width: 30px;
     height: 30px;
-    padding: 20px;
+    margin-right: 24px;
 }
 
 .chat-icon {
     display: flex;
-    justify-content: right;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    padding: 20px;
+    justify-items: center;
+    width: 32px;
+    height: 32px;
 }
 
 div .auth-container{

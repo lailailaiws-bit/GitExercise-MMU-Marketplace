@@ -198,3 +198,14 @@ body{
     padding: 0;
 }
 
+
+@echo off
+echo Starting Tailwind CSS Compiler for Flask...
+tailwind.exe -i 
+\static\src\input.css-0.
+\static\css\output.css --watch
+
+@import "tailwindcss";
+@source "../../templates";
+
+

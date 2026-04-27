@@ -3,11 +3,11 @@
 {% block title %}Select a User to Chat with !{% endblock %}
 
 {% block content %}
-<div class="chat-container">
+<div class="justify-center px-10 py-10 ">
     <h2>Start a Conversation</h2>
     <ul>
         {% for user in users %}
-            <li style="margin: 10px 0; padding: 10px; background: #f4f4f4; border-radius: 5px;">
+            <li class="bg-blue-400">
                 <strong>{{ user.username }}</strong>
                 <a href="{{ url_for('chat_with', target_username=user.username) }}" style="float: right; text-decoration: none; color: blue;">Message</a>
             </li>

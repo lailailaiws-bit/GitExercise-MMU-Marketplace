@@ -151,6 +151,11 @@ div.username_block{
     margin: 3px;
     width: 100%;
     max-width: 160px;
+.user-icon2{
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+    object-fit: cover;
 }
 
 div.wrapper{

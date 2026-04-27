@@ -197,6 +197,15 @@
   .my-5 {
     margin-block: calc(var(--spacing) * 5);
   }
+  .mr-1\.5 {
+    margin-right: calc(var(--spacing) * 1.5);
+  }
+  .mr-1\.25 {
+    margin-right: calc(var(--spacing) * 1.25);
+  }
+  .mr-3 {
+    margin-right: calc(var(--spacing) * 3);
+  }
   .mr-5 {
     margin-right: calc(var(--spacing) * 5);
   }

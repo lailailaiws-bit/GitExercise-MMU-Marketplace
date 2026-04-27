@@ -218,6 +218,9 @@
   .my-2 {
     margin-block: calc(var(--spacing) * 2);
   }
+  .my-3\.5 {
+    margin-block: calc(var(--spacing) * 3.5);
+  }
   .my-5 {
     margin-block: calc(var(--spacing) * 5);
   }
@@ -456,6 +459,9 @@
   }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
+  }
+  .pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
   }
   .pb-10 {
     padding-bottom: calc(var(--spacing) * 10);

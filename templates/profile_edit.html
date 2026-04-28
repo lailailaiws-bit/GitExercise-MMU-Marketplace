@@ -1,9 +1,42 @@
 {% include 'header.html' %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile_edit.css') }}">
 
-<div class="customer_account">
-    <div>
-        <h1>My Account</h1>
-        <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
+<div class="wrapper2">
+
+    <div class="customer_account">
+        <div>
+            <h1>My Account</h1>
+            <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
+        </div>
     </div>
+
+    <form action="/profile_edit" method="POST" enctype="multipart/form-data">
+    <div class="edit_block">
+        <h2>Account Details</h2>
+        <div class="column1">
+            <div class="contact">
+                <input type="tel" name="contact_number" id="contact_number" placeholder="(e.g 01234567890)" pattern="[0-9]{10,11}" value="{{ current_user.contact_number if current_user.contact_number else ''}}">
+                <label class="contact_label">Phone</label>
+            </div>
+        </div>
+
+        <div class="column2">
+            <div class="bio_block">
+                <textarea type="text" name="bio" id="bio" placeholder="-">{{ current_user.bio if current_user.bio else ''}}</textarea>
+                <label class="bio_label">Bio</label>
+            </div>
+        </div>
+
+    </div>
+    
+    <h3>Add a profile picture!</h3>
+    <div class="profile_block2">
+        <input type="file" name="profile_pic" id="profile_pic">
+    </div>
+
+    <p class="submit-button">
+        <input type="submit" class="button" value="Submit">
+    </p>
+    </form>
+
 </div>

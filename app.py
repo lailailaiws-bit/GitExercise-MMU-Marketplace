@@ -64,8 +64,19 @@ def search():
 @app.route('/chat')
 @login_required 
 def chat_list():
-    # This grabs all real registered users from your database, except you!
-    users = User.query.filter(User.id != current_user.id).all()
+    # 1. Check if the user typed something in the search bar
+    search_query = request.args.get('q')
+
+    if search_query:
+        # 2. If they searched, filter the database using .ilike() (case-insensitive search)
+        users = User.query.filter(
+            User.id != current_user.id,
+            User.username.ilike(f"%{search_query}%")
+        ).all()
+    else:
+        # 3. If they didn't search anything, just load everyone like normal
+        users = User.query.filter(User.id != current_user.id).all()
+
     return render_template('chat_list.html', users=users)
 
 @app.route('/chat/<target_username>')

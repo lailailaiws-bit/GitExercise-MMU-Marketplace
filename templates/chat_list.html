@@ -5,16 +5,17 @@
 {% block content %}
 
 
-    <div>
-        <h2 class="font-bold py-2 text-xl mb-2">Start a Conversation for enquiries !</h2>
-        <form action="{{ url_for('chat_list') }}" method="GET" class="mb-8 flex gap-2 max-w-sm">
+    <div class="w-full mb-8">
+        <h2 class="font-bold py-2 text-xl mb-4 text-center">Start a Conversation for enquiries 💬 !</h2>
+
+        <form action="{{ url_for('chat_list') }}" method="GET" class="flex gap-2 max-w-md mx-auto">
             <input type="text" name="q" placeholder="Search for a user..." class="w-full px-3 py-1.5 border rounded-md shadow-sm focus:ring-5 focus:ring-blue-200 transition">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-1.5 rounded-md hover:bg-blue-600 transition">Search</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-1.5 gap-1 rounded-md hover:bg-blue-600 transition">Search</button>
         </form>
 
-        <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+        <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 my-5">
             {% for user in users %}
-                <li class="px-2 py-2 border bg-gray-200 rounded-lg bg-gray-50 flex flex-col items-center shadow-sm hover:shadow-md transition">
+                <li class="px-4 py-4 border bg-gray-200 rounded-lg bg-gray-50 flex flex-col items-center shadow-sm hover:shadow-md transition">
                     <strong class="truncate mb-3 text-center">{{ user.username }}</strong>
                     <a href="{{ url_for('chat_with', target_username=user.username) }}" class="text-xs text-center border border-gray-400 bg-white rounded-md px-4 py-2 hover:bg-gray-100 transition">Message</a>
                 </li>
@@ -26,17 +27,5 @@
 
 </div>
 
-<!-- <div class="justify-left px-10 pt-2 pb-10 ">
-    <h2 class=" text-xl font-bold py-2">Start a Conversation for enquiries !</h2>
-    <ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {% for user in users %}
-            <li class=" cols-2 px-5 py-2 mx-5 my-3.5 border-2 max-w-xs rounded-lg bg-gray-200 flex justify-between items-center">
-                <strong>{{ user.username }}</strong>
-                <a href="{{ url_for('chat_with', target_username=user.username) }}" class=" text-xs border border-gray-400 bg-white rounded-md px-3 py-2 hover:bg-gray-100 transition ">Message</a>
-            </li>
-        {% else %}
-            <p>No other users are registered yet.</p>
-        {% endfor %}
-    </ul>
-</div> -->
+
 {% endblock %}

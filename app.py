@@ -35,9 +35,9 @@ def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 
-#chat system
-# CHAT_DIR = 'chat folder'
-# os.makedirs(CHAT_DIR, exist_ok=True)
+# chat system
+CHAT_DIR = 'chat folder'
+os.makedirs(CHAT_DIR, exist_ok=True)
 
 
 
@@ -89,26 +89,8 @@ def chat_with(target_username):
     </div>
     """
 
-# app.route('/chat', methods=['GET'])
-# @login_required
-# def chat_list() :
-#     users = User.query.filter(User.id != current_user.id).all()
-#     return render_template('chat_list.html', users=users)
 
 
-
-# @app.route('/chat/<user_username>', methods=['GET', 'POST'])
-# @login_required 
-# def chat():
-#     if request.method == 'POST':
-#         content = request.form.get('content')
-#         if content:
-#             save_message(current_user.username, content)
-#         return redirect(url_for('chat'))
-    
-#     # Load private messages for this specific user
-#     user_messages = load_messages(current_user.username)
-#     return render_template('chat.html', messages=user_messages)
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required

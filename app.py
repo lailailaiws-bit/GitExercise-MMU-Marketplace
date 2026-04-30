@@ -5,7 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.utils import secure_filename
 import uuid
 import os
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -41,8 +41,8 @@ class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.Integer(150), nullable=True)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    description = db.Column(db.String(150), nullable=True)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=True)
 
 @login_manager.user_loader

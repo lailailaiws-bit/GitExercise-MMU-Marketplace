@@ -35,15 +35,6 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
-class Products(db.Model):
-    __bind_key__ = "item"
-    id = db.Column(db.Integer, primary_key=True)
-    item_name = db.Column(db.String(50), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.Integer(150), nullable=True)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    item_pic = db.Column(db.String(), nullable=True)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -178,23 +169,6 @@ def delete():
     except:
         flash('Error...Process Unsuccessful!')
         return redirect (url_for('index'))
-    
-@app.route('/item_post', methods=['GET', 'POST'])
-@login_required
-def item_post():
-    if request.method == 'POST':
-        item_name = request.form.get('item_name')
-        price = request.form.get('price')
-        description = request.form.get('description')
-        date_created = request.form.get('date_created')
-
-        try:
-            db.session.commit()
-            return redirect (url_for('item_post'))
-        except:
-            return redirect (url_for('item_post'))
-    else:
-        return render_template('item_post.html', user=current_user)
 
 if __name__ == '__main__':
     with app.app_context():

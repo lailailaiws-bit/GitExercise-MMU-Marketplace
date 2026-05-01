@@ -39,6 +39,10 @@ def load_user(user_id):
 CHAT_DIR = 'chat folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
+def get_user_file (username):
+    return os.path.join(CHAT_DIR, f"{username}.json")
+
+
 
 
 
@@ -88,7 +92,6 @@ def chat_with(target_username):
         <a href="/chat" style="padding: 10px 20px; background: blue; color: white; text-decoration: none; border-radius: 5px;">⬅ Go Back to List</a>
     </div>
     """
-
 
 
 

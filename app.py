@@ -132,8 +132,6 @@ def login():
 
     return render_template('login.html')
 
-
-
 @app.route('/logout')
 @login_required
 def logout():
@@ -182,13 +180,25 @@ def delete():
 @app.route('/item_post', methods=['GET', 'POST'])
 @login_required
 def item_post():
-    if request.method == 'POST':
+    if request.method == 'POST': 
         item_name = request.form.get('item_name')
         price = request.form.get('price')
         description = request.form.get('description')
         date_created = request.form.get('date_created')
 
+        product = Products(
+            item_name = request.form.get('item_name'),
+            price = request.form.get('price'),
+            description = request.form.get('description'),
+            date_created = request.form.get('date_created'),
+        )
+
+        if not item_name or not price or not description:
+            flash('Please fill out the item detail.')
+            return redirect(url_for('item_post'))
+
         try:
+            db.session.add(product)
             db.session.commit()
             return redirect (url_for('item_post'))
         except:

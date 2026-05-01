@@ -5,7 +5,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.utils import secure_filename
 import uuid
 import os
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 

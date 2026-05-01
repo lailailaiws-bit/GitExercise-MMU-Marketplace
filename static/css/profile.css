@@ -272,3 +272,9 @@ label.bio_label{
     border-width: 5px;
     padding: 5px;
 }
+
+.item_post_btn{
+    display:flex;
+    position:absolute;
+    height: 0px;
+}

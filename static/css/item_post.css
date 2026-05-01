@@ -1,0 +1,17 @@
+.button{
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: solid  darkblue;
+    border-radius: 64px;
+    background-color: rgb(18, 18, 103);
+    color: white;
+    left: 276px;
+    bottom: 138px;
+    font-family: monospace;
+    padding: 10px;
+}

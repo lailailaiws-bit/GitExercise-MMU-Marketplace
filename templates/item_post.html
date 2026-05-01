@@ -9,8 +9,31 @@
     <title>Product Post</title>
 </head>
 <body>
-    <div>
-        HI
+    <div class="wrapper3">
+        <form action="/item_post" method="POST" enctype="multipart/form-data">
+            <div class="post_block">
+                <div class="column3">
+                    <div class="item_name">
+                        <input type="text" name="item_name" id="item_name" placeholder="Name...">
+                    </div>
+                </div>
+                <div class="column4">
+                    <div class="price">
+                        <input type="number" name="price" id="price" placeholder="RM xxx">
+                    </div>
+                </div>
+                <div class="column5">
+                    <div class="item_description">
+                        <input type="text" name="item_description" id="item_description" placeholder="...">
+                    </div>
+                </div>
+            </div>
+
+            <p class="submit-button">
+                <input type="submit" class="button" value="Submit">
+            </p>
+        </form>
     </div>
+
 </body>
 </html>

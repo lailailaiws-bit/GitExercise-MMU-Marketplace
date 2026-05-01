@@ -1,1 +1,2 @@
+path/to/tailwind.css filter=lfs diff=lfs merge=lfs -text
 tailwind.exe filter=lfs diff=lfs merge=lfs -text

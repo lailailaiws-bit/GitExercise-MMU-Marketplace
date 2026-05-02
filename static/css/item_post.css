@@ -43,9 +43,37 @@
 }
 
 .column3{
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 p{
     font-weight: bold;
+}
+
+#item_name{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    padding-right: 70px;
+}
+
+#price{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    padding-right: 70px;
+}
+
+#item_description{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    padding-right: 70px;
 }

@@ -97,7 +97,6 @@ def register():
             flash('All fields are required.', 'error')
             return redirect(url_for('register'))
 
-        # Check if user already exists
         if User.query.filter_by(username=username).first():
             flash('Username already exist.')
             return redirect(url_for('register'))
@@ -106,7 +105,6 @@ def register():
             flash('This email has already been registered for an account')
             return redirect(url_for('register'))
 
-        # Create new user
         new_user = User(username=username, email=email)
         new_user.set_password(password)
         db.session.add(new_user)

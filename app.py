@@ -190,9 +190,10 @@ def item_post():
             return redirect(url_for('item_post'))
         
         product = Products(
-            item_name = request.form.get('item_name'),
-            price = request.form.get('price'),
-            item_description = request.form.get('item_description'),
+            item_name = item_name,
+            price = price,
+            item_description = description,
+            user_id = current_user.id
         )
 
         try:

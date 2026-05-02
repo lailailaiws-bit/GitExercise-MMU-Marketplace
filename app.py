@@ -11,9 +11,6 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_BINDS'] = {
-    'items': 'sqlite:///items.db'
-}
 
 UPLOAD_FOLDER = 'static/css/photos'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -39,8 +36,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
     
 class Products(db.Model):
-    __bind_key__ = "items"
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = "items"
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    item_id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
     item_description = db.Column(db.String(150), nullable=True)
@@ -185,8 +183,7 @@ def item_post():
     if request.method == 'POST': 
         item_name = request.form.get('item_name')
         price = request.form.get('price')
-        description = request.form.get('description')
-        date_created = request.form.get('date_created')
+        description = request.form.get('item_description')
 
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
@@ -196,7 +193,6 @@ def item_post():
             item_name = request.form.get('item_name'),
             price = request.form.get('price'),
             item_description = request.form.get('item_description'),
-            date_created = request.form.get('date_created'),
         )
 
         try:

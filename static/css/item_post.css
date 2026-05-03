@@ -51,6 +51,7 @@ form{
     height: 410px;
     border: solid black;
     border-radius: 10px;
+    flex: 1;
 }
 
 .column3{
@@ -97,4 +98,18 @@ select{
     border-radius: 20px;
     padding: 8px;
     padding-right: 55px;
+}
+
+.pic_block{
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: flex-start;
+    border-left: 1px solid #eee;
+    padding-left: 20px;
+}
+
+.item_pic{
+    display: flex;
 }

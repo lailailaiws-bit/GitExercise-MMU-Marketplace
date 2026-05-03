@@ -44,6 +44,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="pic_block">
+                    <div class="item_pic">
+                        <p>5. Add pictures!</p>
+                        <input type="file" name="item_pic" id="item_pic">
+                        {% if current_user.item_pic %}
+                            <img src="{{url_for('static', filename='css/photos/' + current_user.item_pic)}}" class="user-icon1">
+                        {%  else %}
+                            <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="user-icon2">
+                        {% endif %}
+                    </div>
+                </div>
             </div>
 
             <p class="submit-button">

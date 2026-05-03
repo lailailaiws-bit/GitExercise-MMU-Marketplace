@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="wrapper3">
-        <form action="/item_post" method="POST" enctype="multipart/form-data">
+        <form action="/item_post" method="POST" enctype="multipart/form-data" class="post_container">
             <div class="post_block">
                 <h2>Post an Item!</h2>
                 <div class="info_box">
@@ -23,11 +23,22 @@
                     <div class="column4">
                         <p>2. Item's price:</p>
                         <div class="price">
-                            <input type="number" name="price" id="price" placeholder="RM xxx">
+                            <input type="number" name="price" id="price" min="0" placeholder="RM xxx">
+                        </div>
+                    </div>
+                    <div class="column6">
+                        <p>3. Category:</p>
+                        <div class="item_category">
+                            <select name="item_category" id="item_category">
+                                <option  value="" disabled selected>Select a Catogory</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="home">Home & Garden</option>
+                            </select>
                         </div>
                     </div>
                     <div class="column5">
-                        <p>3. Item's description:</p>
+                        <p>4. Item's description:</p>
                         <div class="item_description">
                             <input type="text" name="item_description" id="item_description" placeholder="...">
                         </div>

@@ -42,6 +42,7 @@ class Products(db.Model):
     item_name = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
     item_description = db.Column(db.String(150), nullable=True)
+    item_category = db.Column(db.String(50), nullable=False)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=True)
 
@@ -182,6 +183,7 @@ def item_post():
         item_name = request.form.get('item_name')
         price = request.form.get('price')
         description = request.form.get('item_description')
+        item_category = request.form.get('item_category')
 
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
@@ -191,7 +193,8 @@ def item_post():
             item_name = item_name,
             price = price,
             item_description = description,
-            user_id = current_user.id
+            user_id = current_user.id,
+            item_category = item_category
         )
 
         try:

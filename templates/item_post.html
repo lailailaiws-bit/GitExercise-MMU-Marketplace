@@ -20,21 +20,23 @@
                             <input type="text" name="item_name" id="item_name" placeholder="Name...">
                         </div>
                     </div>
-                    <div class="column4">
-                        <p>2. Item's price:</p>
-                        <div class="price">
-                            <input type="number" name="price" id="price" min="0" placeholder="RM xxx">
+                    <div class="category_price">
+                        <div class="column4">
+                            <p>2. Item's price:</p>
+                            <div class="price">
+                                <input type="number" name="price" id="price" min="0" placeholder="RM xxx">
+                            </div>
                         </div>
-                    </div>
-                    <div class="column6">
-                        <p>3. Category:</p>
-                        <div class="item_category">
-                            <select name="item_category" id="item_category">
-                                <option  value="" disabled selected>Select a Catogory</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="fashion">Fashion</option>
-                                <option value="home">Home & Garden</option>
-                            </select>
+                        <div class="column6">
+                            <p>3. Category:</p>
+                            <div class="item_category">
+                                <select name="item_category" id="item_category">
+                                    <option  value="" disabled selected>Select a Category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="home">Home & Garden</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="column5">
@@ -43,11 +45,9 @@
                             <input type="text" name="item_description" id="item_description" placeholder="...">
                         </div>
                     </div>
-                </div>
-                <div class="pic_block">
                     <div class="item_pic">
                         <p>5. Add pictures!</p>
-                        <input type="file" name="item_pic" id="item_pic">
+                        <input type="file" name="item_pic_input" id="item_pic" style="margin-bottom: 5px;">
                         {% if current_user.item_pic %}
                             <img src="{{url_for('static', filename='css/photos/' + current_user.item_pic)}}" class="user-icon1">
                         {%  else %}

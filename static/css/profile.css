@@ -274,7 +274,21 @@ label.bio_label{
 }
 
 .item_post_btn{
-    display:flex;
-    position:absolute;
-    height: 0px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 12px 12px;
+    gap: 10px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 50px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-left: 628px;
+    margin-top: 50px;
+    width: 115px;
 }

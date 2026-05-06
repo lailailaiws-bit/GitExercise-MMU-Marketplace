@@ -39,12 +39,49 @@ def load_user(user_id):
 CHAT_DIR = 'chat folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
-def get_user_file (username):
+def get_user_file_(username):
     return os.path.join(CHAT_DIR, f"{username}.json")
 
+def load_user_data(username):
+    """Loads all chat history for a specific user."""
+    path = get_user_file_(username)
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+    return {}
 
+def save_user_data(username, data):
+    """Saves chat history for a specific user."""
+    path = get_user_file_(username)
+    with open(path, 'w') as f:
+        json.dump(data, f, indent=4)
 
+def save_message(sender, receiver, content):
+    """Saves a message to both the sender's and receiver's JSON files."""
+    message_obj = {
+        'sender': sender,
+        'content': content,
+        'time': datetime.now().strftime("%H:%M")
+    }
 
+# 1. Save to Sender's outbox
+    sender_data = load_user_data(sender)
+    if receiver not in sender_data:
+        sender_data[receiver] = []
+    sender_data[receiver].append(message_obj)
+    save_user_data(sender, sender_data)
+
+    # 2. Save to Receiver's inbox
+    receiver_data = load_user_data(receiver)
+    if sender not in receiver_data:
+        receiver_data[sender] = []
+    receiver_data[sender].append(message_obj)
+    save_user_data(receiver, receiver_data)
+
+def load_messages(current, target):
+    """Loads the specific conversation between two users."""
+    data = load_user_data(current)
+    return data.get(target, [])
 
         
 @app.route('/')
@@ -68,30 +105,36 @@ def search():
 @app.route('/chat')
 @login_required 
 def chat_list():
-    # 1. Check if the user typed something in the search bar
+    # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
 
     if search_query:
-        # 2. If they searched, filter the database using .ilike() (case-insensitive search)
+        # 2. If they searched for a name, filter the database
         users = User.query.filter(
             User.id != current_user.id,
             User.username.ilike(f"%{search_query}%")
         ).all()
     else:
-        # 3. If they didn't search anything, just load everyone like normal
+        # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
     return render_template('chat_list.html', users=users)
 
-@app.route('/chat/<target_username>')
+@app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
 def chat_with(target_username):
-    return f"""
-    <div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
-        <h1>Pretending to open chat with: {target_username}</h1>
-        <a href="/chat" style="padding: 10px 20px; background: blue; color: white; text-decoration: none; border-radius: 5px;">⬅ Go Back to List</a>
-    </div>
-    """
+    target_user = User.query.filter_by(username=target_username).first_or_404()
+
+    # Handle sending a new message
+    if request.method == 'POST':
+        content = request.form.get('content')
+        if content:
+            save_message(current_user.username, target_username, content)
+        return redirect(url_for('chat_with', target_username=target_username))
+    
+    # Load messages and display the chat
+    user_messages = load_messages(current_user.username, target_username)
+    return render_template('chat.html', messages=user_messages, target_username=target_username)
 
 
 

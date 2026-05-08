@@ -1,10 +1,16 @@
 {% extends 'base.html'%}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+<style>
+    img {
+        width: 100%;
+        height: auto;
+    }
+</style>
 {% endblock %}
 
-
 {% block body %}
+<img src="{{ url_for('static', filename='css/photos/EXP_Product_page.png') }}" alt="Example Product Page">
 
 {% endblock %}

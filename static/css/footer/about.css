@@ -1,0 +1,32 @@
+body{
+    background-color: #e0edfe;
+}
+
+.nav{
+    background-color: #bbdbfc;
+    text-decoration: none;
+}
+
+.top-section {
+    background-color: #bbdbfc;
+    padding: 20px 0 20px 0;
+    text-align: center;
+}
+
+.hero-banner {
+    width: 100%;
+    overflow: visible;
+}
+
+.hero-banner img {
+    width: 100%;
+    height: 50%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+.description {
+    padding: 20px;
+    text-align: justify;
+}

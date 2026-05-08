@@ -7,7 +7,9 @@ MOCK_PRODUCTS = [
         "price": 290.50,
         "image": "product1.png",
         "images": ["product1.png", "product1_02.png", "product1_03.png"],
-        "coordinates": [101.64114948292082, 2.9298399796624897]
+        "coordinates": [101.64114948292082, 2.9298399796624897],
+        "location": "Faculty of Management(FOM)",
+        "phone number": "011-16245892"
     },
     {
         "id": 2,
@@ -17,7 +19,9 @@ MOCK_PRODUCTS = [
         "price": 300.00,
         "image": "product2.png",
         "images": ["product2.png", "product2_02.png", "product2_03.png"],
-        "coordinates": [101.6407954313066, 2.928918505436529]
+        "coordinates": [101.6407954313066, 2.928918505436529],
+        "location": "Faculty of Computing & Informatics(FCI)",
+        "phone number": "019-3456789"
     },
     {
         "id": 3,
@@ -27,6 +31,8 @@ MOCK_PRODUCTS = [
         "price": 500.00,
         "image": "product3.png",
         "images": ["product3.png", "product3_02.png", "product3_03.png"],
-        "coordinates": [101.64200778981842, 2.9278898821755996]
+        "coordinates": [101.64200778981842, 2.9278898821755996],
+        "location": "Multimedia University Cyberjaya(MMUCYBER)",
+        "phone number": "019-3456766"
     }
 ]

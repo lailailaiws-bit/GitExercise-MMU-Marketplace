@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     {% block head %}
 
     {% endblock %}
@@ -42,5 +43,66 @@
 
     {% block body %}
     {% endblock %}
+
+{% block footer %}
+    <footer class="site-footer">
+        <div class="footer-wave" aria-hidden="true">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,58 C120,8 240,108 360,58 C480,8 600,108 720,58 C840,8 960,108 1080,58 C1200,8 1320,108 1440,58 L1440,0 L0,0 Z"></path>
+            </svg>
+        </div>
+
+        <div class="footer-logo-container">
+            <div class="main-logo">
+                <a href="/home">
+                    <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo">
+                </a>
+            </div>
+
+            
+        </div>
+
+        <div class="footer-container">
+            <div class="footer-columns">
+                <section class="footer-col">
+                    <h3>About Us</h3>
+                    <ul>
+                        <li><a href="/about" target="_blank">MMU Marketplace</a></li>
+                        <li><a href="/contact" target="_blank">Contact Us</a></li>
+                    </ul>
+                </section>
+
+                <section class="footer-col">
+                    <h3>Discover</h3>
+                    <ul>
+                        <li><a href="/ourstores" target="_blank">Our Stores</a></li>
+                    </ul>
+                </section>
+
+                <section class="MMU-col">
+                    <h3><span style="color:#0055A5">MM</span><span style="color:#ED1C24">U</span></h3>
+                    <ul>
+                        <li>"MMU is You Leading the Digital Future."</li>
+                    </ul>
+                </section>
+            </div>
+
+             
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2026 MMU Marketplace, by G039.</p>
+                </div>
+  
+                <div class="media-logo">
+                    <a href="https://github.com/lailailaiws-bit/GitExercise-MMU-Marketplace" target="_blank">
+                        <img src="{{ url_for('static', filename='css/photos/github.png')}}" alt="GitHub Logo">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+{% endblock %}
 </body>
 </html>

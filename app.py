@@ -1,11 +1,15 @@
 import os
+import uuid
 
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, abort, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from data import MOCK_PRODUCTS
 
 app = Flask(__name__)
+
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -43,8 +47,7 @@ def index():
 
 @app.route('/home')
 def home():
-    ad_images = [ 'volbees01.jpeg', 'volbees02.jpeg', 'oarsmmucyber01.jpeg' ]
-    return render_template('home.html', ad_images=ad_images, products=MOCK_PRODUCTS)
+    return render_template('home.html')
 
 @app.route('/acc')
 def account():
@@ -168,7 +171,30 @@ def delete():
         flash('Error...Process Unsuccessful!')
         return redirect (url_for('index'))
         
+
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    product = next((item for item in MOCK_PRODUCTS if item['id'] == product_id), None)
+
+    if product is None:
+        abort(404)
+
+    return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
+
+@app.route('/about')
+def about():
+    return render_template('footer/about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('footer/contact.html')
+
+@app.route('/ourstores')
+def ourstores():
+    return render_template('footer/ourstores.html')
+
+with app.app_context():
+    db.create_all()
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)

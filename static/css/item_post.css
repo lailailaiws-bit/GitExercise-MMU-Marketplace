@@ -125,3 +125,23 @@ select{
 input.item_pic_input{
     margin-bottom: 5px;
 }
+
+.flash_container{
+    display: flex;
+    width: 100%;
+    position: absolute;
+    bottom: 55px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flash{
+    padding: 15px 25px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px;
+    font-family: sans-serif;
+    min-width: 300px;
+    text-align: center;
+    background-color: lightgreen;
+}

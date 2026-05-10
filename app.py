@@ -209,6 +209,7 @@ def item_post():
 
         try:
             db.session.add(product)
+            flash('Item posted!')
             db.session.commit()
             return redirect (url_for('item_post'))
         except:

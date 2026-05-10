@@ -49,12 +49,35 @@
                         <p>5. Add pictures!</p>
                         <input type="file" name="item_pic" id="item_pic" style="margin-bottom: 5px;">
                     </div>
+                    <!-- <div class="flash_container">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <div class="flash">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div> -->
                 </div>
             </div>
 
             <p class="submit-button">
                 <input type="submit" class="button" value="Submit">
             </p>
+
+            <div class="flash_container">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="flash">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
         </form>
     </div>
 

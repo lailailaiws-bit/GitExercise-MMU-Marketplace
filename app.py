@@ -41,10 +41,10 @@ class Products(db.Model):
     item_id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    item_description = db.Column(db.String(150), nullable=True)
+    item_description = db.Column(db.String(150), nullable=False)
     item_category = db.Column(db.String(50), nullable=False)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
-    item_pic = db.Column(db.String(), nullable=True)
+    item_pic = db.Column(db.String(), nullable=False)
 
 @login_manager.user_loader
 def load_user(user_id):

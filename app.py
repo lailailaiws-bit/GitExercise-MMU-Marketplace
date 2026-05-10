@@ -185,6 +185,15 @@ def item_post():
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
 
+        if 'item_pic' in request.files:
+            item_pic = request.files.get('item_pic')
+
+            if item_pic and item_pic.filename != '':
+                item_filename = secure_filename(item_pic.filename)
+                item_picname = str(uuid.uuid1()) + '_' + item_filename
+                item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
+                item_pic = item_picname
+
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
             return redirect(url_for('item_post'))
@@ -194,7 +203,8 @@ def item_post():
             price = price,
             item_description = description,
             user_id = current_user.id,
-            item_category = item_category
+            item_category = item_category,
+            item_pic = item_pic
         )
 
         try:

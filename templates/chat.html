@@ -28,16 +28,20 @@
     </div>
 
 {% block content %}
-    <div class="chat-container flex flex-col max-w-2xl h-[calc(100vh-150px)] mx-auto my-4 overflow-hidden border border-gray-300 rounded-xl shadow-lg bg-white">
+    <div class="chat-container flex flex-col max-w-2xl h-[calc(100vh-175px)] mx-auto my-4 overflow-hidden border border-gray-300 rounded-xl shadow-lg bg-white">
         
-        <div style="text-align: right; padding: 10px; border-bottom: 1px solid #eee;">
+        <div class="flex justify-between items-center p-3 border-b-5 border-gray-100 bg-white w-full">
+            <span class="font-semibold text-gray-700">Chatting with: {{ target_username }}</span>
+
+            <div class="flex gap-1 mr-0.2">
             <a href="{{ url_for('chat_with', target_username=target_username) }}" class="refresh-button">🔄 Refresh</a>
             <a href="{{ url_for('chat_list') }}" class="refresh-button" style="margin-left: 10px;">⬅ Back to List</a>
+            </div>
         </div>
 
         <div class="message-container flex-grow overflow-y-auto p-4 flex flex-col gap-3 bg-white">
             {% for msg in messages %}
-                <div class="message {% if msg.sender == current_user.username %}ml-auto receiver-message{% else %}mr-auto sender-message{% endif %}">
+                <div class="message {% if msg.sender == current_user.username %}ml-auto receiver-message{% else %} mr-auto sender-message{% endif %}">
                     {{ msg.content }}
                     <span class="time text-[10px] opacity-75 ml-2">{{ msg.time }}</span>
                 </div>

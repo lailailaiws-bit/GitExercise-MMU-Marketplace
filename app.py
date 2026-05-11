@@ -216,6 +216,25 @@ def item_post():
             return redirect (url_for('item_post'))
     else:
         return render_template('item_post.html', user=current_user)
+    
+@app.route('/item_market')
+@login_required
+def item_market():
+    item_list = Products.query.all()
+
+    return render_template('item_market.html', items=item_list)
+    
+@app.route('/item/<item_id>', methods=["GET", "POST"])
+@login_required
+def item(item_id):
+    item_info = Products.query.get(item_id)
+    if request.method == 'POST':
+
+        return redirect(url_for('item', item_id=item_info))
+    
+    else:
+        return render_template('item.html', item=item_info)
+
 
 if __name__ == '__main__':
     with app.app_context():

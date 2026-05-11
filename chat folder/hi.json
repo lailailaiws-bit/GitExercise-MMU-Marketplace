@@ -1,0 +1,46 @@
+{
+    "awj": [
+        {
+            "content": "hi i am interested",
+            "recipient": "awj",
+            "sender": "hi",
+            "time": "00:00"
+        },
+        {
+            "content": "yo",
+            "recipient": "awj",
+            "sender": "hi",
+            "time": "00:06"
+        },
+        {
+            "content": "hello",
+            "recipient": "awj",
+            "sender": "hi",
+            "time": "00:06"
+        },
+        {
+            "content": "sup",
+            "recipient": "awj",
+            "sender": "hi",
+            "time": "00:06"
+        },
+        {
+            "content": "how r u",
+            "recipient": "awj",
+            "sender": "hi",
+            "time": "00:06"
+        },
+        {
+            "content": "yes",
+            "recipient": "awj",
+            "sender": "hi",
+            "time": "00:07"
+        },
+        {
+            "content": "cool ",
+            "recipient": "hi",
+            "sender": "awj",
+            "time": "00:08"
+        }
+    ]
+}

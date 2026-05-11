@@ -50,15 +50,6 @@ def load_user_data(username):
             return json.load(f)
     return {}
 
-def save_user_data(username, data):
-    """Saves chat history for a specific user."""
-    path = get_user_file_((username))
-    json_string = json.dumps(data, indent=4, sort_keys=True)
-    spaced_json_string = json_string.replace('],', '],\n')
-    with open(path, 'w') as f:
-        f.write(spaced_json_string)
-        
-
 def save_message(sender, receiver, content):
     """Saves a message to both the sender's and receiver's JSON files."""
     message_obj = {
@@ -81,6 +72,15 @@ def save_message(sender, receiver, content):
         receiver_data[sender] = []
     receiver_data[sender].append(message_obj)
     save_user_data(receiver, receiver_data)
+
+def save_user_data(username, data):
+    """Saves chat history for a specific user."""
+    path = get_user_file_((username))
+    json_string = json.dumps(data, indent=4, sort_keys=True)
+    spaced_json_string = json_string.replace('],', '],\n')
+    with open(path, 'w') as f:
+        f.write(spaced_json_string)
+        
 
 def load_messages(current, target):
     # Loads the specific conversation between two users."""

@@ -10,8 +10,8 @@
     border-radius: 64px;
     background-color: rgb(18, 18, 103);
     color: floralwhite;
-    left: 275px;
-    bottom: 0px;
+    left: 255px;
+    bottom: -18px;
     font-family: monospace;
     padding: 10px;
 }
@@ -33,6 +33,8 @@ form{
     align-items: center;
     border-radius: 10px;
     box-shadow: 0 10px 30px gray;
+    padding-bottom: 60px;
+    padding-top: 60px;
 }
 
 .post_block{
@@ -50,6 +52,7 @@ form{
     border: solid black;
     border-radius: 10px;
     flex: 1;
+    padding-bottom: 67px;
 }
 
 .column3{
@@ -65,10 +68,10 @@ p{
     display: block;
     border: solid darkslateblue;
     border-radius: 20px;
-    padding: 10px; /* Made padding uniform */
+    padding: 10px;
     margin-bottom: 10px;
-    width: 100%; /* Use width 100% instead of 395px of padding */
-    box-sizing: border-box; /* Keeps padding inside the width */
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 #price {
@@ -87,10 +90,15 @@ p{
     border-radius: 20px;
     padding: 10px;
     margin-bottom: 10px;
-    width: 100%; /* Changed from fixed 500px */
-    height: 60px;
+    width: 100%; 
+    height: 140px;
     resize: none;
+    padding-bottom: 110px;
     box-sizing: border-box;
+}
+
+.item_description{
+    display: flex;
 }
 
 select {
@@ -116,6 +124,13 @@ select {
     display: flex;
     flex-direction: column;
     padding-left: 20px;
+    border: 3px solid darkslateblue;
+    border-radius: 10px;
+}
+
+.pic_block:hover{
+    background-color: grey;
+    cursor: pointer;
 }
 
 .item_pic{
@@ -131,7 +146,7 @@ input.item_pic_input{
     display: flex;
     width: 100%;
     position: absolute;
-    bottom: 55px;
+    bottom: -69px;
     flex-direction: column;
     align-items: center;
 }
@@ -145,4 +160,10 @@ input.item_pic_input{
     min-width: 300px;
     text-align: center;
     background-color: lightgreen;
+    color: green;
+}
+
+h2{
+    font-size: x-large;
+    font-weight: bold;
 }

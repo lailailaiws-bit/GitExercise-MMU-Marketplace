@@ -42,5 +42,32 @@
             "sender": "awj",
             "time": "00:08"
         }
+    ],
+
+    "lws": [
+        {
+            "content": "hi i am interested",
+            "recipient": "lws",
+            "sender": "hi",
+            "time": "21:55"
+        },
+        {
+            "content": "hows things?",
+            "recipient": "lws",
+            "sender": "hi",
+            "time": "21:55"
+        },
+        {
+            "content": "sure no problem",
+            "recipient": "hi",
+            "sender": "lws",
+            "time": "21:56"
+        },
+        {
+            "content": "lets meet up",
+            "recipient": "hi",
+            "sender": "lws",
+            "time": "21:56"
+        }
     ]
 }

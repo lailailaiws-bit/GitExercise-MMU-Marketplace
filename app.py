@@ -222,7 +222,7 @@ def item_post():
 def item_market():
     item_list = Products.query.all()
 
-    return render_template('item_market.html', items=item_list)
+    return render_template('item_market.html')
     
 @app.route('/item/<item_id>', methods=["GET", "POST"])
 @login_required

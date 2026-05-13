@@ -1,3 +1,7 @@
+import json
+import os
+from datetime import datetime
+
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -50,6 +54,61 @@ class Products(db.Model):
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
+
+# chat system
+CHAT_DIR = 'chat folder'
+os.makedirs(CHAT_DIR, exist_ok=True)
+
+def get_user_file_(username):
+    return os.path.join(CHAT_DIR, f"{username}.json")
+
+def load_user_data(username):
+    """Loads all chat history for a specific user."""
+    path = get_user_file_(username)
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+    return {}
+
+def save_message(sender, receiver, content):
+    """Saves a message to both the sender's and receiver's JSON files."""
+    message_obj = {
+        'sender': sender,
+        'recipient': receiver,
+        'content': content,
+        'time': datetime.now().strftime("%H:%M")
+    }
+
+    # 1. Save to Sender's outbox
+    sender_data = load_user_data(sender)
+    if receiver not in sender_data:
+        sender_data[receiver] = []
+    sender_data[receiver].append(message_obj)
+    save_user_data(sender, sender_data)
+
+    # 2. Save to Receiver's inbox
+    receiver_data = load_user_data(receiver)
+    if sender not in receiver_data:
+        receiver_data[sender] = []
+    receiver_data[sender].append(message_obj)
+    save_user_data(receiver, receiver_data)
+
+def save_user_data(username, data):
+    """Saves chat history for a specific user."""
+    path = get_user_file_((username))
+    json_string = json.dumps(data, indent=4, sort_keys=True)
+    spaced_json_string = json_string.replace('],', '],\n')
+    with open(path, 'w') as f:
+        f.write(spaced_json_string)
+        
+
+def load_messages(current, target):
+    # Loads the specific conversation between two users."""
+    data = load_user_data(current)
+    return data.get(target, [])
+
+
+
 @app.route('/')
 def index():
     return render_template('base.html')
@@ -68,6 +127,41 @@ def search():
     print(f"Search query: {query}")
     return redirect(url_for('index'))
 
+@app.route('/chat')
+@login_required 
+def chat_list():
+    # 1. Grab the search query from the URL (e.g., ?q=Alice)
+    search_query = request.args.get('q')
+
+    if search_query:
+        # 2. If they searched for a name, filter the database
+        users = User.query.filter(
+            User.id != current_user.id,
+            User.username.ilike(f"%{search_query}%")
+        ).all()
+    else:
+        # 3. If the search bar is empty, load everyone normally
+        users = User.query.filter(User.id != current_user.id).all()
+
+    return render_template('chat_list.html', users=users)
+
+@app.route('/chat/<target_username>' , methods=['GET', 'POST'])
+@login_required
+def chat_with(target_username):
+    target_user = User.query.filter_by(username=target_username).first_or_404()
+
+    # Handle sending a new message
+    if request.method == 'POST':
+        content = request.form.get('content')
+        if content:
+            save_message(current_user.username, target_username, content)
+        return redirect(url_for('chat_with', target_username=target_username))
+    
+    # Load messages and display the chat
+    user_messages = load_messages(current_user.username, target_username)
+    return render_template('chat.html', messages=user_messages, target_username=target_username)
+
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -82,11 +176,6 @@ def profile():
         return render_template('profile.html', user=current_user)
 
 
-@app.route('/chat')
-@login_required
-def chat():
-    return render_template('chat.html')
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -98,6 +187,7 @@ def register():
             flash('All fields are required.', 'error')
             return redirect(url_for('register'))
 
+        # Check if user already exists
         if User.query.filter_by(username=username).first():
             flash('Username already exist.')
             return redirect(url_for('register'))

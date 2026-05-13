@@ -4,36 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>{% block title %}MMU marketplace{% endblock %}</title>
+    
     {% block head %}
-
     {% endblock %}
 </head>
 <body>
 
     <div class="nav">
-        <a href="home.html">
+        <a href="/home">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
 
-        
-
-        <div class="marketplace-search-bar">
-            <form class="search_bar" action="/search" method="GET">
+        <div class="marketplace-ui-bar">
+            <form action="/search" method="GET">
                 <select name="category" class="category-select">
                     <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
                     <option value="home">Home & Garden</option>
                 </select>
-                <input type="search" name="q"  placeholder="Search for items, brands, or shops..." aria-label="Search marketplace"required>
+                <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace"required autocomplete="off">
                 <button type="submit" class="search-button">
-                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="width: 20px; height: 17.5px;">
+                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="display: inline-flex; height: 20px;">
                 </button>
             </form>
         
         
         <div class="user-portfolio">
-            <a href="chat.html" class="chat-icon" style="text-decoration: none;">
+            <a href="/chat" class="chat-icon" style="text-decoration: none;">
                 <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
             </a>
 

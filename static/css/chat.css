@@ -1,0 +1,186 @@
+h1{
+    text-align: center;
+}
+
+.navigation{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navigation ul{
+    display: flex;
+    list-style-type: none;
+    background-color: whitesmoke;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.navigation a{
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    text-align: center;
+}
+
+.navigation a:hover{
+    background-color: grey;
+}
+
+.navigation li{
+    float: right;
+}
+
+body{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    /* min-width: 750px;
+    margin: 0 auto; */
+}
+
+.nav{
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: whitesmoke;
+    border-radius: 15px; 
+}
+
+.logo {
+    justify-content: left;
+    display: flex;
+    justify-content: center;
+    width: 180px;
+    height: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.portfolio {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 28px;
+}
+
+.portfolio img{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+.user-portfolio {
+    display: flex;
+    justify-content: right;
+    margin-left: auto;
+}
+
+------------------------------------------------------------------------
+
+/* chatbox css */
+.chat-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.time {
+    font-size: 10px;
+    margin-left: 10px;
+    padding: 3px;
+    margin-top: 50px;
+}
+
+.message {
+    padding: 8px 8px;
+    margin: 5px;
+    border-radius: 5px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sender-message {
+    background-color: #e0e0e0;
+    color: #000;
+    align-self: flex-start;
+    max-width: max-content;
+    max-height: max-content;
+}
+
+.receiver-message {
+    background-color: #4CAF50;
+    color: #fff;
+    align-self: flex-end;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.message input {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.message button {
+    width: 80px;
+    padding: 8px;
+    margin: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.refresh-button {
+    text-decoration: none; 
+    color: black;
+    background: white;
+    padding: 5px 10px; 
+    border-radius: 5px;
+}
+
+/* chat_list part */
+.list {
+    list-style-type: none; 
+    padding: 0;
+}
+
+
+@echo off
+echo Starting Tailwind CSS Compiler for Flask...
+tailwind.exe -i 
+\static\src\input.css-0.
+\static\css\output.css --watch
+
+@import "tailwindcss";
+@source "../../templates";
+
+

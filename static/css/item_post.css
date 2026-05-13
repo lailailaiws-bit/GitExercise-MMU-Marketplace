@@ -1,0 +1,147 @@
+.button{
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: solid  darkblue;
+    border-radius: 64px;
+    background-color: rgb(18, 18, 103);
+    color: floralwhite;
+    left: 275px;
+    bottom: 0px;
+    font-family: monospace;
+    padding: 10px;
+}
+
+.wrapper3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    max-width: 100%;
+    width: 750px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px gray;
+}
+
+.post_block{
+    display: grid;
+    grid-column: 2;
+}
+
+.info_box{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    max-width: 100%;
+    width: 600px;
+    padding: 10px;
+    max-height: 100%;
+    height: 500px;
+    border: solid black;
+    border-radius: 10px;
+    flex: 1;
+}
+
+.column3{
+    display: flex;
+    flex-direction: column;
+}
+
+p{
+    font-weight: bold;
+}
+
+#item_name{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    padding-right: 395px;
+}
+
+#price{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    padding-right: 25px;
+}
+
+#item_description{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 10px;
+    padding-right: 70px;
+    width: 500px;
+    height: 55px;
+    position: relative;
+}
+
+select{
+    display: block;
+    border:solid darkslateblue;
+    border-radius: 20px;
+    padding: 8px;
+    padding-right: 55px;
+}
+
+.category_price{
+    display: flex;
+    flex-direction: row;
+}
+
+.column4{
+    margin-right: 80px;
+}
+
+.pic_block{
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.item_pic{
+    display: flex;
+    flex-direction: column;
+}
+
+input.item_pic_input{
+    margin-bottom: 5px;
+}
+
+.flash_container{
+    display: flex;
+    width: 100%;
+    position: absolute;
+    bottom: 55px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flash{
+    padding: 15px 25px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px;
+    font-family: sans-serif;
+    min-width: 300px;
+    text-align: center;
+    background-color: lightgreen;
+}

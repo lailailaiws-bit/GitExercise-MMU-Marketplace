@@ -104,16 +104,15 @@ body{
 
 .time {
     font-size: 10px;
-    margin-left: 10px;
-    padding: 3px;
-    margin-top: 50px;
+    align-self: flex-end;
+    margin-top: 4px;
 }
 
 .message {
-    padding: 8px 8px;
-    margin: 5px;
+    padding: 10px 15px;
+    margin: 5px 0;
     border-radius: 5px;
-    max-width: 70%;
+    max-width: 75%;
     word-wrap: break-word;
     display: flex;
     justify-content: center;
@@ -121,17 +120,17 @@ body{
 }
 
 .sender-message {
-    background-color: #e0e0e0;
-    color: #000;
+    background-color:oklch(71.2% 0.194 13.428);
+    color: #fff;
     align-self: flex-start;
-    max-width: max-content;
-    max-height: max-content;
+    border-bottom-left-radius: 10px ;
 }
 
 .receiver-message {
-    background-color: #4CAF50;
+    background-color:oklch(70.7% 0.165 254.624);
     color: #fff;
     align-self: flex-end;
+    border-bottom-right-radius: 10px;
 }
 
 .avatar {

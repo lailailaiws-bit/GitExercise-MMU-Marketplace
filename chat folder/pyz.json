@@ -1,0 +1,31 @@
+{
+    "hi": [
+        {
+            "content": "hi",
+            "recipient": "hi",
+            "sender": "pyz",
+            "time": "22:42"
+        },
+        {
+            "content": "bye",
+            "recipient": "hi",
+            "sender": "pyz",
+            "time": "22:43"
+        },
+        {
+            "content": "yo",
+            "recipient": "pyz",
+            "sender": "hi",
+            "time": "22:48"
+        }
+    ],
+
+    "lws": [
+        {
+            "content": "hi",
+            "recipient": "lws",
+            "sender": "pyz",
+            "time": "22:25"
+        }
+    ]
+}

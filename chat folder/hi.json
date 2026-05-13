@@ -69,5 +69,26 @@
             "sender": "lws",
             "time": "21:56"
         }
+    ],
+
+    "pyz": [
+        {
+            "content": "hi",
+            "recipient": "hi",
+            "sender": "pyz",
+            "time": "22:42"
+        },
+        {
+            "content": "bye",
+            "recipient": "hi",
+            "sender": "pyz",
+            "time": "22:43"
+        },
+        {
+            "content": "yo",
+            "recipient": "pyz",
+            "sender": "hi",
+            "time": "22:48"
+        }
     ]
 }

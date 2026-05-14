@@ -3,43 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>{% block title %}MMU marketplace{% endblock %}</title>
+    
     {% block head %}
-
     {% endblock %}
 </head>
-<body class="font-[Arial,_sans-serif] bg-[#f0f0f0] text-black m-0 p-0 {% block body_class %}{% endblock %}">
-    <div class="flex items-center mb-5 justify-between px-5 py-2.5 bg-[whitesmoke] rounded-[50px] gap-4 {% block nav_class %}{% endblock %}">
+<body>
+
+    <div class="nav">
         <a href="/home">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="w-[170px] h-[52px] mb-0">
         </a>
 
-        <div class="flex flex-1 min-w-0 mx-6 max-w-[900px]">
-            <form class="flex w-full min-w-0 items-center" action="/search" method="GET">
-                <select name="category" class="h-[44px] px-3 border-0 bg-[#f3f3f3] border-r border-[#ccc] outline-none shrink-0">
-                    <option value="all">All Categories</option>
+        <div class="marketplace-ui-bar">
+            <form action="/search" method="GET">
+                <select name="category" class="category-select">
+                    <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
                     <option value="home">Home & Garden</option>
                 </select>
-                <input type="search" name="q" placeholder="Search for items, brands, or shops..." aria-label="Search marketplace" required class="flex-1 min-w-0 h-[44px] px-3 border-0 outline-none text-[16px]">
-                <button type="submit" class="bg-white h-[44px] px-3 border-0 -ml-[10px] cursor-pointer font-bold transition-colors overflow-hidden hover:bg-[#94b9e1]">
-                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" class="w-[20px] h-[17.5px]">
+                <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace"required autocomplete="off">
+                <button type="submit" class="search-button">
+                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="display: inline-flex; height: 20px;">
                 </button>
             </form>
-        </div>
-
-        <div class="flex items-center gap-4 ml-auto shrink-0">
-            <a href="/chat" class="flex items-center justify-center w-10 h-10 rounded-full bg-white no-underline">
-                <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon" class="w-6 h-6 object-contain">
+        
+        
+        <div class="user-portfolio">
+            <a href="/chat" class="chat-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
             </a>
 
             <a href="/profile" class="flex items-center justify-center w-10 h-10 rounded-full bg-white no-underline">
                 <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-6 h-6 object-contain">
             </a>
-        </div>
-    </div>
 
+        </div>
+
+    </div>
     {% block body %}
     {% endblock %}
 

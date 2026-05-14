@@ -1,15 +1,27 @@
-<nav class="flex mb-5 justify-between px-5 py-2.5 bg-[whitesmoke] rounded-[50px]">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/output.css')}}">
+    <title>Profile</title>
+</head>
+
+<body>
+<div class="nav">
     <a href="/home">
-        <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="w-[170px] h-[52px] mb-0">
+        <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
     </a>
 
-    <div class="flex ml-auto">
-        <a href="/chat" class="flex justify-center w-[30px] h-[30px] p-5 no-underline">
-            <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
+    <div class=" flex items-center gap-10 mr-1.25">
+        <a href="/home" class="w-8 h-8 block" style="text-decoration: none;">
+            <img src="{{ url_for('static', filename='css/photos/home.png') }}" alt="Home Icon">
         </a>
 
-        <a href="/profile" class="flex justify-center w-[30px] h-[30px] p-5 no-underline">
+        <a href="/profile" class="w-7.5 h-7.5 block" style="text-decoration: none;">
             <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
         </a>
     </div>
-</nav>
+</div>
+</body>

@@ -1,84 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}">
     <title>Profile</title>
 </head>
-<body class="flex flex-col font-[Arial,_sans-serif] bg-[#f0f0f0] m-0 p-5">
-{% include 'header.html' %}
 
-<div class="flex justify-center items-center p-5">
-  <div class="bg-white p-[50px] w-full max-w-[745px] rounded-[30px] h-[370px] shadow-[0_10px_30px_gray]">
-    <div class="flex flex-col justify-start">
-      <a class="text-[32px] font-bold font-[system-ui,_-apple-system,_BlinkMacSystemFont,_'Segoe UI',_Roboto,_Oxygen,_Ubuntu,_Cantarell,_'Open Sans',_'Helvetica Neue',_sans-serif] underline flex justify-center items-center mr-[90px]">My Account</a>
-      <div class="grid grid-cols-[226px_1fr] gap-x-[10px] gap-y-[15px]">
-        <div class="block w-[226px] h-auto max-w-[250px] rounded-[50%] static inset-auto mr-[10px] mt-[-30px] ml-[5px]">
-          {% if current_user.profile_pic %}
-            <img src="{{ url_for('static', filename='css/photos/' + current_user.profile_pic) }}" class="w-[150px] ml-[15px] border-[5px] border-black rounded-[15px] p-[5px]">
-          {% else %}
-            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" class="w-[150px] ml-[15px] border-[5px] border-black rounded-[15px] p-[5px]">
-          {% endif %}
+<body class="bg-gray-100">
+
+    {% include 'header.html' %}
+
+    <div class="max-w-3xl mx-auto mt-10 p-8 pb-6 bg-white border border-gray-200 rounded-xl shadow-lg">
+
+        <div class="flex justify-between items-center mb-8 pb-2 border-b-2 border-black">
+            <h1 class="text-2xl font-bold text-gray-800">My Account</h1>
+            <a href="{{ url_for('profile_edit')}}" class="flex gap-1 text-blue-600 font-bold hover:underline">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                Edit Profile
+            </a>
         </div>
 
-        <div>
-          <h1 class="block font-[system-ui,_-apple-system,_BlinkMacSystemFont,_'Segoe UI',_Roboto,_Oxygen,_Ubuntu,_Cantarell,_'Open Sans',_'Helvetica Neue',_sans-serif] text-black font-bold p-5 text-[32px]">My Account</h1>
-
-          <div class="profile_acc">
-            <h1 class="block font-[system-ui,_-apple-system,_BlinkMacSystemFont,_'Segoe UI',_Roboto,_Oxygen,_Ubuntu,_Cantarell,_'Open Sans',_'Helvetica Neue',_sans-serif] text-black font-bold p-5 text-[32px]">Username:</h1>
-            <h2>{{ user.username }}</h2>
-            <h1 class="block font-[system-ui,_-apple-system,_BlinkMacSystemFont,_'Segoe UI',_Roboto,_Oxygen,_Ubuntu,_Cantarell,_'Open Sans',_'Helvetica Neue',_sans-serif] text-black font-bold p-5 text-[32px] mt-[-4%]">Contact number:</h1>
-            <h2>
-              {% if user.contact_number %}
-                {{ user.contact_number }}
-              {% else %}
-                No contact number is added
-              {% endif %}
-            </h2>
-          </div>
-
-          <div class="grid bg-[rgb(250,243,243)] rounded-[5px] w-full h-[140px] items-center shadow-[2px_0.5px_2px_gray]">
-            <div class="flex justify-around items-center m-[3px] w-full max-w-[160px]">
-              <label class="flex justify-start items-start font-bold text-[18px]">Username: </label>
-              <p class="username">{{ current_user.username }}</p>
-            </div>
-            <div class="flex justify-around items-center m-[3px] w-full max-w-[265px]">
-              <label class="flex justify-start items-start font-bold text-[18px]">Contact Number: </label>
-              <p class="contact">
-                {% if user.contact_number %}
-                  {{ user.contact_number }}
+        <div class="flex flex-row gap-8">
+            
+            <div class="shrink-0">
+                {% if current_user.profile_pic %}
+                    <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% else %}
-                  No contact
+                    <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% endif %}
-              </p>
             </div>
-          </div>
 
-          <div class="grid bg-[gainsboro] rounded-[5px] w-full h-[150px] items-center shadow-[2px_0.5px_2px_gray] mt-[5px]">
-            <div class="block m-[3px] w-full max-w-[160px] pl-[15px] mt-[-40px]">
-              <label class="font-bold text-[18px]">Description: </label>
-              <p class="bio">
-                {% if user.bio %}
-                  {{ current_user.bio }}
-                {% else %}
-                  No bio
-                {% endif %}
-              </p>
+            <div class="flex flex-col gap-5 w-full">
+                <div class="flex flex-col">
+                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Username</label>
+                    <p class="text-xl font-semibold text-gray-900 ">{{current_user.username}}</p>
+                </div>
+                
+                <div class="flex flex-col">
+                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Contact Number</label>
+                    <p class="text-gray-800">
+                        {% if current_user.contact_number %}
+                            {{ current_user.contact_number }}
+                        {% else %}
+                            <span class="text-gray-400">No contact provided</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="flex flex-col">
+                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Description</label>
+                    <p class="text-gray-800 bg-gray-50 border border-gray-200 p-8">
+                        {% if current_user.bio %}
+                            {{current_user.bio}}
+                        {% else %}
+                            <span class="text-gray-400">No bio provided</span>
+                        {% endif %}
+                    </p>
+                </div>
             </div>
-          </div>
-
-          <a href="{{ url_for('logout') }}" class="text-black underline font-bold flex items-center whitespace-nowrap gap-1 mt-[33px]">
-            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="w-[30px] h-[20px] shrink-0"><path d="M.57,7.36A.64.64,0,0,0,1.2,8H9L7.21,9.85a.63.63,0,0,0,0,.89h0a.63.63,0,0,0,.9,0L11,7.84A.63.63,0,0,0,11,7h0L8.11,4a.64.64,0,0,0-.91.89h0L9,6.72H1.2A.64.64,0,0,0,.57,7.36Z"></path><path d="M12.67.52H2.33A1.83,1.83,0,0,0,.5,2.3V4.7a.64.64,0,1,0,1.27,0V2.3a.55.55,0,0,1,.55-.55H12.67a.56.56,0,0,1,.56.54h0V12.65a.56.56,0,0,1-.56.56H2.33a.56.56,0,0,1-.56-.56V10A.64.64,0,1,0,.5,10v2.64a1.83,1.83,0,0,0,1.83,1.83H12.67a1.83,1.83,0,0,0,1.83-1.83V2.3A1.83,1.83,0,0,0,12.67.52Z"></path></svg>
-            Log out
-          </a>
-
-          <a href="{{ url_for('profile_edit') }}" class="text-black underline font-bold flex items-center whitespace-nowrap mt-[-40px] ml-[620px]">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-[30px] h-[20px] shrink-0"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-            Edit Profile
-          </a>
-
         </div>
-      </div>
+
+        <div class="mt-10 pt-6 border-t border-black-600 flex flex-col sm:flex-row justify-between items-center gap-4">  
+            <a href="{{url_for('logout')}}" class="flex items-center text-red-600 font-bold hover:bg-red-50 px-4 py-2 rounded-lg">
+                <svg class="w-5 h-5 fill-current" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path d="M.57,7.36A.64.64,0,0,0,1.2,8H9L7.21,9.85a.63.63,0,0,0,0,.89h0a.63.63,0,0,0,.9,0L11,7.84A.63.63,0,0,0,11,7h0L8.11,4a.64.64,0,0,0-.91.89h0L9,6.72H1.2A.64.64,0,0,0,.57,7.36Z"></path><path d="M12.67.52H2.33A1.83,1.83,0,0,0,.5,2.3V4.7a.64.64,0,1,0,1.27,0V2.3a.55.55,0,0,1,.55-.55H12.67a.56.56,0,0,1,.56.54h0V12.65a.56.56,0,0,1-.56.56H2.33a.56.56,0,0,1-.56-.56V10A.64.64,0,1,0,.5,10v2.64a1.83,1.83,0,0,0,1.83,1.83H12.67a1.83,1.83,0,0,0,1.83-1.83V2.3A1.83,1.83,0,0,0,12.67.52Z"></path></svg>
+                Log out
+            </a>
+
+            <div class="flex items-center gap-4">
+                <a href="{{ url_for('item_post')}}" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-blue-700">
+                    POST ITEM +
+                </a>
+            </div>
+        </div>
+
     </div>
-  </div>
-</div>
+
+    <a href="{{url_for('item_market')}}">Item Marketplace</a>
 
 </body>
 </html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/item_post.css')}}">
+    <title>Product Post</title>
+</head>
+
+<body style="background-color: #f0f0f0;">
+
+    {% include 'header.html' %}
+    
+    <div class="wrapper3" style="margin-top: 60px;">
+        <form action="/item_post" method="POST" enctype="multipart/form-data" class="post_container">
+            <div class="post_block">
+                <h2>Post an Item!</h2>
+                <div class="info_box">
+                    <div class="column3">
+                        <p>1. Item's name:</p>
+                        <div class="item_name">
+                            <input type="text" name="item_name" id="item_name" placeholder="Name..." required>
+                        </div>
+                    </div>
+                    <div class="category_price">
+                        <div class="column4">
+                            <p>2. Item's price:</p>
+                            <div class="price">
+                                <input type="number" name="price" id="price" min="0" step="0.01" placeholder="RM xxx" required>
+                            </div>
+                        </div>
+                        <div class="column6">
+                            <p>3. Category:</p>
+                            <div class="item_category">
+                                <select name="item_category" id="item_category" required>
+                                    <option value="" disabled selected>Select a Category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="home">Home & Garden</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column5">
+                        <p>4. Item's description:</p>
+                        <div class="item_description">
+                            <input type="text" name="item_description" id="item_description" placeholder="..." required>
+                        </div>
+                    </div>
+                    <div class="item_pic">
+                        <p>5. Add pictures!</p>
+                        <input type="file" name="item_pic" id="item_pic" class="pic_block" required>
+                    </div>
+                </div>
+            </div>
+
+            <p class="submit-button">
+                <input type="submit" class="button" value="Submit">
+            </p>
+
+            <div class="flash_container">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="flash">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

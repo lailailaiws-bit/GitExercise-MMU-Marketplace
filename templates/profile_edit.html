@@ -1,42 +1,57 @@
-{% include 'header.html' %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile_edit.css') }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <title>Edit Profile</title>
+</head>
+<body class="bg-gray-100">
 
-<div class="wrapper2">
+    {% include 'header.html' %}
 
-    <div class="customer_account">
+    <div class="max-w-2xl mx-auto mt-10 p-8 bg-white border border-gray-200 rounded-xl">
+
+        <div class="flex justify-between items-center mb-6 border-b-2 border-black pb-4">
+            <h1 class="text-2xl font-bold">Edit Account Details</h1>
+            <a href="{{url_for('profile')}}" class="text-blue-600 font-semibold hover:underline">← Back</a>
+        </div>
+
         <div>
-            <h1>My Account</h1>
-            <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="bg-green-100 text-green-700 px-4 py-3 rounded">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
-    </div>
 
-    <form action="/profile_edit" method="POST" enctype="multipart/form-data">
-    <div class="edit_block">
-        <h2>Account Details</h2>
-        <div class="column1">
-            <div class="contact">
-                <input type="tel" name="contact_number" id="contact_number" placeholder="(e.g 01234567890)" pattern="[0-9]{10,11}" value="{{ current_user.contact_number if current_user.contact_number else ''}}">
-                <label class="contact_label">Phone</label>
+        <form action="/profile_edit" method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
+            
+            <div class="flex flex-col gap-1">
+                <label class="font-bold text-gray-700">Phone Number</label>
+                <input type="tel" name="contact_number" id="contact_number" placeholder="(e.g 01234567890)" pattern="[0-9]{10,11}" value="{{ current_user.contact_number if current_user.contact_number else ''}}" class="px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-400">
             </div>
-        </div>
 
-        <div class="column2">
-            <div class="bio_block">
-                <textarea type="text" name="bio" id="bio" placeholder="-">{{ current_user.bio if current_user.bio else ''}}</textarea>
-                <label class="bio_label">Bio</label>
+            <div class="flex flex-col gap-1">
+                <label class="font-bold text-gray-700">Bio</label>
+                <textarea name="bio" id="bio" rows="4" placeholder="Tell us about yourself..." class="px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-400 resize-none">{{ current_user.bio if current_user.bio else ''}}</textarea>
             </div>
-        </div>
+
+            <div >
+                <label class="font-bold text-gray-700">Add a Profile Picture!</label>
+                <br>
+                <input type="file" name="profile_pic" id="profile_pic" class="mt-2 text-sm p-2 text-gray-600 border border-gray-700">
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white font-bold py-3 rounded-md hover:bg-blue-600 mt-4">
+                Save Changes
+            </button>
+        </form>
 
     </div>
-    
-    <h3>Add a profile picture!</h3>
-    <div class="profile_block2">
-        <input type="file" name="profile_pic" id="profile_pic">
-    </div>
-
-    <p class="submit-button">
-        <input type="submit" class="button" value="Submit">
-    </p>
-    </form>
-
-</div>
+</body>
+</html>

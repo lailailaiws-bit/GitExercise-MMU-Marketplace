@@ -57,7 +57,7 @@ def load_user(user_id):
 
 
 # chat system
-CHAT_DIR = 'chat folder'
+CHAT_DIR = 'chats folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
 def get_user_file_(username):
@@ -206,6 +206,7 @@ def register():
     else:
         return render_template('register.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -221,6 +222,7 @@ def login():
             flash('Invalid username or password', 'error')
 
     return render_template('login.html')
+
 
 @app.route('/logout')
 @login_required

@@ -1,6 +1,0 @@
-Hi
-This is a test to try out Git
-Hopefully i wont accidentally upload some weird shit into github
-
-It's currently working as i intended it to
-But im probably not gonna push to gtihub yet

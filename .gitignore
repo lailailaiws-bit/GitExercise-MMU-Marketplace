@@ -2,5 +2,9 @@ env/
 __pycache__/
 *.pyc
 .env
-requirement.txt
 node_modules/
+*.db
+*.sqlite
+*.sqlite3
+instance/
+.vscode/

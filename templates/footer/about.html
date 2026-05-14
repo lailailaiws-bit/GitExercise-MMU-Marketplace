@@ -1,22 +1,22 @@
 
 {% block head %}
     <title>About MMU Marketplace</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer/about.css') }}">
 {% endblock %}
+
 
 {% block body %}
 
-    <div class="top-section">
-        <h1>About MMU Marketplace</h1>
+    <div class="bg-[#bbdbfc] py-5 text-center">
+        <h1 class="text-center">About MMU Marketplace</h1>
     </div>
 
 
-<div class="content-section">
-    <div class="hero-banner">
-        <img src="{{ url_for('static', filename='css/photos/about_page.png')}}" alt="About MMU Marketplace">
+<div>
+    <div class="w-full overflow-visible">
+        <img src="{{ url_for('static', filename='css/photos/about_page.png')}}" alt="About MMU Marketplace" class="w-full h-[50%] block object-cover object-center">
     </div>
 
-    <div class="description">
+    <div class="p-5 text-justify">
         <p>MMU Marketplace is a dedicated web-based platform designed for students to buy, sell, and trade items or services.</p>
         <p>Our goal is to provide a seamless and accessible trading experience for the MMU community, anytime and anywhere.</p>
     </div>

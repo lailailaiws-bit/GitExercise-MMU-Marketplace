@@ -181,6 +181,10 @@ def product_detail(product_id):
 
     return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+
 @app.route('/about')
 def about():
     return render_template('footer/about.html')

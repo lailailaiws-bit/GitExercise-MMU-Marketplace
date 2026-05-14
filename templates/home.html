@@ -1,16 +1,9 @@
 {% extends 'base.html'%}
 
 {% block head %}
-
-<style>
-    img {
-        width: 100%;
-        height: auto;
-    }
-</style>
 {% endblock %}
 
 {% block body %}
-<img src="{{ url_for('static', filename='css/photos/EXP_Product_page.png') }}" alt="Example Product Page">
+<img src="{{ url_for('static', filename='css/photos/EXP_Product_page.png') }}" alt="Example Product Page" class="w-full h-auto">
 
 {% endblock %}

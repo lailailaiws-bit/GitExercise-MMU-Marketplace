@@ -1,41 +1,41 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% include 'header.html' %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile_edit.css') }}">
 
-<div class="wrapper2">
+<div class="flex flex-col justify-center items-center">
 
-    <div class="customer_account">
+    <div class="flex mr-[40%]">
         <div>
-            <h1>My Account</h1>
-            <a href="{{url_for('profile')}}" class="back_btn">← Back</a>
+            <h1 class="flex text-[43.2px] font-[Arial,_Helvetica,_sans-serif]">My Account</h1>
+            <a href="{{url_for('profile')}}" class="inline-flex relative text-[rgb(18,18,103)] left-[10%] font-bold hover:text-[rgb(108,108,144)] hover:text-[17px]">← Back</a>
         </div>
     </div>
 
-    <form action="/profile_edit" method="POST" enctype="multipart/form-data">
-    <div class="edit_block">
-        <h2>Account Details</h2>
-        <div class="column1">
-            <div class="contact">
-                <input type="tel" name="contact_number" id="contact_number" placeholder="(e.g 01234567890)" pattern="[0-9]{10,11}" value="{{ current_user.contact_number if current_user.contact_number else ''}}">
-                <label class="contact_label">Phone</label>
+    <form action="/profile_edit" method="POST" enctype="multipart/form-data" class="flex flex-col items-center gap-5">
+    <div class="relative flex flex-col left-[10px] top-[-70px]">
+        <h2 class="relative flex font-[system-ui,_-apple-system,_BlinkMacSystemFont,_'Segoe UI',_Roboto,_Oxygen,_Ubuntu,_Cantarell,_'Open Sans',_'Helvetica Neue',_sans-serif] text-[24px] font-bold left-[-43px] top-[80px]">Account Details</h2>
+        <div class="flex relative p-2.5 my-2.5 right-[100px] top-[63px]">
+            <div class="flex relative left-[40px] bottom-[70%]">
+                <input type="tel" name="contact_number" id="contact_number" placeholder="(e.g 01234567890)" pattern="[0-9]{10,11}" value="{{ current_user.contact_number if current_user.contact_number else ''}}" class="block border-2 border-black rounded-[20px] p-2.5 w-[700px] pt-[30px] mb-[106px]">
+                <label class="text-[11px] top-[7px] tracking-[0.64px] absolute left-[10px]">Phone</label>
             </div>
         </div>
 
-        <div class="column2">
-            <div class="bio_block">
-                <textarea type="text" name="bio" id="bio" placeholder="-">{{ current_user.bio if current_user.bio else ''}}</textarea>
-                <label class="bio_label">Bio</label>
+        <div class="flex relative bottom-[35px] right-[50px]">
+            <div class="relative w-full">
+                <textarea type="text" name="bio" id="bio" placeholder="-" class="block border-2 border-black rounded-[20px] p-2.5 w-[700px] relative h-[140px] resize-none pt-[25px] mt-[40px] ml-[-15px]">{{ current_user.bio if current_user.bio else ''}}</textarea>
+                <label class="absolute left-[10px] text-[13px] top-[7px] tracking-[0.64px] pointer-events-none mt-[37px]">Bio</label>
             </div>
         </div>
 
     </div>
     
-    <h3>Add a profile picture!</h3>
-    <div class="profile_block2">
+    <h3 class="flex relative bottom-[91px] left-[-308px]">Add a profile picture!</h3>
+    <div class="flex relative bottom-[91px] left-[-280px]">
         <input type="file" name="profile_pic" id="profile_pic">
     </div>
 
-    <p class="submit-button">
-        <input type="submit" class="button" value="Submit">
+    <p class="mb-4 text-[25.6px]">
+        <input type="submit" class="relative cursor-pointer inline-flex justify-center items-center box-border no-underline border border-[darkblue] rounded-[64px] bg-[rgb(18,18,103)] text-white left-[276px] bottom-[138px] font-[monospace] p-2.5" value="Submit">
     </p>
     </form>
 

@@ -123,14 +123,14 @@ body{
     background-color:oklch(71.2% 0.194 13.428);
     color: #fff;
     align-self: flex-start;
-    border-bottom-left-radius: 10px ;
+    border-bottom-left-radius: 15px ;
 }
 
 .receiver-message {
     background-color:oklch(70.7% 0.165 254.624);
     color: #fff;
     align-self: flex-end;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 15px;
 }
 
 .avatar {

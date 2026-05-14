@@ -33,7 +33,7 @@
         <div class="flex justify-between items-center p-3 border-b-5 border-gray-100 bg-white w-full">
             <span class="font-semibold text-gray-700">Chatting with: {{ target_username }}</span>
 
-            <div class="flex gap-1 mr-0.2">
+            <div class="flex gap-1 mr-0.1">
             <a href="{{ url_for('chat_with', target_username=target_username) }}" class="refresh-button">🔄 Refresh</a>
             <a href="{{ url_for('chat_list') }}" class="refresh-button" style="margin-left: 10px;">⬅ Back to List</a>
             </div>

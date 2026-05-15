@@ -15,7 +15,6 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///item.db'
 
 UPLOAD_FOLDER = 'static/css/photos'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -308,23 +307,21 @@ def item_post():
     else:
         return render_template('item_post.html', user=current_user)
     
-@app.route('/item_market')
+@app.route('/item_market/')
 @login_required
 def item_market():
-    item_list = Products.query.all()
+    item_info = Products.query.all()
 
-    return render_template('item_market.html')
+    return render_template('item_market.html', item_list=item_info)
     
-@app.route('/item/<item_id>', methods=["GET", "POST"])
+@app.route('/item/<item_id>')
 @login_required
 def item(item_id):
-    item_info = Products.query.get(item_id)
-    if request.method == 'POST':
+    target_item = Products.query.get(item_id)
 
-        return redirect(url_for('item', item_id=item_info))
-    
-    else:
-        return render_template('item.html', item=item_info)
+    return render_template('item.html', item=target_item)
+    # return render_template('item.html', item=item_block)
+
 
 
 if __name__ == '__main__':

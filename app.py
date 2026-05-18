@@ -160,7 +160,7 @@ def chat_with(target_username):
     
     # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)
-    return render_template('chat.html', messages=user_messages, target_username=target_username)
+    return render_template('chat.html', messages=user_messages, target_username=target_username ,target_user=target_user)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

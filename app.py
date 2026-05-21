@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -289,8 +289,25 @@ def item_post():
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
             return redirect(url_for('item_post'))
-        
-<<<<<<< HEAD
+
+        product = Products(
+            item_name = item_name,
+            price = price,
+            item_description = description,
+            user_id = current_user.id,
+            item_category = item_category,
+            item_pic = item_pic
+        )
+
+        try:
+            db.session.add(product)
+            flash('Item posted!')
+            db.session.commit()
+            return redirect (url_for('item_post'))
+        except:
+            return redirect (url_for('item_post'))
+    else:
+        return render_template('item_post.html', user=current_user)
 
 @app.route('/product/<int:product_id>')
 def product_detail(product_id):
@@ -315,29 +332,10 @@ def contact():
 
 @app.route('/ourstores')
 def ourstores():
-    return render_template('footer/ourstores.html')
+    return render_template('home.html')
 
 with app.app_context():
     db.create_all()
-=======
-        product = Products(
-            item_name = item_name,
-            price = price,
-            item_description = description,
-            user_id = current_user.id,
-            item_category = item_category,
-            item_pic = item_pic
-        )
-
-        try:
-            db.session.add(product)
-            flash('Item posted!')
-            db.session.commit()
-            return redirect (url_for('item_post'))
-        except:
-            return redirect (url_for('item_post'))
-    else:
-        return render_template('item_post.html', user=current_user)
     
 @app.route('/item_market')
 @login_required
@@ -357,7 +355,6 @@ def item(item_id):
     else:
         return render_template('item.html', item=item_info)
 
->>>>>>> ea7a0e65d95fe2e5a7a592c62856307d1cbfa351
 
 if __name__ == '__main__':
     app.run(debug=True)

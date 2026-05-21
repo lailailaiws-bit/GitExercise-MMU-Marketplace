@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-</head>
-<body>
-    <h1>Simple Contact view.</h1>
-</body>
-</html>
+{% extends "footer/about_NAV.html" %}
+
+{% block about_content %}
+
+    <div class="bg-[#bbdbfc] py-5 text-center">
+        <h1 class="text-center font-bold text-2xl">Contact Us</h1>
+    </div>
+
+    <div class="p-8 text-center max-w-4xl mx-auto text-gray-800 text-[16px] leading-relaxed">
+        <p class="mb-4">If you have any questions, feedback, or need assistance, please don't hesitate to reach out to us. We're here to help!</p>
+        <p>Email: <a href="mailto:info@mmumarketplace.com" class="text-blue-600 hover:underline">info@mmumarketplace.com</a></p>
+    </div>
+{% endblock %}

@@ -11,41 +11,37 @@
 </head>
 <body>
 
-    <div class="flex items-center justify-between px-8 py-3 bg-[#f2f4f8]">
-        <a href="/home" class="shrink-0 flex items-center">
-            <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="w-[170px] h-[52px]">
+    <div class="nav">
+        <a href="/home">
+            <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
 
-        <div class="flex-1 flex justify-center max-w-[500px] mx-10">
-            <form action="/search" method="GET" class="w-full flex items-center bg-white rounded-[4px] h-[40px] shadow-sm">
-                <select name="category" class="bg-white text-gray-700 px-3 py-2 outline-none cursor-pointer text-[14px] h-full rounded-l-[4px]">
-                    <option value="all">All Categories</option>
+        <div class="marketplace-ui-bar">
+            <form action="/search" method="GET">
+                <select name="category" class="category-select">
+                    <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
                     <option value="home">Home & Garden</option>
                 </select>
-                
-                <div class="w-[1px] h-[20px] bg-gray-300"></div>
-                
-                <input type="search" name="q" placeholder="Search for items, brands, " class="flex-1 px-4 py-2 outline-none text-[14px] placeholder-gray-400 h-full bg-transparent" required autocomplete="off">
-                
-                <button type="submit" class="px-4 text-gray-500 hover:text-black h-full flex items-center justify-center rounded-r-[4px]">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M16.65 16.65A7.5 7.5 0 1116.65 1.5a7.5 7.5 0 010 15.15z"></path>
-                    </svg>
+                <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace"required autocomplete="off">
+                <button type="submit" class="search-button">
+                    <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="display: inline-flex; height: 20px;">
                 </button>
             </form>
-        </div>
         
-        <div class="flex items-center gap-6 shrink-0">
-            <a href="/chat" class="w-[20px] h-[20px] hover:opacity-80 transition-opacity flex items-center justify-center">
-                <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon" class="w-[20px] h-[20px] object-contain">
+        
+        <div class="user-portfolio">
+            <a href="/chat" class="chat-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon">
             </a>
 
-            <a href="/profile" class="w-[22px] h-[22px] hover:opacity-80 transition-opacity flex items-center justify-center">
-                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-[22px] h-[22px] object-contain">
+            <a href="/profile" class="user-icon" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
             </a>
+
         </div>
+        
     </div>
     {% block body %}
     {% endblock %}

@@ -1,0 +1,20 @@
+{% extends "footer/about_NAV.html" %}
+
+{% block about_content %}
+
+    <div class="bg-[#bbdbfc] py-5 text-center">
+        <h1 class="text-center font-bold text-2xl">About MMU Marketplace</h1>
+    </div>
+
+
+<div>
+    <div class="w-full overflow-visible">
+        <img src="{{ url_for('static', filename='css/photos/about_page.png')}}" alt="About MMU Marketplace" class="w-full h-auto max-h-[400px] block object-cover object-center">
+    </div>
+
+    <div class="p-8 text-center max-w-8xl mx-auto text-gray-800 text-[20px] leading-relaxed">
+        <p class="mb-4">MMU Marketplace is a dedicated web-based platform designed for students to buy, sell, and trade items or services.</p>
+        <p>Our goal is to provide a seamless and accessible trading experience for the MMU community, anytime and anywhere.</p>
+    </div>
+</div>
+{% endblock %}

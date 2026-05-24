@@ -5,15 +5,15 @@
 {% endblock %}
 
 {% block body %}
-<div class="auth-container">
-    <div class="auth-header">
-    <h1>Welcome to Our Platform!</h1>
-    <p>Sign up to get started!</p>
+<div class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 h-[61%] m-0 mb-[200px] text-black p-[50px] pt-[10px] rounded-[10px] font-['Times New Roman',_Times,_serif] flex flex-col items-center justify-center bg-[#fff6e7]">
+    <div class="text-center">
+    <h1 class="text-center">Welcome to Our Platform!</h1>
+    <p class="text-center">Sign up to get started!</p>
     </div>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="flashes">
+            <div class="bg-[#99bf8e] rounded-[10px] p-2.5 mb-5">
             {% for message in messages %}
                 <p>{{ message }}</p>
             {% endfor %}
@@ -21,22 +21,25 @@
         {% endif %}
     {% endwith %}
 
-    <div class="toggle">
-        <a href="/register" class="toggle_btn_1">Sign up</a>
-        <a href="/login" class="toggle_btn_2">Login</a>
+    <div class="bg-[#c8e3f5] flex rounded-[30px] gap-5 py-2.5 px-5">
+        <a href="/register" class="no-underline text-black leading-normal box-border px-5 py-2.5 bg-[#93c2e2] rounded-[50px]">Sign up</a>
+        <a href="/login" class="no-underline text-black leading-normal box-border px-5 py-2.5 rounded-[50px]">Login</a>
     </div>
 
     <form action="/register" method="POST" class="auth-form">
 
-        <div class="form-group">
-            <input type="name" id="username" name="username" placeholder="Username..." requied>
-            <input type="email" id="email" name="email" placeholder="...@student.mmu.edu.my" pattern=".+@student.mmu.edu.my" required>
-            <input type="password" id="password" name="password" placeholder="Password..." required>
+        <div class="flex flex-col gap-2.5 m-[30px]">
+            <input type="name" id="username" name="username" placeholder="Username..." required class="font-['Veldana',_serif] font-bold p-2.5 bg-[whitesmoke] border-0 rounded-[10px]">
+            <input type="email" id="email" name="email" placeholder="...@student.mmu.edu.my" pattern=".+@student.mmu.edu.my" required class="font-['Veldana',_serif] font-bold p-2.5 bg-[whitesmoke] border-0 rounded-[10px]">
+            <input type="password" id="password" name="password" placeholder="Password..." required class="font-['Veldana',_serif] font-bold p-2.5 bg-[whitesmoke] border-0 rounded-[10px]">
         </div>
 
-        <button type="submit" class="submit-button">Register</button>
+        <button type="submit" class="bg-[#8ebbeb] text-black font-['Franklin Gothic Medium',_'Arial Narrow',_Arial,_sans-serif] border-0 rounded-[30px] flex px-5 py-2.5 cursor-pointer">Register</button>
     </form>
 
 </div>
 
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

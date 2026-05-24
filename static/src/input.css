@@ -1,2 +1,2 @@
-@import "tailwindcss";
-@source "../../templates/*/.html";
+﻿@import "tailwindcss";
+@source "../../templates/**/*.html";

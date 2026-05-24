@@ -320,7 +320,7 @@ def item(item_id):
     target_item = Products.query.get(item_id)
 
     return render_template('item.html', item=target_item)
-    # return render_template('item.html', item=item_block)
+
 
 
 

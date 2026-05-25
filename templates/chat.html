@@ -52,9 +52,9 @@
                  </div>
                 
                 {% if current_user.profile_pic %}
-                     <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-8 h-8 mr-0 mb-1 rounded-full object-cover shrink-0">
+                     <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0">
                 {% else %}
-                     <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-8 h-8 mr-0 mb-1 rounded-full object-cover shrink-0">
+                     <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
                 {% endif %}
 
              </div>
@@ -63,9 +63,9 @@
               <div class="flex items-end gap-2 mr-auto max-w-[80%]">
 
                 {% if target_user.profile_pic %}
-                    <img src="{{url_for('static', filename='css/photos/' + target_user.profile_pic)}}" class="w-8 h-8 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
+                    <img src="{{url_for('static', filename='css/photos/' + target_user.profile_pic)}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
                 {% else %}
-                    <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-8 h-8 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
+                    <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
                 {% endif %}
 
                 <div class="message receiver-message m-0 flex flex-col items-start min-w-[75px] px-3 py-2">

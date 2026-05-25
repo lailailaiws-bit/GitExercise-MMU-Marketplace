@@ -6,6 +6,22 @@
     <title>Marketplace</title>
 </head>
 <body>
-    <a href="{{ url_for('item', item_id=item_id)}}">item</a>
+    {%include 'header.html'%}
+    <div class="grid grid-cols-2 col-span-2 justify-center items-center pl-48">
+        {% for items in item_list %}
+
+        <div class=" flex border-4 border-black bg-white shadow-lg w-140 h-60 mb-10">
+            <a href="{{ url_for('item', item_id=items.item_id)}}">
+                <div class="font-bold w-140 h-60">
+                    {{items.item_name}}
+                    <br>
+                    RM {{items.price}}
+                    <br>
+                    {{items.item_description}}
+                </div>
+            </a>
+        </div>
+        {%  endfor %}
+    </div>
 </body>
 </html>

@@ -2,20 +2,20 @@ import json
 import os
 from datetime import datetime
 
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from data import MOCK_PRODUCTS
 import uuid
-import os
 from datetime import datetime
 
 app = Flask(__name__)
 
+
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///item.db'
 
 UPLOAD_FOLDER = 'static/css/photos'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -230,7 +230,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile_edit/', methods=['GET', 'POST'])
+@app.route('/profile_edit')
 @login_required
 def profile_edit():
     if request.method == 'POST':
@@ -290,7 +290,7 @@ def item_post():
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
             return redirect(url_for('item_post'))
-        
+
         product = Products(
             item_name = item_name,
             price = price,
@@ -309,27 +309,51 @@ def item_post():
             return redirect (url_for('item_post'))
     else:
         return render_template('item_post.html', user=current_user)
+
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    product = next((item for item in MOCK_PRODUCTS if item['id'] == product_id), None)
+
+    if product is None:
+        abort(404)
+
+    return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+
+@app.route('/about')
+def about():
+    return render_template('footer/about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('footer/contact.html')
+
+@app.route('/ourstores')
+def ourstores():
+    return render_template('home.html')
+
+with app.app_context():
+    db.create_all()
     
-@app.route('/item_market')
+@app.route('/item_market/')
 @login_required
 def item_market():
-    item_list = Products.query.all()
+    item_info = Products.query.all()
 
-    return render_template('item_market.html')
+    return render_template('item_market.html', item_list=item_info)
     
-@app.route('/item/<item_id>', methods=["GET", "POST"])
+@app.route('/item/<item_id>')
 @login_required
 def item(item_id):
-    item_info = Products.query.get(item_id)
-    if request.method == 'POST':
+    target_item = Products.query.get(item_id)
 
-        return redirect(url_for('item', item_id=item_info))
-    
-    else:
-        return render_template('item.html', item=item_info)
+    return render_template('item.html', item=target_item)
+
+
 
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)

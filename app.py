@@ -51,6 +51,8 @@ class Products(db.Model):
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
 
+    seller = db.relationship('User', backref='items')
+
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))

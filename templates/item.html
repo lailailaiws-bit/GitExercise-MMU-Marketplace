@@ -7,14 +7,20 @@
 </head>
 <body>
     {%include 'header.html'%}
-    <div>
-        <div>
-            <div>{{item.item_name}}</div>
-            <div>{{item.price}}</div>
-            <div>{{item.item_description}}</div>
-            <div>{{item.category}}</div>
-            <div>{{item.date_created}}</div>
-        </div>
+    <div class="grid grid-cols-2 col-span-2 justify-center items-start bg-white pt-6 pb-6 pr-50 mx-auto max-w-7xl rounded-lg">
+            <div class="flex flex-col justify-center items-center">
+                <img src="{{url_for('static', filename='css/photos/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
+            </div>
+            <div class="flex flex-col justify-start items-start gap-6 text-left">
+                <div class="text-4xl font-bold">{{item.item_name}}</div>
+                <div class="text-2xl font-semibold">Price: RM{{item.price}}</div>
+                <div class="text-1xl font-semibold">Category: {{item.item_category}}</div>
+                <p class="font-semibold">Description:</p>
+                <div class="bg-gray-100 text-left w-full p-6 rounded-lg h-40">
+                    <h3>{{item.item_description}}</h3>
+                </div>
+            </div>
+        
     </div>
 </body>
 </html>

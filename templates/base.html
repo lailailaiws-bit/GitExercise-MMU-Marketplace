@@ -23,7 +23,8 @@
                     <option  value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="fashion">Fashion</option>
-                    <option value="home">Home & Garden</option>
+                    <option value="home">Home & Furniture</option>
+                    <option value="home">Accessories</option>
                 </select>
                 <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace"required autocomplete="off">
                 <button type="submit" class="search-button">
@@ -44,12 +45,11 @@
         </div>
 
     </div>
-    {% block body %}
-    {% endblock %}
+
+        </div> {% block body %}
+        {% endblock %}
+
+        <!-- {% include 'footer.html' %} -->
 
 </body>
-
-<footer>
-    <!-- {% include 'footer.html' %} -->
-</footer>
 </html>

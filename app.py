@@ -156,7 +156,7 @@ def chat_with(target_username):
         content = request.form.get('content')
         if content:
             save_message(current_user.username, target_username, content)
-        return redirect(url_for('chat_with', target_username=target_username))
+        return redirect(url_for('chat_with', target_username=target_username) + '#bottom') # URL Anchor Hack
     
     # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)

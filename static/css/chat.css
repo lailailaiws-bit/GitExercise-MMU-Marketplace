@@ -39,6 +39,7 @@ body{
     background-color: #f0f0f0;
     margin: 0;
     padding: 20px;
+    overflow-y: scroll;
     /* min-width: 750px;
     margin: 0 auto; */
 }
@@ -103,16 +104,15 @@ body{
 
 .time {
     font-size: 10px;
-    margin-left: 10px;
-    padding: 3px;
-    margin-top: 50px;
+    align-self: flex-end;
+    margin-top: 4px;
 }
 
 .message {
-    padding: 8px 8px;
-    margin: 5px;
+    padding: 10px 15px;
+    margin: 5px 0;
     border-radius: 5px;
-    max-width: 70%;
+    max-width: 75%;
     word-wrap: break-word;
     display: flex;
     justify-content: center;
@@ -120,17 +120,17 @@ body{
 }
 
 .sender-message {
-    background-color: #e0e0e0;
-    color: #000;
+    background-color:oklch(71.2% 0.194 13.428);
+    color: #fff;
     align-self: flex-start;
-    max-width: max-content;
-    max-height: max-content;
+    border-bottom-left-radius: 15px ;
 }
 
 .receiver-message {
-    background-color: #4CAF50;
+    background-color:oklch(70.7% 0.165 254.624);
     color: #fff;
     align-self: flex-end;
+    border-bottom-right-radius: 15px;
 }
 
 .avatar {
@@ -173,14 +173,5 @@ body{
     padding: 0;
 }
 
-
-@echo off
-echo Starting Tailwind CSS Compiler for Flask...
-tailwind.exe -i 
-\static\src\input.css-0.
-\static\css\output.css --watch
-
-@import "tailwindcss";
-@source "../../templates";
 
 

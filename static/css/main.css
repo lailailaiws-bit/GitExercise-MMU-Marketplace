@@ -78,28 +78,6 @@ button{
   background-color: #94b9e1;
 }
 
-.user-portfolio {
-    display: flex;
-    margin-left: auto;
-    gap: 40px;
-}
-
-.user-icon {
-    display: flex;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    padding: 24.5px 5px;
-}
-
-.chat-icon {
-    display: flex;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    padding: 24.5px 0.5px;
-}
-
 div .auth-container{
     position: absolute;
     left: 50%;

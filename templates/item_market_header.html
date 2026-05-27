@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>{% block title %}MMU marketplace{% endblock %}</title>
-    
-    {% block head %}
-    {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <title>Item market</title>
 </head>
-<body class="flex flex-col min-h-screen">
 
-    <div class="nav">
+<body>
+ <div class="nav">
         <a href="/home">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
@@ -26,7 +23,7 @@
                     <option value="home">Home & Furniture</option>
                     <option value="home">Accessories</option>
                 </select>
-                <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace" required autocomplete="off">
+                <input type="search" name="q"  placeholder="Search for items, brands..." aria-label="Search marketplace"required autocomplete="off">
                 <button type="submit" class="search-button">
                     <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" style="display: inline-flex; height: 20px;">
                 </button>
@@ -36,17 +33,10 @@
         <div class=" flex items-center gap-10 mr-1.25">
             <a href="/chat" class="w-9 h-9 mt-1 block" style="text-decoration: none;">
             <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon"></a>
-            
-            <a href="/profile" class="w-7.5 h-7.5 block" style="text-decoration: none;">
+
+        <a href="/profile" class="w-7.5 h-7.5 block" style="text-decoration: none;">
             <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon"></a>
         </div>
 
-    </div> <main class="flex-grow">
-        {% block body %}
-        {% endblock %}
-    </main>
-
-    {% include 'footer.html' %}
-
-</body>
+    </div>
 </html>

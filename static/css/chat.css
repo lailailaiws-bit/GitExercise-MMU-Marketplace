@@ -31,12 +31,6 @@ body{
     margin-bottom: 10px;
 }
 
-.user-portfolio {
-    display: flex;
-    justify-content: right;
-    margin-left: auto;
-}
-
 ------------------------------------------------------------------------
 
 /* chatbox css */

@@ -230,7 +230,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile_edit')
+@app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
     if request.method == 'POST':

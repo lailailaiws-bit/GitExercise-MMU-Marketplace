@@ -15,9 +15,9 @@
             <div class="flex flex-col justify-start items-start gap-6 text-left">
                 <div class="grid grid-cols-2 gap-100">
                     <div class="text-4xl font-bold">{{item.item_name}}</div>
-                    <a href="{{url_for('item_market')}}" class="text-blue-600 font-semibold hover:underline">← Back</a>
+                    <a href="{{url_for('item_market')}}" class="text-blue-600 font-semibold hover:underline pl-10">← Back</a>
                 </div>
-                <div class="grid grid-cols-2 grid-rows-2 gap-6 space-x-6">
+                <div class="grid grid-cols-2 grid-rows-2 gap-6 space-x-6 border-t-2 border-black">
                     <div class="text-2xl font-semibold">Price: RM{{item.price}}</div>
                     <div class="text-2xl font-medium">Seller:- {{item.seller.username}}</div>
                     <div class="text-1xl font-medium">Category: {{item.item_category}}</div>
@@ -31,5 +31,7 @@
             </div>
         
     </div>
+
+    <a href="item_edit.html">Edit item</a>
 </body>
 </html>

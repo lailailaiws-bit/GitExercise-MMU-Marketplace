@@ -51,7 +51,7 @@ class Products(db.Model):
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
 
-    seller = db.relationship('User', backref='items')
+    seller = db.relationship('User', backref='products')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -352,7 +352,25 @@ def item(item_id):
 
     return render_template('item.html', item=target_item)
 
+@app.route('/item_edit/<item_edit>', methods=['GET', 'POST'])
+@login_required
+def item_edit(item_id):
+    target_item = Products.query.get(item_id)
 
+    if request.method == 'POST':
+        target_item.item_name = request.form.get('item_name')
+        target_item.price = request.form.get('price')
+        target_item.item_description = request.form.get('item_description')
+
+        try:
+            db.session.commit()
+            flash('Edit successful')
+            return redirect(url_for('item_edit'))
+        except:
+            return redirect(url_for('item_edit'))
+
+    else:
+        return render_template('item_edit.html', item=target_item)
 
 
 if __name__ == '__main__':

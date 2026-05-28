@@ -31,7 +31,7 @@
                         <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
                         {% endif %}
                         
-                        <span class="text-sm font-bold text-gray-800 truncate group-hover:text-[#0055A5] transition-colors">
+                        <span class="text-sm font-bold text-gray-800 group-hover:text-blue-800 transition-colors">
                             {{ current_user.id }}
                         </span>
                     </div>
@@ -42,7 +42,7 @@
                     
                     <div class="p-4 flex flex-col flex-grow">
                         
-                        <h2 class="text-xl mb-0 font-bold text-gray-900 group-hover:text-[#0055A5] transition-colors line-clamp-1">
+                        <h2 class="text-xl mb-0 font-bold text-gray-900 group-hover:text-blue-800 transition-colors line-clamp-1">
                             {{ items.item_name }}
                         </h2>
                         
@@ -50,7 +50,7 @@
                             RM {{ items.price }}
                         </p>
                         
-                        <p class="text-sm text-gray-500 line-clamp-2 mt-auto mb-auto">
+                        <p class="text-sm text-sky-700 line-clamp-2 mt-auto mb-auto">
                             {{ items.item_description }}
                         </p>
                     </div>

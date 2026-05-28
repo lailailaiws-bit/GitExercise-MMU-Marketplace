@@ -134,6 +134,14 @@ def chat_list():
     # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
 
+    #load and display active chats
+    try:
+        user_chat_data = load_user_data(current_user.username)
+        active_chat_usernames = list(user_chat_data.keys())
+    except Exception as e:
+        active_chat_usernames = []
+
+
     if search_query:
         # 2. If they searched for a name, filter the database
         users = User.query.filter(
@@ -144,7 +152,7 @@ def chat_list():
         # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users)
+    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
@@ -160,7 +168,14 @@ def chat_with(target_username):
     
     # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)
-    return render_template('chat.html', messages=user_messages, target_username=target_username ,target_user=target_user)
+
+    try:
+        user_chat_data = load_user_data(current_user.username)
+        active_chat_usernames = list(user_chat_data.keys())
+    except Exception as e:
+        active_chat_usernames = []
+
+    return render_template('chat.html', messages=user_messages, target_username=target_username ,target_user=target_user, active_chat_usernames=active_chat_usernames)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

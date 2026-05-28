@@ -9,7 +9,7 @@
     {% block head %}{% endblock %}
 </head>
 
-<body>
+<body >
     <div class="nav">
         <a href="/home">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
@@ -29,7 +29,7 @@
 
 {% block content %}
     <div class="chat-container flex flex-col max-w-2xl h-[calc(100vh-175px)] mx-auto my-4 overflow-hidden border-2 border-black rounded-xl shadow-lg"
-         style="background-image: url('{{ url_for('static', filename='css/photos/chat-background.png') }}'); background-size: cover; background-position: center;">
+         style="background-image: url('{{ url_for('static', filename='css/photos/chat-background.jpg') }}'); background-size: cover; background-position: center;">
     
         <div class="flex justify-between items-center p-3 border-b-3 border-gray-400 bg-white w-full">
 
@@ -77,15 +77,15 @@
              {% endif %}
 
     {% else %}
-        <div class="text-center text-gray-500 italic mt-10">
+        <div class="text-center text-gray-900 italic mt-10">
             <span>No messages yet? Start chatting with {{ target_username }}!</span>
         </div>
     {% endfor %}
 
         <div id="bottom"></div>
 
-        <form action="{{ url_for('chat_with', target_username=target_username) }}" method="POST" class="w-full flex gap-2 p-4 border-t bg-gray-50">
-            <input type="text" name="content" placeholder="Type..." required autocomplete="off" class="flex-grow px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-400">
+        <form action="{{ url_for('chat_with', target_username=target_username) }}" method="POST" class="w-full flex gap-2 p-4 border-1 rounded-md bg-gray-50">
+            <input type="text" name="content" placeholder="Type..." required autocomplete="off" class="flex-grow px-4 py-2  rounded-md outline focus:ring-2 focus:ring-blue-400">
             <button type="submit" class="bg-black text-white px-5 py-2 rounded-md font-bold">Send</button>
         </form>
     </div>

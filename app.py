@@ -59,7 +59,7 @@ def load_user(user_id):
 
 
 # chat system
-CHAT_DIR = 'chat folder'
+CHAT_DIR = 'chats folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
 def get_user_file_(username):
@@ -136,6 +136,14 @@ def chat_list():
     # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
 
+    #load and display active chats
+    try:
+        user_chat_data = load_user_data(current_user.username)
+        active_chat_usernames = list(user_chat_data.keys())
+    except Exception as e:
+        active_chat_usernames = []
+
+
     if search_query:
         # 2. If they searched for a name, filter the database
         users = User.query.filter(
@@ -146,7 +154,7 @@ def chat_list():
         # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users)
+    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
@@ -158,11 +166,18 @@ def chat_with(target_username):
         content = request.form.get('content')
         if content:
             save_message(current_user.username, target_username, content)
-        return redirect(url_for('chat_with', target_username=target_username))
+        return redirect(url_for('chat_with', target_username=target_username) + '#bottom') # URL Anchor Hack
     
     # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)
-    return render_template('chat.html', messages=user_messages, target_username=target_username)
+
+    try:
+        user_chat_data = load_user_data(current_user.username)
+        active_chat_usernames = list(user_chat_data.keys())
+    except Exception as e:
+        active_chat_usernames = []
+
+    return render_template('chat.html', messages=user_messages, target_username=target_username ,target_user=target_user, active_chat_usernames=active_chat_usernames)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -208,6 +223,7 @@ def register():
     else:
         return render_template('register.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -224,13 +240,14 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile_edit')
+@app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
     if request.method == 'POST':

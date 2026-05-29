@@ -5,26 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketplace</title>
 </head>
-<body>
-    {%include 'header.html'%}
-    <div class="grid grid-cols-2 col-span-2 justify-center items-center pl-48">
-        {% for items in item_list %}
 
-        <div class=" flex border-4 border-black bg-white shadow-lg w-140 h-60 mb-10">
-            <a href="{{ url_for('item', item_id=items.item_id)}}">
-                <div class="font-bold w-140 h-60">
-                    {{items.item_name}}
-                    <br>
-                    RM {{items.price}}
-                    <br>
-                    {{items.item_description}}
-                    <br>
-                    {{items.seller.username}}
-            </div>
+<body class="bg-gray-50">
+    
+    {% include 'item_market_header.html' %}
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full mb-8">
+        
+        <div class="flex items-center justify-between mb-4 border-b border-gray-200 pb-4">
+            <h1 class="text-2xl font-bold text-gray-900">Items for purchase ! </h1>
+            <span class="text-gray-500 text-sm">{{ item_list|length }} items available</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6">
+            
+            {% for items in item_list %}
+            
+            <a href="{{ url_for('item', item_id=items.item_id) }}" class="group block h-full">
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-xSl transition-all duration-300 overflow-hidden flex flex-col border border-gray-200 h-full">
+
+                    <div class="p-2 flex items-center gap-3 bg-white border-b border-gray-100">
+                        {% if current_user.profile_pic %}
+                        <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover ">
+                        {% else %}
+                        <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
+                        {% endif %}
+                        
+                        <span class="text-sm font-bold text-gray-800 group-hover:text-blue-800 transition-colors">
+                            {{ items.seller.username }}
+                        </span>
+                    </div>
+                    
+                    <div class="bg-gray-100 flex items-center justify-center overflow-hidden border-b border-gray-100" >
+                        <img src="{{ url_for('static', filename='css/photos/' + items.item_pic) }}" alt="Product Image" class="w-40 h-40 object-contain opacity-100 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    
+                    <div class="p-4 flex flex-col flex-grow">
+                        
+                        <h2 class="text-xl mb-0 font-bold text-gray-900 group-hover:text-blue-800 transition-colors line-clamp-1">
+                            {{ items.item_name }}
+                        </h2>
+                        
+                        <p class="text-red-500 font-extrabold text-lg mt-0 mb-3">
+                            RM {{ items.price }}
+                        </p>
+                        
+                        <p class="text-sm text-sky-700 line-clamp-2 mt-auto mb-auto">
+                            {{ items.item_description }}
+                        </p>
+                    </div>
+                    
                 </div>
             </a>
-        </div>
-        {%  endfor %}
-    </div>
+            
+            {% else %}
+            <div class="col-span-full py-16 text-center text-gray-500 flex flex-col items-center">
+                <p class="text-lg">No items available in the marketplace right now.</p>
+            </div>
+            {% endfor %}
+
+    
 </body>
 </html>

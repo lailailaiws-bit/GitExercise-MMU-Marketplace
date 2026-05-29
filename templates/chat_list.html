@@ -3,11 +3,32 @@
 {% block title %}Select a User to Chat with !{% endblock %}
 
 {% block content %}
+<div class="flex flex-col md:flex-row gap-10 px-4 md:px-10 pt-6 pb-6 w-full max-w-[1400px] mx-auto justify-between">
+    <div class="w-full md:w-1/4 lg:w-1/5 bg-white border rounded-lg shadow-sm p-4 h-fit">
+        <h3 class="font-bold text-lg border-b pb-2 mb-4">Quick Access to Chat! 📬</h3>
 
+        <ul class="flex flex-cols divide-y divide-gray-100"></ul>
+        {% if active_chat_usernames %}
+        {% for chat_user in active_chat_usernames %}
+                    <a href="{{ url_for('chat_with', target_username=chat_user) }}" class="flex items-center gap-3 py-2 hover:bg-cyan-50 transition px-2 rounded-lg group">
+                        
+                        <!-- <div class="w-10 h-10 text-white rounded-full flex items-center justify-center font-bold text-lg uppercase shadow-sm">
+                        </div> -->
 
-    <div class="w-full mb-8">
-        <h2 class="font-bold py-2 text-xl mb-4 text-center">Start a Conversation for enquiries 💬 !</h2>
+                        <span class="font-bold text-gray-800 ">{{ chat_user }}</span>
+                    </a>
+                {% endfor %}
 
+            {% else %}
+                <span class="text-sm text-gray-500 italic py-6 text-center">
+                    No active chats yet. <br> Start one on the right!</span>
+            {% endif %}
+        </ul>
+
+    </div>
+    <div class="w-full md:w-2/3 lg:w-3/4 bg-white border border-gray-200 rounded-xl shadow-sm p-6 lg:p-8">
+        <h2 class="font-bold text-2xl mb-6 text-gray-900 text-center">Start a Conversation 💬</h2>
+        
         <form action="{{ url_for('chat_list') }}" method="GET" class="flex gap-2 max-w-md mx-auto">
             <input type="text" name="q" placeholder="Search for a user..." class="w-full px-3 py-1.5 border rounded-md shadow-sm focus:ring-5 focus:ring-blue-200 transition">
             <button type="submit" class="bg-blue-500 text-white px-4 py-1.5 gap-1 rounded-md hover:bg-blue-600 transition">Search</button>
@@ -24,5 +45,5 @@
             {% endfor %}
         </ul>
     </div>
-
+</div>
 {% endblock %}

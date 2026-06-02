@@ -10,7 +10,7 @@
 
 <body style="background-color: #f0f0f0;">
 
-    {% include 'item_market_header.html' %}
+    {% include 'header.html' %}
     
     <div class="wrapper3" style="margin-top: 60px;">
         <form action="/item_post" method="POST" enctype="multipart/form-data" class="post_container">
@@ -27,7 +27,7 @@
                         <div class="column4">
                             <p>2. Item's price:</p>
                             <div class="price">
-                                <input type="number" name="price" id="price" min="0" step="0.01" placeholder="RM xxx" required>
+                                <input type="number" name="price" id="price" min="0" placeholder="RM xxx" required>
                             </div>
                         </div>
                         <div class="column6">

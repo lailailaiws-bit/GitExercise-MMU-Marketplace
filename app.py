@@ -392,7 +392,7 @@ def item_edit(item_id):
 
         try:
             db.session.commit()
-            flash('Edit successful')
+            flash('Your item information has been edited successful')
             return redirect(url_for('item_edit', item_id=item_id))
         except:
             return redirect(url_for('item_edit', item_id=item_id))

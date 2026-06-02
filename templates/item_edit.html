@@ -3,9 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Item Edit</title>
 </head>
 <body>
     {% include 'item_market_header.html' %}
+
+    <div class="max-w-2xl mx-auto mt-10 p-8 bg-white border border-gray-200 rounded-xl">
+
+        <div class="flex justify-between items-center mb-6 border-b-2 border-black pb-4">
+            <h1 class="text-2xl font-bold">Edit Your Item Details</h1>
+            <a href="{{url_for('item', item_id=item.item_id)}}" class="text-blue-600 font-semibold hover:underline">← Back</a>
+        </div>
+
+        <div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="bg-green-100 text-green-700 px-4 py-3 rounded">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <form action="{{url_for('item_edit', item_id=item.item_id)}}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
+            
+            <div class="flex flex-col gap-1">
+                <label class="font-bold text-gray-700">Item Name</label>
+                <input type="tel" name="item_name" id="item_name" placeholder="Edit item name" value="{{ item.item_name if item.item_name else ''}}" class="px-4 py-2 border rounded-md">
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label class="font-bold text-gray-700">Item Price</label>
+                <input type="number" name="price" id="price" min="0" placeholder="RM xxx" value="{{ item.price if item.price else ''}}" required class="border rounded-lg p-2">
+            </div>
+
+            <div class="flex flex-col gap-1">
+                <label class="font-bold text-gray-700">Item Description</label>
+                <textarea name="item_description" id="item_description" rows="4" placeholder="Edit your item's description" class="px-4 py-2 border rounded-md ">{{ item.item_description if item.item_description else ''}}</textarea>
+            </div>
+
+            <div >
+                <label class="font-bold text-gray-700">Change Your Item's Picture</label>
+                <br>
+                <input type="file" name="item_pic" id="item_pic" class="mt-2 text-sm p-2 text-gray-600 border border-gray-700">
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white font-bold py-3 rounded-md hover:bg-blue-600 mt-4">
+                Save Changes
+            </button>
+        </form>
+
+    </div>
 </body>
 </html>

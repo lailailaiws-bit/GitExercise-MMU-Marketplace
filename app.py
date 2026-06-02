@@ -295,6 +295,12 @@ def item_post():
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
 
+        if not item_name or not price or not description:
+            flash('Please fill out the item detail.')
+            return redirect(url_for('item_post'))
+        
+        item_picname = None
+
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
 
@@ -304,17 +310,13 @@ def item_post():
                 item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
                 item_pic = item_picname
 
-        if not item_name or not price or not description:
-            flash('Please fill out the item detail.')
-            return redirect(url_for('item_post'))
-
         product = Products(
             item_name = item_name,
             price = price,
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_pic
+            item_pic = item_picname
         )
 
         try:
@@ -365,29 +367,38 @@ def item_market():
 @app.route('/item/<item_id>')
 @login_required
 def item(item_id):
-    target_item = Products.query.get(item_id)
+    target_item = Products.query.get_or_404(item_id)
 
     return render_template('item.html', item=target_item)
 
-@app.route('/item_edit/<item_edit>', methods=['GET', 'POST'])
+@app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
 @login_required
 def item_edit(item_id):
-    target_item = Products.query.get(item_id)
+    target_item = Products.query.get_or_404(item_id)
 
     if request.method == 'POST':
         target_item.item_name = request.form.get('item_name')
         target_item.price = request.form.get('price')
         target_item.item_description = request.form.get('item_description')
 
+        if 'item_pic' in request.files:
+            item_pic = request.files.get('item_pic')
+
+            if item_pic and item_pic.filename != '':
+                item_filename = secure_filename(item_pic.filename)
+                item_picname = str (uuid.uuid1()) + '_' + item_filename
+                item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
+                target_item.item_pic = item_picname
+
         try:
             db.session.commit()
             flash('Edit successful')
-            return redirect(url_for('item_edit'))
+            return redirect(url_for('item_edit', item_id=item_id))
         except:
-            return redirect(url_for('item_edit'))
+            return redirect(url_for('item_edit', item_id=item_id))
 
     else:
-        return render_template('item_edit.html', item=target_item)
+        return render_template('item_edit.html', item = target_item)
 
 
 if __name__ == '__main__':

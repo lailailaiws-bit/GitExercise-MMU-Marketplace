@@ -6,10 +6,15 @@
     <title>Item's name</title>
 </head>
 <body>
-    {%include 'header.html'%}
+    {% include 'item_market_header.html' %}
+
     <div class="grid grid-cols-2 col-span-2 justify-center items-start bg-white pt-6 pb-6 pr-15 mx-auto max-w-7xl rounded-lg shadow-xl/30">
             <div class="flex flex-col justify-center items-center">
+                {% if item.item_pic %}
                 <img src="{{url_for('static', filename='css/photos/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
+                {% else %}
+                <img src="{{url_for('static', filename='css/photos/user-icon')}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
+                {%  endif %}
             </div>
             
             <div class="flex flex-col justify-start items-start gap-6 text-left">
@@ -32,6 +37,6 @@
         
     </div>
 
-    <a href="item_edit.html">Edit item</a>
+    <a href="{{url_for('item_edit', item_id=item.item_id)}}">Edit item</a>
 </body>
 </html>

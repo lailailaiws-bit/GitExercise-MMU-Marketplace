@@ -2,43 +2,12 @@ h1{
     text-align: center;
 }
 
-.navigation{
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.navigation ul{
-    display: flex;
-    list-style-type: none;
-    background-color: whitesmoke;
-    align-items: center;
-    padding: 0px;
-    margin: 0px;
-    overflow: hidden;
-}
-
-.navigation a{
-    color: black;
-    text-decoration: none;
-    padding: 10px;
-    display: block;
-    text-align: center;
-}
-
-.navigation a:hover{
-    background-color: grey;
-}
-
-.navigation li{
-    float: right;
-}
-
 body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #f0f0f0;
     margin: 0;
     padding: 20px;
+    overflow-y: scroll;
     /* min-width: 750px;
     margin: 0 auto; */
 }
@@ -62,35 +31,12 @@ body{
     margin-bottom: 10px;
 }
 
-.portfolio {
-    background-color: whitesmoke;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 28px;
-}
-
-.portfolio img{
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-
-.user-portfolio {
-    display: flex;
-    justify-content: right;
-    margin-left: auto;
-}
-
 ------------------------------------------------------------------------
 
 /* chatbox css */
 .chat-container {
     max-width: 1000px;
     margin: 50px auto;
-    background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -102,35 +48,33 @@ body{
 }
 
 .time {
-    font-size: 10px;
-    margin-left: 10px;
-    padding: 3px;
-    margin-top: 50px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    align-self: flex-end;
+    margin-top: 4px;
 }
 
 .message {
-    padding: 8px 8px;
-    margin: 5px;
+    padding: 10px 15px;
+    margin: 5px 0;
     border-radius: 5px;
-    max-width: 70%;
+    max-width: 75%;
     word-wrap: break-word;
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.sender-message {
-    background-color: #e0e0e0;
-    color: #000;
-    align-self: flex-start;
-    max-width: max-content;
-    max-height: max-content;
 }
 
 .receiver-message {
-    background-color: #4CAF50;
+    background-color: oklch(70.7% 0.165 254.624);
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 15px ;
+}
+
+.sender-message {
+    background-color: oklch(70.7% 0.165 254.624);
+    background-color: oklch(71.2% 0.194 13.428);
     color: #fff;
     align-self: flex-end;
+    border-bottom-right-radius: 15px;
 }
 
 .avatar {
@@ -173,14 +117,5 @@ body{
     padding: 0;
 }
 
-
-@echo off
-echo Starting Tailwind CSS Compiler for Flask...
-tailwind.exe -i 
-\static\src\input.css-0.
-\static\css\output.css --watch
-
-@import "tailwindcss";
-@source "../../templates";
 
 

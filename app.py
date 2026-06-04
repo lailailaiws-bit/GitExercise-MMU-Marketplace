@@ -16,7 +16,6 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///item.db'
 
 UPLOAD_FOLDER = 'static/css/photos'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -52,13 +51,15 @@ class Products(db.Model):
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
 
+    seller = db.relationship('User', backref='products')
+
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 
 # chat system
-CHAT_DIR = 'chat folder'
+CHAT_DIR = 'chats folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
 def get_user_file_(username):
@@ -135,6 +136,14 @@ def chat_list():
     # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
 
+    #load and display active chats
+    try:
+        user_chat_data = load_user_data(current_user.username)
+        active_chat_usernames = list(user_chat_data.keys())
+    except Exception as e:
+        active_chat_usernames = []
+
+
     if search_query:
         # 2. If they searched for a name, filter the database
         users = User.query.filter(
@@ -145,7 +154,7 @@ def chat_list():
         # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users)
+    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
@@ -157,11 +166,18 @@ def chat_with(target_username):
         content = request.form.get('content')
         if content:
             save_message(current_user.username, target_username, content)
-        return redirect(url_for('chat_with', target_username=target_username))
+        return redirect(url_for('chat_with', target_username=target_username) + '#bottom') # URL Anchor Hack
     
     # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)
-    return render_template('chat.html', messages=user_messages, target_username=target_username)
+
+    try:
+        user_chat_data = load_user_data(current_user.username)
+        active_chat_usernames = list(user_chat_data.keys())
+    except Exception as e:
+        active_chat_usernames = []
+
+    return render_template('chat.html', messages=user_messages, target_username=target_username ,target_user=target_user, active_chat_usernames=active_chat_usernames)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -207,6 +223,7 @@ def register():
     else:
         return render_template('register.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -223,13 +240,14 @@ def login():
 
     return render_template('login.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/profile_edit')
+@app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
     if request.method == 'POST':
@@ -277,6 +295,12 @@ def item_post():
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
 
+        if not item_name or not price or not description:
+            flash('Please fill out the item detail.')
+            return redirect(url_for('item_post'))
+        
+        item_picname = None
+
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
 
@@ -286,17 +310,13 @@ def item_post():
                 item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
                 item_pic = item_picname
 
-        if not item_name or not price or not description:
-            flash('Please fill out the item detail.')
-            return redirect(url_for('item_post'))
-
         product = Products(
             item_name = item_name,
             price = price,
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_pic
+            item_pic = item_picname
         )
 
         try:
@@ -337,23 +357,48 @@ def ourstores():
 with app.app_context():
     db.create_all()
     
-@app.route('/item_market')
+@app.route('/item_market/')
 @login_required
 def item_market():
-    item_list = Products.query.all()
+    item_info = Products.query.all()
 
-    return render_template('item_market.html')
+    return render_template('item_market.html', item_list=item_info)
     
-@app.route('/item/<item_id>', methods=["GET", "POST"])
+@app.route('/item/<item_id>')
 @login_required
 def item(item_id):
-    item_info = Products.query.get(item_id)
-    if request.method == 'POST':
+    target_item = Products.query.get_or_404(item_id)
 
-        return redirect(url_for('item', item_id=item_info))
-    
+    return render_template('item.html', item=target_item)
+
+@app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
+@login_required
+def item_edit(item_id):
+    target_item = Products.query.get_or_404(item_id)
+
+    if request.method == 'POST':
+        target_item.item_name = request.form.get('item_name')
+        target_item.price = request.form.get('price')
+        target_item.item_description = request.form.get('item_description')
+
+        if 'item_pic' in request.files:
+            item_pic = request.files.get('item_pic')
+
+            if item_pic and item_pic.filename != '':
+                item_filename = secure_filename(item_pic.filename)
+                item_picname = str (uuid.uuid1()) + '_' + item_filename
+                item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
+                target_item.item_pic = item_picname
+
+        try:
+            db.session.commit()
+            flash('Your item information has been edited successful')
+            return redirect(url_for('item_edit', item_id=item_id))
+        except:
+            return redirect(url_for('item_edit', item_id=item_id))
+
     else:
-        return render_template('item.html', item=item_info)
+        return render_template('item_edit.html', item = target_item)
 
 
 if __name__ == '__main__':

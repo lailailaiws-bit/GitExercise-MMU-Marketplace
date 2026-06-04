@@ -20,16 +20,6 @@ body{
     border-radius: 15px; 
 }
 
-.logo {
-    justify-content: left;
-    display: flex;
-    justify-content: center;
-    width: 180px;
-    height: 60px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
 .marketplace-ui-bar {
     flex: 2;
     display: flex;
@@ -57,7 +47,7 @@ input[type="search"] {
   width: 350px;
   margin: auto;
   display: inline-block;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .search-button {

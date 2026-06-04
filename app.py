@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-
+from dotenv import load_dotenv
 from flask import Flask, flash, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,6 +11,8 @@ from data import MOCK_PRODUCTS
 import uuid
 from datetime import datetime
 
+
+load_dotenv()
 app = Flask(__name__)
 
 
@@ -50,6 +52,9 @@ class Products(db.Model):
     item_category = db.Column(db.String(50), nullable=False)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
+    location = db.Column(db.String(100), nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
+    latitude = db.Column(db.Float, nullable=True)
 
     seller = db.relationship('User', backref='products')
 
@@ -294,6 +299,10 @@ def item_post():
         price = request.form.get('price')
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
+        location = request.form.get('location')
+        longitude = request.form.get('longitude')
+        latitude = request.form.get('latitude')
+        
 
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
@@ -316,27 +325,24 @@ def item_post():
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_picname
+            item_pic = item_picname,
+            location = location,
+            longitude = longitude,
+            latitude = latitude
         )
 
         try:
             db.session.add(product)
-            flash('Item posted!')
             db.session.commit()
+            flash('Item posted!')
             return redirect (url_for('item_post'))
-        except:
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error posting item: {e}")
+            flash('Error occurred while posting the item.')
             return redirect (url_for('item_post'))
     else:
         return render_template('item_post.html', user=current_user)
-
-@app.route('/product/<int:product_id>')
-def product_detail(product_id):
-    product = next((item for item in MOCK_PRODUCTS if item['id'] == product_id), None)
-
-    if product is None:
-        abort(404)
-
-    return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/cart')
 def cart():
@@ -368,8 +374,9 @@ def item_market():
 @login_required
 def item(item_id):
     target_item = Products.query.get_or_404(item_id)
+    mapbox_token = os.environ.get('MAPBOX_TOKEN')
 
-    return render_template('item.html', item=target_item)
+    return render_template('item.html', item=target_item, mapbox_token=mapbox_token)
 
 @app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
 @login_required
@@ -380,6 +387,10 @@ def item_edit(item_id):
         target_item.item_name = request.form.get('item_name')
         target_item.price = request.form.get('price')
         target_item.item_description = request.form.get('item_description')
+        target_item.item_category = request.form.get('item_category')
+        target_item.location = request.form.get('location')
+        target_item.longitude = request.form.get('longitude')
+        target_item.latitude = request.form.get('latitude')
 
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
@@ -390,15 +401,21 @@ def item_edit(item_id):
                 item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
                 target_item.item_pic = item_picname
 
+
         try:
             db.session.commit()
             flash('Your item information has been edited successful')
             return redirect(url_for('item_edit', item_id=item_id))
-        except:
+        
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error editing item: {e}")
+            flash('Error occurred while editing the item.')
             return redirect(url_for('item_edit', item_id=item_id))
 
     else:
-        return render_template('item_edit.html', item = target_item)
+        mapbox_token = os.environ.get('MAPBOX_TOKEN')
+        return render_template('item_edit.html', item = target_item, mapbox_token=mapbox_token)
 
 
 if __name__ == '__main__':

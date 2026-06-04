@@ -35,7 +35,13 @@
             <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon"></a>
 
         <a href="/profile" class="w-7.5 h-7.5 block" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon"></a>
+            {% if current_user.profile_pic %}
+            <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic )}}">
+            {% else %}
+            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
+            {% endif %}
+
+        </a>
         </div>
 
     </div>

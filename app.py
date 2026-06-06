@@ -354,7 +354,7 @@ def about():
 
 @app.route('/contact')
 def contact():
-    return render_template('footer/contact.html')
+    return render_template('footer/NV_contact.html')
 
 @app.route('/ourstores')
 def ourstores():

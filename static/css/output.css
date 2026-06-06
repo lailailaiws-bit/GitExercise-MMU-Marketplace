@@ -1044,11 +1044,19 @@
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
   }
+  .pl-2 {
+    padding-left: calc(var(--spacing) * 2);
+  }
   .pl-10 {
     padding-left: calc(var(--spacing) * 10);
   }
+<<<<<<< HEAD
   .pl-135 {
     padding-left: calc(var(--spacing) * 135);
+=======
+  .pl-55 {
+    padding-left: calc(var(--spacing) * 55);
+>>>>>>> ec5d32d495f75f6738b2373fddfd0704df4c268b
   }
   .text-center {
     text-align: center;

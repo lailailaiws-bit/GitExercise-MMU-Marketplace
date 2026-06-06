@@ -33,11 +33,17 @@
                     <h3>{{item.item_description}}</h3>
                 </div>
 
-                <div class="text-blue-600 font-semibold pl-135">
-                    <a href="{{url_for('item_edit', item_id=item.item_id)}}">
-                    Edit item
-                    </a>
+                {% if current_user.id == item.user_id %}
+                <div class="grid grid-cols-2 pl-2">
+                        <a href="{{url_for('delete', item_id=item.item_id)}}" class="text-red-600 font-semibold">
+                        Delete item
+                        </a>
+
+                        <a href="{{url_for('item_edit', item_id=item.item_id)}}" class="text-blue-600 font-semibold pl-55">
+                        Edit item
+                        </a>
                 </div>
+                {% endif %}
 
             </div>
         

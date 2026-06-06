@@ -10,7 +10,7 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <div class="nav">
+    <div class="nav" style="margin: 20px; padding: 15px;">
         <a href="/home">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
@@ -44,9 +44,9 @@
         {% endblock %}
     </main>
 
-</body>
+    <footer class="w-full">
+        {% include 'footer.html' %}
+    </footer>
 
-<footer>
-    {% include 'footer.html' %}
-</footer>
+</body>
 </html>

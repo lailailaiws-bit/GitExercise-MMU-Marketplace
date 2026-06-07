@@ -253,7 +253,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
@@ -281,18 +281,18 @@ def profile_edit():
     else:
         return render_template('profile_edit.html', user=current_user)
     
-@app.route('/delete')
-@login_required
-def delete():
-    try:
-        db.session.delete(current_user)
-        db.session.commit()
-        flash('Account Deleted!')
-        return redirect (url_for('home'))
+# @app.route('/delete')
+# @login_required
+# def delete():
+#     try:
+#         db.session.delete(current_user)
+#         db.session.commit()
+#         flash('Account Deleted!')
+#         return redirect (url_for('home'))
 
-    except:
-        flash('Error...Process Unsuccessful!')
-        return redirect (url_for('home'))
+#     except:
+#         flash('Error...Process Unsuccessful!')
+#         return redirect (url_for('home'))
     
 @app.route('/item_post/', methods=['GET', 'POST'])
 @login_required
@@ -408,6 +408,17 @@ def item_edit(item_id):
     else:
         return render_template('item_edit.html', item = target_item)
 
+@app.route('/delete/<item_id>')
+@login_required
+def delete(item_id):
+    target_id = Products.query.get(item_id)
+    try:
+        db.session.delete(target_id)
+        db.session.commit()
+        return redirect (url_for('home'))
+
+    except:
+        return redirect (url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

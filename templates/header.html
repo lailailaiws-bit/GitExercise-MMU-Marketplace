@@ -21,7 +21,11 @@
         </a>
             
         <a href="/profile" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+            {% if current_user.profile_pic %}
+                <img src="{{ url_for('static', filename='css/pictures/' + current_user.profile_pic) }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+            {% else %}
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+            {% endif %}
         </a>
     </div>
 

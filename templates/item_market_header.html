@@ -40,7 +40,11 @@
             </a>
             
             <a href="/profile" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
-            <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-8 h-8 sm:w-9 sm:h-9 md:h-9 md:w-9 lg:w-9 lg:h-9 object-contain">
+            {% if current_user.profile_pic %}
+                <img src="{{ url_for('static', filename='css/pictures/' +current_user.profile_pic) }}" alt="Profile Icon" class="w-8 h-8 sm:w-9 sm:h-9 md:h-9 md:w-9 lg:w-9 lg:h-9 object-contain">
+            {% else %}
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-8 h-8 sm:w-9 sm:h-9 md:h-9 md:w-9 lg:w-9 lg:h-9 object-contain">
+            {% endif %}
             </a>
         </div>
     </div>

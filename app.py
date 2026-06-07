@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
-UPLOAD_FOLDER = 'static/css/photos'
+UPLOAD_FOLDER = 'static/css/pictures'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
@@ -288,11 +288,11 @@ def delete():
         db.session.delete(current_user)
         db.session.commit()
         flash('Account Deleted!')
-        return redirect (url_for('index'))
+        return redirect (url_for('home'))
 
     except:
         flash('Error...Process Unsuccessful!')
-        return redirect (url_for('index'))
+        return redirect (url_for('home'))
     
 @app.route('/item_post/', methods=['GET', 'POST'])
 @login_required

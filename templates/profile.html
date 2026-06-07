@@ -25,7 +25,7 @@
             
             <div class="shrink-0">
                 {% if current_user.profile_pic %}
-                    <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
+                    <img src="{{url_for('static', filename='css/pictures/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% else %}
                     <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% endif %}

@@ -46,6 +46,19 @@
                 <textarea name="item_description" id="item_description" rows="4" placeholder="Edit your item's description" class="px-4 py-2 border rounded-md ">{{ item.item_description if item.item_description else ''}}</textarea>
             </div>
 
+            <div class="flex flex-col gap-1">
+                <label class="font-bold text-gray-700">Item Category</label>
+                <select name="item_category" id="item_category" required class="px-4 py-2 border rounded-md">
+                    <option value="" disabled {% if not item.item_category %}selected{% endif %}>Select a category</option>
+                    <option value="Electronics" {% if item.item_category == 'Electronics' %}selected{% endif %}>Electronics</option>
+                    <option value="Books" {% if item.item_category == 'Books' %}selected{% endif %}>Books</option>
+                    <option value="Clothing" {% if item.item_category == 'Clothing' %}selected{% endif %}>Clothing</option>
+                    <option value="Furniture" {% if item.item_category == 'Furniture' %}selected{% endif %}>Furniture</option>
+                    <option value="Accessories" {% if item.item_category == 'Accessories' %}selected{% endif %}>Accessories</option>
+                    <option value="Other" {% if item.item_category == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+
             <div >
                 <label class="font-bold text-gray-700">Change Your Item's Picture</label>
                 <br>
@@ -57,10 +70,16 @@
                 <select name="location" id="location" required class="px-4 py-2 border rounded-md">
                     <option value="" disabled {% if not item.location %}selected{% endif %}>Select a location</option>
                     
-                    <option value="fci" {% if item.location == 'fci' %}selected{% endif %}>FCI Building</option>
-                    <option value="fcm" {% if item.location == 'fcm' %}selected{% endif %}>FCM Building</option>
-                    <option value="library" {% if item.location == 'library' %}selected{% endif %}>Main Library</option>
-                    <option value="canteen" {% if item.location == 'canteen' %}selected{% endif %}>President Square</option>
+                    <option value="dtc" {% if item.location == 'dtc' %}selected{% endif %}>Dewan Tun Canselor (DTC)</option>
+                    <option value="fci" {% if item.location == 'fci' %}selected{% endif %}>Faculty of Computing & Informatics (FCI)</option>
+                    <option value="faie" {% if item.location == 'faie' %}selected{% endif %}>Faculty of Artificial Intelligence & Engineering (FAIE)</option>
+                    <option value="fom" {% if item.location == 'fom' %}selected{% endif %}>Faculty of Management (FOM)</option>
+                    <option value="fcm" {% if item.location == 'fcm' %}selected{% endif %}>Faculty of Creative Multimedia (FCM)</option>
+                    <option value="fca" {% if item.location == 'fca' %}selected{% endif %}>Faculty of Cinematic Arts (FCA)</option>
+                    <option value="fac" {% if item.location == 'fac' %}selected{% endif %}>Faculty of Applied Communication (FAC)</option>
+                    <option value="sport" {% if item.location == 'sport' %}selected{% endif %}>MMU Sports Complex</option>
+                    <option value="library" {% if item.location == 'library' %}selected{% endif %}>Siti Hasmah Digital Library MMU</option>
+                    <option value="starbees" {% if item.location == 'starbees' %}selected{% endif %}>Starbees</option>
                 </select>
 
                 <input type="hidden" id="longitude" name="longitude" value="{{ item.longitude if item.longitude else '' }}">

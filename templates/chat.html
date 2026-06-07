@@ -9,28 +9,29 @@
     {% block head %}{% endblock %}
 </head>
 
-<body>
+<body >
     <div class="nav">
         <a href="/home">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
 
-        <div class=" flex items-center gap-10 mr-1.25">
-            <a href="/home" class="w-8 h-8 block" style="text-decoration: none;">
-                <img src="{{ url_for('static', filename='css/photos/home.png') }}" alt="Home Icon">
+        <div class="flex items-center gap-7 sm:gap-9 md,lg:gap-10 flex-shrink-0 order-2 md:order-3">
+            <a href="/home" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/home.png') }}" alt="Home Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
             </a>
-
-            <a href="/profile" class="w-7.5 h-7.5 block" style="text-decoration: none;">
-                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
+            
+            <a href="/profile" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
             </a>
-
         </div>
     </div>
 
 {% block content %}
-    <div class="chat-container flex flex-col max-w-2xl h-[calc(100vh-175px)] mx-auto my-4 overflow-hidden border border-gray-300 rounded-xl shadow-lg bg-white">
-        
-        <div class="flex justify-between items-center p-3 border-b-5 border-gray-100 bg-white w-full">
+    <div class="chat-container flex flex-col max-w-2xl h-[calc(100vh-175px)] mx-auto my-4 overflow-hidden border-2 border-black rounded-xl shadow-lg"
+         style="background-image: url('{{ url_for('static', filename='css/photos/chat-background.jpg') }}'); background-size: cover; background-position: center; ">
+    
+        <div class="flex justify-between items-center p-3 border-b-3 border-gray-400 bg-white w-full">
+
             <span class="font-semibold text-gray-700">Chatting with: {{ target_username }}</span>
 
             <div class="flex gap-1 mr-0.1">
@@ -39,21 +40,51 @@
             </div>
         </div>
 
-        <div class="message-container flex-grow overflow-y-auto p-4 flex flex-col gap-3 bg-white">
+        <div class="message-container flex-grow overflow-y-auto p-3 flex flex-col gap-3">
             {% for msg in messages %}
-                <div class="message {% if msg.sender == current_user.username %} ml-auto receiver-message{% else %} mr-auto sender-message{% endif %}">
-                    {{ msg.content }}
-                    <span class="time text-[10px] opacity-75 ml-2">{{ msg.time }}</span>
+
+             {% if msg.sender == current_user.username %}
+             <div class="flex items-end gap-2 ml-auto max-w-[80%] justify-end">
+                 <div class="message sender-message m-0 flex flex-col items-start min-w-[75px] px-3 py-2">
+                    <span class="text-sm text-left break-words">{{ msg.content }}</span>
+                    <span class="time opacity-75 text-[10px] w-full text-right">{{ msg.time }}</span>
+                 </div>
+                
+                {% if current_user.profile_pic %}
+                     <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0">
+                {% else %}
+                     <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
+                {% endif %}
+
+             </div>
+
+             {% else %}
+              <div class="flex items-end gap-2 mr-auto max-w-[80%]">
+
+                {% if target_user.profile_pic %}
+                    <img src="{{url_for('static', filename='css/photos/' + target_user.profile_pic)}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
+                {% else %}
+                    <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
+                {% endif %}
+
+                <div class="message receiver-message m-0 flex flex-col items-start min-w-[75px] px-3 py-2">
+                    <span class="text-sm text-left break-words">{{ msg.content }}</span>
+                    <span class="time opacity-75 text-[10px] w-full text-right">{{ msg.time }}</span>
                 </div>
-            {% else %}
-                <div class="text-center text-gray-700 italic">
-                    <span>No messages yet? Start chatting with {{ target_username }}!</span>
-                </div>
-            {% endfor %}
+              </div>
+
+             {% endif %}
+
+    {% else %}
+        <div class="text-center text-gray-900 italic mt-10">
+            <span>No messages yet? Start chatting with {{ target_username }}!</span>
         </div>
-        
-        <form action="{{ url_for('chat_with', target_username=target_username) }}" method="POST" class="w-full flex gap-2 p-4 border-t bg-gray-50">
-            <input type="text" name="content" placeholder="Type..." autofocus required class="flex-grow px-4 py-2 border rounded-md outline-none focus:ring-2 focus:ring-blue-400">
+    {% endfor %}
+
+        <div id="bottom"></div>
+
+        <form action="{{ url_for('chat_with', target_username=target_username) }}" method="POST" class="w-full flex gap-2 p-4 border-1 rounded-md bg-gray-50">
+            <input type="text" name="content" placeholder="Type..." required autocomplete="off" class="flex-grow px-4 py-2  rounded-md outline focus:ring-2 focus:ring-blue-400">
             <button type="submit" class="bg-black text-white px-5 py-2 rounded-md font-bold">Send</button>
         </form>
     </div>

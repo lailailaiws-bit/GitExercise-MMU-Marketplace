@@ -1,7 +1,10 @@
 env/
-venv/
 __pycache__/
 *.pyc
-requirements.txt
+.env
+*.db
+*.sqlite
+*.sqlite3
+instance/
+.vscode/
 tailwind.exe
-

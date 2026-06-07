@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}About MMU Marketplace{% endblock %}
+
+{% block body %}
+    <div class="flex gap-8 justify-center bg-[#f0f0f0] py-4 shadow-sm border-neutral-300 ">
+        <a href="/about" class="px-4 py-2 text-gray-700 text-[18px] font-semibold rounded-lg hover:bg-gradient-to-b hover:from-[#c3cfe2] hover:to-[#efefef] hover:text-[#364fc7] transition-all w-fit">About Us</a>
+        <a href="/contact" class="px-4 py-2 text-gray-700 text-[18px] font-semibold rounded-lg hover:bg-gradient-to-b hover:from-[#c3cfe2] hover:to-[#efefef] hover:text-[#364fc7] transition-all w-fit">Contact Us</a>
+    </div>
+
+    {% block about_content %}
+    {% endblock %}
+
+{% endblock %}

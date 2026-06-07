@@ -7,7 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from data import MOCK_PRODUCTS
 import uuid
 from datetime import datetime
 
@@ -387,22 +386,55 @@ def item_edit(item_id):
         abort(403)
 
     if request.method == 'POST':
-        target_item.item_name = request.form.get('item_name')
-        target_item.price = request.form.get('price')
-        target_item.item_description = request.form.get('item_description')
-        target_item.item_category = request.form.get('item_category')
-        target_item.location = request.form.get('location')
-        target_item.longitude = request.form.get('longitude')
-        target_item.latitude = request.form.get('latitude')
+        item_name = request.form.get('item_name')
+        if item_name is not None and item_name != '':
+            target_item.item_name = item_name
+
+        price_val = request.form.get('price')
+        if price_val is not None and price_val != '':
+            try:
+                target_item.price = float(price_val)
+            except ValueError:
+                flash('Invalid price value.')
+
+        item_description = request.form.get('item_description')
+        if item_description is not None:
+            target_item.item_description = item_description
+
+        item_category = request.form.get('item_category')
+        if item_category:
+            target_item.item_category = item_category
+
+        location_val = request.form.get('location')
+        if location_val is not None:
+            target_item.location = location_val
+
+        longitude_val = request.form.get('longitude')
+        latitude_val = request.form.get('latitude')
+        if longitude_val:
+            try:
+                target_item.longitude = float(longitude_val)
+            except ValueError:
+                pass
+        if latitude_val:
+            try:
+                target_item.latitude = float(latitude_val)
+            except ValueError:
+                pass
 
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
 
             if item_pic and item_pic.filename != '':
-                item_filename = secure_filename(item_pic.filename)
-                item_picname = str (uuid.uuid1()) + '_' + item_filename
-                item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
-                target_item.item_pic = item_picname
+                try:
+                    item_filename = secure_filename(item_pic.filename)
+                    item_picname = str(uuid.uuid1()) + '_' + item_filename
+                    os.makedirs(app.config.get("UPLOAD_FOLDER", ""), exist_ok=True)
+                    item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
+                    target_item.item_pic = item_picname
+                except Exception as e:
+                    flash('Failed to save uploaded image.')
+                    print(f"Error saving uploaded image: {e}")
 
 
         try:

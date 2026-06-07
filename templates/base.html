@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <title>{% block title %}MMU marketplace{% endblock %}</title>
     
-    {% block head %}
-    {% endblock %}
 </head>
 <body class="flex flex-col min-h-screen">
 
@@ -29,7 +27,7 @@
                     <option value="accessories">Accessories</option>
                 </select>
                 
-                <input type="search" name="q" placeholder="Search items..." aria-label="Search marketplace" required autocomplete="off" class="flex-1 w-full min-w-0 px-3 py-2 text-xs sm:text-sm md:text-sm lg:text-base outline-none hover-bg-gray-300 ">
+                <input type="search" name="q" placeholder="Search items..." aria-label="Search marketplace" autocomplete="off" class="flex-1 w-full min-w-0 px-3 py-2 text-xs sm:text-sm md:text-sm lg:text-base outline-none hover-bg-gray-300 ">
                 
                 <button type="submit" class="bg-gray-100 hover:bg-gray-200 px-3 sm:px-5 py-2 sm:py-2.5 transition-colors flex items-center justify-center shrink-0 border-l border-gray-300">
                     <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" class="h-4 sm:h-5 object-contain">
@@ -56,7 +54,9 @@
         {% endblock %}
     </main>
 
-    <!-- {% include 'footer.html' %} -->
-
 </body>
+
+<footer>
+    <!-- {% include 'footer.html' %} -->
+</footer>
 </html>

@@ -50,6 +50,7 @@ class Products(db.Model):
     item_category = db.Column(db.String(50), nullable=False)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
+    seller = db.relationship('User', backref='products')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -102,7 +103,6 @@ def save_user_data(username, data):
     with open(path, 'w') as f:
         f.write(spaced_json_string)
         
-
 def load_messages(current, target):
     # Loads the specific conversation between two users."""
     data = load_user_data(current)
@@ -111,12 +111,10 @@ def load_messages(current, target):
 
 
 @app.route('/')
-def index():
-    return render_template('base.html')
-
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    item_info = Products.query.all()
+    return render_template('home.html',item_list=item_info)
 
 @app.route('/acc')
 def account():
@@ -124,16 +122,28 @@ def account():
 
 @app.route('/search')
 def search():
-    query = request.args.get('q')
-    print(f"Search query: {query}")
-    return redirect(url_for('index'))
+    search_query = request.args.get('q', '')
+    category_filter = request.args.get('category', 'all')
+
+    query = Products.query 
+
+    #category filter
+    if category_filter and category_filter != 'all':
+        query = query.filter(Products.item_category.ilike(category_filter))
+
+    #search filter
+    if search_query:
+        query = query.filter(Products.item_name.ilike(f'%{search_query}%'))
+
+    matching_items = query.all()
+    return render_template('item_market.html', item_list=matching_items)
 
 @app.route('/chat')
 @login_required 
 def chat_list():
     # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
-
+    
     #load and display active chats
     try:
         user_chat_data = load_user_data(current_user.username)
@@ -293,6 +303,12 @@ def item_post():
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
 
+        if not item_name or not price or not description:
+            flash('Please fill out the item detail.')
+            return redirect(url_for('item_post'))
+        
+        item_picname = None
+
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
 
@@ -302,17 +318,13 @@ def item_post():
                 item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
                 item_pic = item_picname
 
-        if not item_name or not price or not description:
-            flash('Please fill out the item detail.')
-            return redirect(url_for('item_post'))
-
         product = Products(
             item_name = item_name,
             price = price,
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_pic
+            item_pic = item_picname
         )
 
         try:
@@ -363,11 +375,38 @@ def item_market():
 @app.route('/item/<item_id>')
 @login_required
 def item(item_id):
-    target_item = Products.query.get(item_id)
+    target_item = Products.query.get_or_404(item_id)
 
     return render_template('item.html', item=target_item)
 
+@app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
+@login_required
+def item_edit(item_id):
+    target_item = Products.query.get_or_404(item_id)
 
+    if request.method == 'POST':
+        target_item.item_name = request.form.get('item_name')
+        target_item.price = request.form.get('price')
+        target_item.item_description = request.form.get('item_description')
+
+        if 'item_pic' in request.files:
+            item_pic = request.files.get('item_pic')
+
+            if item_pic and item_pic.filename != '':
+                item_filename = secure_filename(item_pic.filename)
+                item_picname = str (uuid.uuid1()) + '_' + item_filename
+                item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
+                target_item.item_pic = item_picname
+
+        try:
+            db.session.commit()
+            flash('Your item information has been edited successful')
+            return redirect(url_for('item_edit', item_id=item_id))
+        except:
+            return redirect(url_for('item_edit', item_id=item_id))
+
+    else:
+        return render_template('item_edit.html', item = target_item)
 
 
 if __name__ == '__main__':

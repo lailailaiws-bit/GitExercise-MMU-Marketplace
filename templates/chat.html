@@ -15,15 +15,14 @@
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="logo">
         </a>
 
-        <div class=" flex items-center gap-10 mr-1.25">
-            <a href="/home" class="w-8 h-8 block" style="text-decoration: none;">
-                <img src="{{ url_for('static', filename='css/photos/home.png') }}" alt="Home Icon">
+        <div class="flex items-center gap-7 sm:gap-9 md,lg:gap-10 flex-shrink-0 order-2 md:order-3">
+            <a href="/home" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/home.png') }}" alt="Home Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
             </a>
-
-            <a href="/profile" class="w-7.5 h-7.5 block object-contain" style="text-decoration: none;">
-                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon">
+            
+            <a href="/profile" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
             </a>
-
         </div>
     </div>
 

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
     <title>Item's name</title>
 </head>
 <body>
@@ -33,15 +35,41 @@
                     <h3>{{item.item_description}}</h3>
                 </div>
 
-                <div class="text-blue-600 font-semibold pl-135">
-                    <a href="{{url_for('item_edit', item_id=item.item_id)}}">
-                    Edit item
-                    </a>
+                {% if current_user.id == item.user_id %}
+                <div class="grid grid-cols-2 pl-2">
+                        <a href="{{url_for('delete', item_id=item.item_id)}}" class="text-red-600 font-semibold">
+                        Delete item
+                        </a>
+
+                        <a href="{{url_for('item_edit', item_id=item.item_id)}}" class="text-blue-600 font-semibold pl-55">
+                        Edit item
+                        </a>
                 </div>
+                {% endif %}
 
             </div>
         
     </div>
+
+<script>
+    mapboxgl.accessToken = '{{ mapbox_token }}';
+
+    const itemLng = {{ item.longitude | default(101.6420, true) }};
+    const itemLat = {{ item.latitude | default(2.9270, true) }};
+
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12', 
+        center: [itemLng, itemLat], 
+        zoom: 15 
+    });
+
+    const marker = new mapboxgl.Marker({ color: '#FF0000' })
+        .setLngLat([itemLng, itemLat])
+        .addTo(map);
+
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+</script>
 
 </body>
 </html>

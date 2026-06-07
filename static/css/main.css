@@ -5,10 +5,7 @@ h1{
 body{
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-    /* min-width: 750px;
-    margin: 0 auto; */
+
 }
 
 .nav{
@@ -74,11 +71,9 @@ div .auth-container{
 }
 
 .auth-container {
-    margin: 0%;
-    margin-bottom: 200px;
+    margin: 2%;
+    margin-bottom: 300px;
     color: black;
-    padding:50px;
-    padding-top: 10px;
     border-radius: 10px; 
     font-family:'Times New Roman', Times, serif;
     display: flex;
@@ -87,6 +82,9 @@ div .auth-container{
     justify-content: center;
     background-color: #fff6e7;
     height: 400px;
+    margin-left: 500px;
+    margin-right: 500px;
+    border: solid black;
 }
 
 .form-group {

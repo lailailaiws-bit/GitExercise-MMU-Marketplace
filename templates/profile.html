@@ -9,9 +9,9 @@
 
 <body class="bg-gray-100">
 
-    {% include 'item_market_header.html' %}
+    {% include 'header.html' %}
 
-    <div class="max-w-3xl mx-auto mt-10 p-8 pb-6 bg-white border border-gray-200 rounded-xl shadow-lg">
+    <div class="max-w-3xl mx-auto mt-10 p-8 bg-white border border-gray-200 rounded-xl shadow-lg">
 
         <div class="flex justify-between items-center mb-8 pb-2 border-b-2 border-black">
             <h1 class="text-2xl font-bold text-gray-800">My Account</h1>
@@ -25,7 +25,7 @@
             
             <div class="shrink-0">
                 {% if current_user.profile_pic %}
-                    <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
+                    <img src="{{url_for('static', filename='css/pictures/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% else %}
                     <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% endif %}
@@ -61,11 +61,17 @@
             </div>
         </div>
 
-        <div class="mt-10 pt-6 border-t border-black-600 flex flex-col sm:flex-row justify-between items-center gap-4">  
+        <div class="mt-10 pt-4 border-t border-black-600 flex flex-col sm:flex-row justify-between items-center gap-4">  
             <a href="{{url_for('logout')}}" class="flex items-center text-red-600 font-bold hover:bg-red-50 px-4 py-2 rounded-lg">
                 <svg class="w-5 h-5 fill-current" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path d="M.57,7.36A.64.64,0,0,0,1.2,8H9L7.21,9.85a.63.63,0,0,0,0,.89h0a.63.63,0,0,0,.9,0L11,7.84A.63.63,0,0,0,11,7h0L8.11,4a.64.64,0,0,0-.91.89h0L9,6.72H1.2A.64.64,0,0,0,.57,7.36Z"></path><path d="M12.67.52H2.33A1.83,1.83,0,0,0,.5,2.3V4.7a.64.64,0,1,0,1.27,0V2.3a.55.55,0,0,1,.55-.55H12.67a.56.56,0,0,1,.56.54h0V12.65a.56.56,0,0,1-.56.56H2.33a.56.56,0,0,1-.56-.56V10A.64.64,0,1,0,.5,10v2.64a1.83,1.83,0,0,0,1.83,1.83H12.67a1.83,1.83,0,0,0,1.83-1.83V2.3A1.83,1.83,0,0,0,12.67.52Z"></path></svg>
                 Log out
             </a>
+
+            <div class="font-bold bg-sky-600 hover:bg-sky-800 text-white p-2.5 rounded-full">
+                <a href="{{url_for('my_item')}}">
+                    My items
+                </a>
+            </div>
 
             <div class="flex items-center gap-4">
                 <a href="{{ url_for('item_post')}}" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-blue-700">
@@ -75,8 +81,6 @@
         </div>
 
     </div>
-
-    <a href="{{url_for('item_market')}}">Item Marketplace</a>
 
 </body>
 </html>

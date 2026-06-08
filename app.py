@@ -1,7 +1,7 @@
 import json
 import os
 from datetime import datetime
-from dotenv import load_dotenv
+
 from flask import Flask, flash, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,15 +10,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import uuid
 from datetime import datetime
 
-
-load_dotenv()
 app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
-UPLOAD_FOLDER = 'static/css/photos'
+UPLOAD_FOLDER = 'static/css/pictures'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
@@ -51,10 +49,6 @@ class Products(db.Model):
     item_category = db.Column(db.String(50), nullable=False)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
-    location = db.Column(db.String(100), nullable=True)
-    longitude = db.Column(db.Float, nullable=True)
-    latitude = db.Column(db.Float, nullable=True)
-
     seller = db.relationship('User', backref='products')
 
 @login_manager.user_loader
@@ -108,7 +102,6 @@ def save_user_data(username, data):
     with open(path, 'w') as f:
         f.write(spaced_json_string)
         
-
 def load_messages(current, target):
     # Loads the specific conversation between two users."""
     data = load_user_data(current)
@@ -117,12 +110,10 @@ def load_messages(current, target):
 
 
 @app.route('/')
-def index():
-    return render_template('base.html')
-
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    item_info = Products.query.all()
+    return render_template('home.html',item_list=item_info)
 
 @app.route('/acc')
 def account():
@@ -130,16 +121,28 @@ def account():
 
 @app.route('/search')
 def search():
-    query = request.args.get('q')
-    print(f"Search query: {query}")
-    return redirect(url_for('index'))
+    search_query = request.args.get('q', '')
+    category_filter = request.args.get('category', 'all')
+
+    query = Products.query 
+
+    #category filter
+    if category_filter and category_filter != 'all':
+        query = query.filter(Products.item_category.ilike(category_filter))
+
+    #search filter
+    if search_query:
+        query = query.filter(Products.item_name.ilike(f'%{search_query}%'))
+
+    matching_items = query.all()
+    return render_template('item_market.html', item_list=matching_items)
 
 @app.route('/chat')
 @login_required 
 def chat_list():
     # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
-
+    
     #load and display active chats
     try:
         user_chat_data = load_user_data(current_user.username)
@@ -249,7 +252,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
@@ -284,11 +287,11 @@ def profile_edit():
 #         db.session.delete(current_user)
 #         db.session.commit()
 #         flash('Account Deleted!')
-#         return redirect (url_for('index'))
+#         return redirect (url_for('home'))
 
 #     except:
 #         flash('Error...Process Unsuccessful!')
-#         return redirect (url_for('index'))
+#         return redirect (url_for('home'))
     
 @app.route('/item_post/', methods=['GET', 'POST'])
 @login_required
@@ -298,10 +301,6 @@ def item_post():
         price = request.form.get('price')
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
-        location = request.form.get('location')
-        longitude = request.form.get('longitude')
-        latitude = request.form.get('latitude')
-        
 
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
@@ -324,24 +323,27 @@ def item_post():
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_picname,
-            location = location,
-            longitude = longitude,
-            latitude = latitude
+            item_pic = item_picname
         )
 
         try:
             db.session.add(product)
-            db.session.commit()
             flash('Item posted!')
+            db.session.commit()
             return redirect (url_for('item_post'))
-        except Exception as e:
-            db.session.rollback()
-            print(f"Error posting item: {e}")
-            flash('Error occurred while posting the item.')
+        except:
             return redirect (url_for('item_post'))
     else:
         return render_template('item_post.html', user=current_user)
+
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    product = next((item for item in MOCK_PRODUCTS if item['id'] == product_id), None)
+
+    if product is None:
+        abort(404)
+
+    return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/cart')
 def cart():
@@ -353,7 +355,7 @@ def about():
 
 @app.route('/contact')
 def contact():
-    return render_template('footer/NV_contact.html')
+    return render_template('footer/contact.html')
 
 @app.route('/ourstores')
 def ourstores():
@@ -373,17 +375,13 @@ def item_market():
 @login_required
 def item(item_id):
     target_item = Products.query.get_or_404(item_id)
-    mapbox_token = os.environ.get('MAPBOX_TOKEN')
 
-    return render_template('item.html', item=target_item, mapbox_token=mapbox_token)
+    return render_template('item.html', item=target_item)
 
 @app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
 @login_required
 def item_edit(item_id):
     target_item = Products.query.get_or_404(item_id)
-
-    if target_item.user_id != current_user.id:
-        abort(403)
 
     if request.method == 'POST':
         item_name = request.form.get('item_name')
@@ -421,6 +419,9 @@ def item_edit(item_id):
                 target_item.latitude = float(latitude_val)
             except ValueError:
                 pass
+        target_item.item_name = request.form.get('item_name')
+        target_item.price = request.form.get('price')
+        target_item.item_description = request.form.get('item_description')
 
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
@@ -436,21 +437,15 @@ def item_edit(item_id):
                     flash('Failed to save uploaded image.')
                     print(f"Error saving uploaded image: {e}")
 
-
         try:
             db.session.commit()
             flash('Your item information has been edited successful')
             return redirect(url_for('item_edit', item_id=item_id))
-        
-        except Exception as e:
-            db.session.rollback()
-            print(f"Error editing item: {e}")
-            flash('Error occurred while editing the item.')
+        except:
             return redirect(url_for('item_edit', item_id=item_id))
 
     else:
-        mapbox_token = os.environ.get('MAPBOX_TOKEN')
-        return render_template('item_edit.html', item = target_item, mapbox_token=mapbox_token)
+        return render_template('item_edit.html', item = target_item)
 
 @app.route('/delete/<item_id>')
 @login_required
@@ -459,10 +454,18 @@ def delete(item_id):
     try:
         db.session.delete(target_id)
         db.session.commit()
-        return redirect (url_for('item_market'))
+        return redirect (url_for('home'))
 
     except:
-        return redirect (url_for('item_market'))
+        return redirect (url_for('home'))
+    
+@app.route('/my_item/')
+@login_required
+def my_item():
+    my_products = Products.query.filter_by(user_id=current_user.id).all()
+
+    return render_template('my_item.html', item=my_products)
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

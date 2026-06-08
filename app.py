@@ -1,7 +1,7 @@
 import json
 import os
+import sqlite3
 from datetime import datetime
-
 from flask import Flask, flash, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -47,6 +47,9 @@ class Products(db.Model):
     price = db.Column(db.Float, nullable=False)
     item_description = db.Column(db.String(150), nullable=False)
     item_category = db.Column(db.String(50), nullable=False)
+    location = db.Column(db.String(50), nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
+    latitude = db.Column(db.Float, nullable=True)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
     seller = db.relationship('User', backref='products')
@@ -274,8 +277,9 @@ def profile_edit():
             db.session.commit()
             flash("Update successful")
             return redirect(url_for("profile_edit"))
-        except:
+        except Exception as e:
             flash("Error")
+            print(f"Profile update failed: {e}")
             return redirect(url_for("profile_edit"))
     else:
         return render_template('profile_edit.html', user=current_user)
@@ -301,6 +305,9 @@ def item_post():
         price = request.form.get('price')
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
+        location = request.form.get('location')
+        longitude = request.form.get('longitude')
+        latitude = request.form.get('latitude')
 
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
@@ -323,7 +330,10 @@ def item_post():
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_picname
+            item_pic = item_picname,
+            location = location,
+            longitude = float(longitude) if longitude else None,
+            latitude = float(latitude) if latitude else None
         )
 
         try:
@@ -331,19 +341,12 @@ def item_post():
             flash('Item posted!')
             db.session.commit()
             return redirect (url_for('item_post'))
-        except:
+        except Exception as e:
+            flash('Failed to post item.')
+            print(f"Item post failed: {e}")
             return redirect (url_for('item_post'))
     else:
         return render_template('item_post.html', user=current_user)
-
-@app.route('/product/<int:product_id>')
-def product_detail(product_id):
-    product = next((item for item in MOCK_PRODUCTS if item['id'] == product_id), None)
-
-    if product is None:
-        abort(404)
-
-    return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/cart')
 def cart():
@@ -355,7 +358,7 @@ def about():
 
 @app.route('/contact')
 def contact():
-    return render_template('footer/contact.html')
+    return render_template('footer/NV_contact.html')
 
 @app.route('/ourstores')
 def ourstores():
@@ -363,6 +366,23 @@ def ourstores():
 
 with app.app_context():
     db.create_all()
+
+    db_path = os.path.join(app.instance_path, 'site.db')
+    if os.path.exists(db_path):
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        cursor.execute("PRAGMA table_info(items)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+
+        if 'location' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN location VARCHAR(50)")
+        if 'longitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN longitude FLOAT")
+        if 'latitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN latitude FLOAT")
+
+        connection.commit()
+        connection.close()
     
 @app.route('/item_market/')
 @login_required
@@ -376,7 +396,7 @@ def item_market():
 def item(item_id):
     target_item = Products.query.get_or_404(item_id)
 
-    return render_template('item.html', item=target_item)
+    return render_template('item.html', item=target_item, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
 @login_required
@@ -419,9 +439,6 @@ def item_edit(item_id):
                 target_item.latitude = float(latitude_val)
             except ValueError:
                 pass
-        target_item.item_name = request.form.get('item_name')
-        target_item.price = request.form.get('price')
-        target_item.item_description = request.form.get('item_description')
 
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
@@ -441,11 +458,13 @@ def item_edit(item_id):
             db.session.commit()
             flash('Your item information has been edited successful')
             return redirect(url_for('item_edit', item_id=item_id))
-        except:
+        except Exception as e:
+            flash('Failed to update item.')
+            print(f"Item edit failed: {e}")
             return redirect(url_for('item_edit', item_id=item_id))
 
     else:
-        return render_template('item_edit.html', item = target_item)
+        return render_template('item_edit.html', item=target_item, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/delete/<item_id>')
 @login_required
@@ -456,7 +475,8 @@ def delete(item_id):
         db.session.commit()
         return redirect (url_for('home'))
 
-    except:
+    except Exception as e:
+        print(f"Delete failed: {e}")
         return redirect (url_for('home'))
     
 @app.route('/my_item/')

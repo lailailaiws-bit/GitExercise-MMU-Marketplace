@@ -106,52 +106,53 @@
     let currentLng = {{ item.longitude | default(101.6420, true) }};
     let currentLat = {{ item.latitude | default(2.9270, true) }};
 
+    if (typeof mapboxgl !== 'undefined' && mapboxgl.Map) {
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [currentLng, currentLat],
+            zoom: 15
+        });
 
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: [currentLng, currentLat],
-        zoom: 15
-    });
-
-    const marker = new mapboxgl.Marker({ color: '#FF0000' })
-        .setLngLat([currentLng, currentLat])
-        .addTo(map);
-
-
-    const landmarkData = {
-        "dtc": { lng: 101.64239494127669, lat: 2.9291816587708763 },
-        "fci": { lng: 101.6405965110121, lat: 2.929109039395619 },
-        "faie": { lng: 101.64114941731358, lat: 2.926472960420866 },
-        "fom": { lng: 101.64126768161965, lat: 2.9300088416183825 }, 
-        "fcm": { lng: 101.643113010575, lat: 2.926197469995002 },
-        "fca": { lng: 101.64228419058419, lat: 2.926211506665962 }, 
-        "fac": { lng: 101.64257733152519, lat: 2.9258712221199312 },
-        "sport": { lng: 101.64324960131643, lat: 2.927141507240638 },
-        "library": { lng: 101.64171224203099, lat: 2.927582609827954 },
-        "starbees": { lng: 101.64309825135217, lat: 2.92785344178045 }
-        };
+        const marker = new mapboxgl.Marker({ color: '#FF0000' })
+            .setLngLat([currentLng, currentLat])
+            .addTo(map);
 
 
-    const locationSelect = document.getElementById('location');
-    const inputLng = document.getElementById('longitude');
-    const inputLat = document.getElementById('latitude');
+        const landmarkData = {
+            "dtc": { lng: 101.64239494127669, lat: 2.9291816587708763 },
+            "fci": { lng: 101.6405965110121, lat: 2.929109039395619 },
+            "faie": { lng: 101.64114941731358, lat: 2.926472960420866 },
+            "fom": { lng: 101.64126768161965, lat: 2.9300088416183825 }, 
+            "fcm": { lng: 101.643113010575, lat: 2.926197469995002 },
+            "fca": { lng: 101.64228419058419, lat: 2.926211506665962 }, 
+            "fac": { lng: 101.64257733152519, lat: 2.9258712221199312 },
+            "sport": { lng: 101.64324960131643, lat: 2.927141507240638 },
+            "library": { lng: 101.64171224203099, lat: 2.927582609827954 },
+            "starbees": { lng: 101.64309825135217, lat: 2.92785344178045 }
+            };
 
-    locationSelect.addEventListener('change', function() {
-        const selectedKey = this.value;
 
-        if (landmarkData[selectedKey]) {
-            const newLng = landmarkData[selectedKey].lng;
-            const newLat = landmarkData[selectedKey].lat;
-                
+        const locationSelect = document.getElementById('location');
+        const inputLng = document.getElementById('longitude');
+        const inputLat = document.getElementById('latitude');
 
-            inputLng.value = newLng;
-            inputLat.value = newLat;
+        locationSelect.addEventListener('change', function() {
+            const selectedKey = this.value;
 
-            marker.setLngLat([newLng, newLat]);
-            map.flyTo({ center: [newLng, newLat], zoom: 16 });
-        }
-    });
+            if (landmarkData[selectedKey]) {
+                const newLng = landmarkData[selectedKey].lng;
+                const newLat = landmarkData[selectedKey].lat;
+                    
+
+                inputLng.value = newLng;
+                inputLat.value = newLat;
+
+                marker.setLngLat([newLng, newLat]);
+                map.flyTo({ center: [newLng, newLat], zoom: 16 });
+            }
+        });
+    }
 </script>
 
 </body>

@@ -419,6 +419,14 @@ def delete(item_id):
 
     except:
         return redirect (url_for('home'))
+    
+@app.route('/my_item/')
+@login_required
+def my_item():
+    my_products = Products.query.filter_by(user_id=current_user.id).all()
+
+    return render_template('my_item.html', item=my_products)
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

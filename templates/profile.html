@@ -11,7 +11,7 @@
 
     {% include 'header.html' %}
 
-    <div class="max-w-3xl mx-auto mt-10 p-8 pb-6 bg-white border border-gray-200 rounded-xl shadow-lg">
+    <div class="max-w-3xl mx-auto mt-10 p-8 bg-white border border-gray-200 rounded-xl shadow-lg">
 
         <div class="flex justify-between items-center mb-8 pb-2 border-b-2 border-black">
             <h1 class="text-2xl font-bold text-gray-800">My Account</h1>
@@ -25,7 +25,7 @@
             
             <div class="shrink-0">
                 {% if current_user.profile_pic %}
-                    <img src="{{url_for('static', filename='css/photos/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
+                    <img src="{{url_for('static', filename='css/pictures/' + current_user.profile_pic)}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% else %}
                     <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-40 h-40 rounded-xl border-4 border-gray-800">
                 {% endif %}
@@ -75,8 +75,9 @@
         </div>
 
     </div>
-
-    <a href="{{url_for('item_market')}}">My items</a>
+    
+    <div class="py-5"><a href="{{url_for('item_market')}}">My items</a></div>
+    
 
 </body>
 </html>

@@ -326,6 +326,12 @@
   .mr-0 {
     margin-right: calc(var(--spacing) * 0);
   }
+  .mr-1 {
+    margin-right: calc(var(--spacing) * 1);
+  }
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
+  }
   .mr-3 {
     margin-right: calc(var(--spacing) * 3);
   }
@@ -364,6 +370,9 @@
   }
   .mb-auto {
     margin-bottom: auto;
+  }
+  .ml-0 {
+    margin-left: calc(var(--spacing) * 0);
   }
   .ml-3 {
     margin-left: calc(var(--spacing) * 3);
@@ -787,6 +796,9 @@
   .border-neutral-300 {
     border-color: var(--color-neutral-300);
   }
+  .border-transparent {
+    border-color: transparent;
+  }
   .bg-\[\#161616\] {
     background-color: #161616;
   }
@@ -951,12 +963,6 @@
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
   }
-  .py-9 {
-    padding-block: calc(var(--spacing) * 9);
-  }
-  .py-12 {
-    padding-block: calc(var(--spacing) * 12);
-  }
   .py-16 {
     padding-block: calc(var(--spacing) * 16);
   }
@@ -965,6 +971,9 @@
   }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
+  }
+  .pt-20 {
+    padding-top: calc(var(--spacing) * 20);
   }
   .pr-15 {
     padding-right: calc(var(--spacing) * 15);
@@ -1380,6 +1389,13 @@
       }
     }
   }
+  .hover\:opacity-90 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 90%;
+      }
+    }
+  }
   .hover\:shadow-md {
     &:hover {
       @media (hover: hover) {
@@ -1458,6 +1474,16 @@
   .sm\:gap-9 {
     @media (width >= 40rem) {
       gap: calc(var(--spacing) * 9);
+    }
+  }
+  .sm\:rounded-3xl {
+    @media (width >= 40rem) {
+      border-radius: var(--radius-3xl);
+    }
+  }
+  .sm\:rounded-full {
+    @media (width >= 40rem) {
+      border-radius: calc(infinity * 1px);
     }
   }
   .sm\:px-4 {
@@ -1572,6 +1598,11 @@
       gap: calc(var(--spacing) * 10);
     }
   }
+  .md\:rounded-full {
+    @media (width >= 48rem) {
+      border-radius: calc(infinity * 1px);
+    }
+  }
   .md\:p-12 {
     @media (width >= 48rem) {
       padding: calc(var(--spacing) * 12);
@@ -1642,6 +1673,11 @@
   .lg\:gap-10 {
     @media (width >= 64rem) {
       gap: calc(var(--spacing) * 10);
+    }
+  }
+  .lg\:rounded-full {
+    @media (width >= 64rem) {
+      border-radius: calc(infinity * 1px);
     }
   }
   .lg\:p-8 {

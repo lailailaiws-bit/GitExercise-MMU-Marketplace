@@ -10,8 +10,8 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <div class="nav flex flex-wrap md:flex-nowrap items-center justify-between px-4 sm:px-6 py-5 gap-4 bg-white">
-        <a href="/home">
+    <div class="nav flex flex-wrap md:flex-nowrap items-center justify-between px-4 sm:px-6 py-5 mt-5 mr-3 ml-3 gap-4 bg-white">
+        <a href="/home" class="hover:opacity-90 transition-opacity">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="w-36 sm:w-46 md:w-50 lg:w-54 h-auto object-contain my-2">
         </a>
 
@@ -39,12 +39,16 @@
 
         
        <div class="flex items-center gap-7 sm:gap-9 md,lg:gap-10 flex-shrink-0 order-2 md:order-3">
-            <a href="/chat" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
+            <a href="/chat" class="hover:opacity-90 transition-opacity" style="text-decoration: none;">
                 <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat Icon" class="w-8 h-8 sm:w-9 sm:h-9 md:h-9 md:w-9 lg:w-9 lg:h-9 object-contain">
             </a>
             
-            <a href="/profile" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
-                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+            <a href="/profile" class="hover:opacity-90 transition-opacity" style="text-decoration: none;">
+            {% if current_user.profile_pic %}
+                <img src="{{ url_for('static', filename='css/pictures/' + current_user.profile_pic) }}" alt="Profile Icon"  class="w-10 h-10 object-cover rounded-full sm:rounded-full md:rounded-full lg:rounded-full border-2 border-transparent">
+            {% else %}
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="rounded-full w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+            {% endif %}
             </a>
         </div>
     </div>

@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
-UPLOAD_FOLDER = 'static/css/photos'
+UPLOAD_FOLDER = 'static/css/pictures'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
@@ -148,9 +148,9 @@ def chat_list():
     try:
         user_chat_data = load_user_data(current_user.username)
         active_chat_usernames = list(user_chat_data.keys())
+        active_chat_users = User.query.filter(User.username.in_(active_chat_usernames)).all()
     except Exception as e:
         active_chat_usernames = []
-
 
     if search_query:
         # 2. If they searched for a name, filter the database
@@ -162,7 +162,7 @@ def chat_list():
         # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
+    return render_template('chat_list.html', users=users, active_chat_users=active_chat_users)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
@@ -253,7 +253,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
@@ -281,18 +281,18 @@ def profile_edit():
     else:
         return render_template('profile_edit.html', user=current_user)
     
-@app.route('/delete')
-@login_required
-def delete():
-    try:
-        db.session.delete(current_user)
-        db.session.commit()
-        flash('Account Deleted!')
-        return redirect (url_for('index'))
+# @app.route('/delete')
+# @login_required
+# def delete():
+#     try:
+#         db.session.delete(current_user)
+#         db.session.commit()
+#         flash('Account Deleted!')
+#         return redirect (url_for('home'))
 
-    except:
-        flash('Error...Process Unsuccessful!')
-        return redirect (url_for('index'))
+#     except:
+#         flash('Error...Process Unsuccessful!')
+#         return redirect (url_for('home'))
     
 @app.route('/item_post/', methods=['GET', 'POST'])
 @login_required
@@ -408,6 +408,17 @@ def item_edit(item_id):
     else:
         return render_template('item_edit.html', item = target_item)
 
+@app.route('/delete/<item_id>')
+@login_required
+def delete(item_id):
+    target_id = Products.query.get(item_id)
+    try:
+        db.session.delete(target_id)
+        db.session.commit()
+        return redirect (url_for('home'))
+
+    except:
+        return redirect (url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

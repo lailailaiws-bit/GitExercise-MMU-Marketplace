@@ -8,21 +8,20 @@
         <h3 class="font-bold text-lg border-b pb-2 mb-4">Quick Access to Chat! 📬</h3>
 
         <ul class="flex flex-cols divide-y divide-gray-100"></ul>
-        {% if active_chat_usernames %}
-        {% for chat_user in active_chat_usernames %}
-                    <a href="{{ url_for('chat_with', target_username=chat_user) }}" class="flex items-center gap-3 py-2 hover:bg-cyan-50 transition px-2 rounded-lg group">
-                        
-                        <!-- <div class="w-10 h-10 text-white rounded-full flex items-center justify-center font-bold text-lg uppercase shadow-sm">
-                        </div> -->
-
-                        <span class="font-bold text-gray-800 ">{{ chat_user }}</span>
-                    </a>
-                {% endfor %}
-
-            {% else %}
-                <span class="text-sm text-gray-500 italic py-6 text-center">
-                    No active chats yet. <br> Start one on the right!</span>
-            {% endif %}
+        {% if active_chat_users %}
+            {% for chat_user in active_chat_users %}
+                <a href="{{ url_for('chat_with', target_username=chat_user.username) }}" class="flex items-center gap-3 ml-0 py-2 hover:bg-cyan-50 transition px-2 rounded-lg group">
+                    {% if chat_user.profile_pic %}
+                        <img src="{{ url_for('static', filename='css/pictures/' + chat_user.profile_pic) }}" alt="Profile Icon" class="w-10 h-10 mr-2 object-cover rounded-full border-2 border-transparent shadow-sm shrink-0">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0">
+                    {% endif %}
+                    <span class="font-bold text-gray-800 ">{{ chat_user.username }}</span>
+                </a>
+            {% endfor %}
+        {% else %}
+            <span class="text-sm text-gray-500 italic py-6">No active chats. Start one!</span>
+        {% endif %}
         </ul>
 
     </div>

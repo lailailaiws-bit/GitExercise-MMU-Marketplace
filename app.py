@@ -148,9 +148,9 @@ def chat_list():
     try:
         user_chat_data = load_user_data(current_user.username)
         active_chat_usernames = list(user_chat_data.keys())
+        active_chat_users = User.query.filter(User.username.in_(active_chat_usernames)).all()
     except Exception as e:
         active_chat_usernames = []
-
 
     if search_query:
         # 2. If they searched for a name, filter the database
@@ -162,7 +162,7 @@ def chat_list():
         # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
+    return render_template('chat_list.html', users=users, active_chat_users=active_chat_users)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required

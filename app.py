@@ -423,10 +423,6 @@ def item_edit(item_id):
         if item_category:
             target_item.item_category = item_category
 
-        location_val = request.form.get('location')
-        if location_val is not None:
-            target_item.location = location_val
-
         longitude_val = request.form.get('longitude')
         latitude_val = request.form.get('latitude')
         if longitude_val:

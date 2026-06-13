@@ -1,42 +1,72 @@
 {% extends "base.html" %}
 
-{% block head %}
-    <title>Register</title>
-{% endblock %}
+{% block title %}Register | MMU marketplace{% endblock %}
 
 {% block body %}
-<div class="auth-container">
-    <div class="auth-header">
-    <h1>Welcome to Our Platform!</h1>
-    <p>Sign up to get started!</p>
-    </div>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="flashes">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+<div class="min-h-[calc(100vh-9rem)] px-4 py-12 sm:px-6 lg:px-8">
+    <div class="relative mx-auto flex max-w-6xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-[0_30px_80px_rgba(15,23,42,0.12)] ring-1 ring-slate-200 lg:grid lg:grid-cols-2">
+        <div class="absolute inset-0 z-0 pointer-events-none lg:left-1/2">
+            <div class="absolute -top-10 -left-10 w-96 h-96 rounded-full bg-[#ffccff] mix-blend-multiply blur-[80px] opacity-70"></div>
+            <div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#b7e3ff] mix-blend-multiply blur-[80px] opacity-70"></div>
+            <div class="absolute -bottom-20 left-20 w-80 h-80 rounded-full bg-[#a49aff] mix-blend-multiply blur-[80px] opacity-80"></div>
+        </div>
+        
+        <div class="relative z-10 flex flex-col justify-between bg-emerald-950 px-8 py-10 text-white sm:px-12 lg:px-14">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.35em] text-emerald-200">MMU Marketplace</p>
+                <h1 class="mt-6 max-w-md text-4xl font-black leading-tight sm:text-5xl">Create your account and start trading smarter.</h1>
+                <p class="mt-10 max-w-md text-center leading-7 text-emerald-100/80 ">Join the marketplace to post items, message buyers, and manage your listings in one place.</p>
             </div>
-        {% endif %}
-    {% endwith %}
-
-    <div class="toggle">
-        <a href="/register" class="toggle_btn_1">Sign up</a>
-        <a href="/login" class="toggle_btn_2">Login</a>
-    </div>
-
-    <form action="/register" method="POST" class="auth-form">
-
-        <div class="form-group">
-            <input type="name" id="username" name="username" placeholder="Username..." requied>
-            <input type="email" id="email" name="email" placeholder="...@student.mmu.edu.my" pattern=".+@student.mmu.edu.my" required>
-            <input type="password" id="password" name="password" placeholder="Password..." required>
         </div>
 
-        <button type="submit" class="submit-button">Register</button>
-    </form>
+        <div class="relative z-10 flex items-center justify-center px-8 py-10 sm:px-12 lg:px-14">
+            <div class="w-full max-w-md">
+                <div class="mb-8 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-900 font-['Cambria',_serif]">Sign up</h2>
+                        <p class="mt-2 text-sm text-slate-500 font-['Times_New_Roman',_serif]">Already have an account? <a href="/login" class="font-semibold text-emerald-600 hover:text-emerald-700">Login</a></p>
+                    </div>
+                </div>
 
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="mb-6 space-y-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="mb-6 grid grid-cols-2 gap-3 rounded-2xl bg-slate-100 p-1 text-sm font-semibold">
+                    <a href="/register" class="rounded-2xl bg-white px-4 py-3 text-center text-slate-900 shadow-sm ring-1 ring-slate-200">Sign up</a>
+                    <a href="/login" class="rounded-2xl px-4 py-3 text-center text-slate-500 hover:text-slate-900">Login</a>
+                </div>
+
+                <form action="/register" method="POST" class="space-y-5">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="username" class="mb-2 block text-sm font-medium text-slate-700">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Enter your username" required class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-3 focus:ring-indigo-100">
+                        </div>
+
+                        <div>
+                            <label for="email" class="mb-2 block text-sm font-medium text-slate-700">MMU Email</label>
+                            <input type="email" id="email" name="email" placeholder="name@student.mmu.edu.my" pattern=".+@student.mmu.edu.my" required class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-3 focus:ring-indigo-100">
+                        </div>
+
+                        <div>
+                            <label for="password" class="mb-2 block text-sm font-medium text-slate-700">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Create a password" required class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-3 focus:ring-indigo-100">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full rounded-2xl bg-slate-950 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:bg-slate-800 focus:outline-none focus:ring-3 focus:ring-indigo-100">
+                        Create account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock %}

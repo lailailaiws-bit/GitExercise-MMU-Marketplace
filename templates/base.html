@@ -17,22 +17,11 @@
 
         <div class="w-full md:flex-1 md:w-auto order-3 md:order-2 flex justify-center min-w-0 md:px-6">
             
-            <form action="/search" method="GET" class="flex w-full max-w-xl items-center rounded-lg">
-                
-                <select name="category" class=" text-xs sm:text-sm sm:px-4 py-2 sm:py-2.5 shrink-0 cursor-pointer w-24 sm:w-auto truncate">
-                    <option value="all" class="sm:text-sm " >All Categories</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home & Furniture</option>
-                    <option value="accessories">Accessories</option>
-                </select>
-                
+            <form action="/search" method="GET" class="flex w-full max-w-xl items-center rounded-lg">  
                 <input type="search" name="q" placeholder="Search items..." aria-label="Search marketplace" autocomplete="off" class="flex-1 w-full min-w-0 px-3 py-2 text-xs sm:text-sm md:text-sm lg:text-base outline-none hover-bg-gray-300 ">
-                
                 <button type="submit" class="bg-gray-100 hover:bg-gray-200 px-3 sm:px-5 py-2 sm:py-2.5 transition-colors flex items-center justify-center shrink-0 border-l border-gray-300">
                     <img src="{{ url_for('static', filename='css/photos/search.png') }}" alt="Search Icon" class="h-4 sm:h-5 object-contain">
                 </button>
-
             </form>
 
         </div>

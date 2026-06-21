@@ -346,7 +346,7 @@ def item_post():
             print(f"Item post failed: {e}")
             return redirect (url_for('item_post'))
     else:
-        return render_template('item_post.html', user=current_user)
+        return render_template('item_post.html', user=current_user, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/cart')
 def cart():
@@ -389,7 +389,7 @@ with app.app_context():
 def item_market():
     item_info = Products.query.all()
 
-    return render_template('item_market.html', item_list=item_info)
+    return render_template('item_market.html', item_list=item_info, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
     
 @app.route('/item/<item_id>')
 @login_required

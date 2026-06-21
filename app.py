@@ -127,10 +127,6 @@ def search():
     search_query = request.args.get('q', '')
     category_filter = request.args.get('category', 'all')
 
-    #grab the price filters from the URL (and convert them to floats/decimals)
-    min_price = request.args.get('min_price', type=float)
-    max_price = request.args.get('max_price', type=float)
-
     query = Products.query 
 
     #category filter
@@ -140,12 +136,6 @@ def search():
     #search filter
     if search_query:
         query = query.filter(Products.item_name.ilike(f'%{search_query}%'))
-
-    #Price Filters
-    if min_price is not None:
-        query = query.filter(Products.price >= min_price)
-    if max_price is not None:
-        query = query.filter(Products.price <= max_price)
 
     matching_items = query.all()
     return render_template('item_market.html', item_list=matching_items)
@@ -160,9 +150,9 @@ def chat_list():
     try:
         user_chat_data = load_user_data(current_user.username)
         active_chat_usernames = list(user_chat_data.keys())
-        active_chat_users = User.query.filter(User.username.in_(active_chat_usernames)).all()
     except Exception as e:
         active_chat_usernames = []
+
 
     if search_query:
         # 2. If they searched for a name, filter the database
@@ -174,7 +164,7 @@ def chat_list():
         # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users, active_chat_users=active_chat_users)
+    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
@@ -294,7 +284,6 @@ def profile_edit():
     else:
         return render_template('profile_edit.html', user=current_user)
     
-    
 @app.route('/item_post/', methods=['GET', 'POST'])
 @login_required
 def item_post():
@@ -393,17 +382,13 @@ def item_market():
 @login_required
 def item(item_id):
     target_item = Products.query.get_or_404(item_id)
-    seller = User.query.get(target_item.user_id)
 
-    
-    return render_template('item.html', item=target_item, seller=seller, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
+    return render_template('item.html', item=target_item, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
 @login_required
 def item_edit(item_id):
     target_item = Products.query.get_or_404(item_id)
-
-    seller = User.query.get(target_item.user_id)
 
     if request.method == 'POST':
         item_name = request.form.get('item_name')

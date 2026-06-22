@@ -11,20 +11,20 @@
 <body>
 
 <div class="nav flex flex-wrap md:flex-nowrap items-center justify-between px-4 sm:px-6 py-1 mt-1 gap-4 bg-white">
-    <a href="/home">
+    <a href="/home" class="hover:opacity-90 transition-opacity">
             <img src="{{ url_for('static', filename='css/photos/mmu-logo.png')}}" alt="MMU Logo" class="w-36 sm:w-46 md:w-50 lg:w-54 h-auto object-contain my-2">
         </a>
 
-    <div class="flex items-center gap-7 sm:gap-9 md,lg:gap-10 flex-shrink-0 order-2 md:order-3">
+    <div class="flex items-center gap-7 sm:gap-9 md,lg:gap-10 flex-shrink-0 order-2 md:order-3 hover:opacity-90 transition-opacity">
         <a href="/home" class="w-8 h-8 block" style="text-decoration: none;">
             <img src="{{ url_for('static', filename='css/photos/home.png') }}" alt="Home Icon">
         </a>
             
-        <a href="/profile" class="hover:opacity-75 transition-opacity" style="text-decoration: none;">
+        <a href="/profile" class="hover:opacity-90 transition-opacity" style="text-decoration: none;">
             {% if current_user.profile_pic %}
-                <img src="{{ url_for('static', filename='css/pictures/' + current_user.profile_pic) }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+                <img src="{{ url_for('static', filename='css/pictures/' + current_user.profile_pic) }}" alt="Profile Icon" class="w-10 h-10 object-cover rounded-full sm:rounded-full md:rounded-full lg:rounded-full border-2 border-transparent">
             {% else %}
-                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
+                <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" alt="Profile Icon" class="rounded-full w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
             {% endif %}
         </a>
     </div>

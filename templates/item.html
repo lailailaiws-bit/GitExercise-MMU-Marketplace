@@ -11,12 +11,20 @@
     {% include 'item_market_header.html' %}
 
     <div class="grid grid-cols-2 col-span-2 justify-center items-start bg-white pt-6 pb-6 pr-15 mx-auto max-w-7xl rounded-lg shadow-xl/30">
-            <div class="flex flex-col justify-center items-center">
+
+            <div class="flex flex-col justify-center items-center w-full px-4">
                 {% if item.item_pic %}
                 <img src="{{url_for('static', filename='css/pictures/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
                 {% else %}
                 <img src="{{url_for('static', filename='css/photos/user-icon')}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
-                {%  endif %}
+                {% endif %}
+
+                {% if current_user.id != item.user_id %}
+                <a href="{{ url_for('chat_with', target_username=seller.username) }}" class="mt-10 flex items-center justify-center gap-2 bg-rose-400 hover:bg-red-400 text-white font-bold py-3 px-4 rounded-lg" style="text-decoration: none;">
+                   <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat" class="w-6 h-6"> 
+                   Chat with {{ seller.username }}
+                </a>
+                {% endif %}
             </div>
             
             <div class="flex flex-col justify-start items-start gap-6 text-left">

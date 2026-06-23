@@ -16,18 +16,6 @@
     
     <div class="wrapper3" style="margin-top: 60px;">
         <form action="/item_post" method="POST" enctype="multipart/form-data" class="post_container">
-
-            <div class="flex flash_container">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <div class="flash">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                    </div>
-                    {% endif %}
-                {% endwith %}
-            </div>
             
             <div class="post_block">
                 <h2>Post an Item!</h2>
@@ -50,10 +38,10 @@
                             <div class="item_category">
                                 <select name="item_category" id="item_category" required>
                                     <option value="" disabled selected>Select a Category</option>
-                                    <option value="electronics">Electronics</option>
-                                    <option value="fashion">Fashion</option>
-                                    <option value="home">Home & Garden</option>
-                                    <option value="accessories">Accessories</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Home & Garden">Home & Garden</option>
+                                    <option value="Accessories">Accessories</option>
                                 </select>
                             </div>
                         </div>
@@ -61,7 +49,7 @@
                     <div class="column5">
                         <p>4. Item's description:</p>
                         <div class="item_description">
-                            <input type="text" name="item_description" id="item_description" placeholder="..." required>
+                            <textarea type="text" name="item_description" id="item_description" placeholder="..." rows="3" required></textarea>
                         </div>
                     </div>
                     <div class="item_pic">
@@ -99,20 +87,22 @@
                 </div>
             </div>
 
-            <p class="submit-button">
-                <input type="submit" class="button" value="Submit">
-            </p>
+            <div>
+                <p class="submit-button">
+                    <input type="submit" class="button" value="Submit">
+                </p>
 
-            <div class="flash_container">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <div class="flash pt-20">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                    </div>
-                    {% endif %}
-                {% endwith %}
+                <div class="flash_container">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <div class="flash pt-20">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
             </div>
         </form>
     </div>

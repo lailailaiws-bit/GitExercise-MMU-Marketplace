@@ -60,7 +60,6 @@ def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 
-# chat system
 CHAT_DIR = 'chats folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
@@ -84,14 +83,12 @@ def save_message(sender, receiver, content):
         'time': datetime.now().strftime("%H:%M")
     }
 
-    # 1. Save to Sender's outbox
     sender_data = load_user_data(sender)
     if receiver not in sender_data:
         sender_data[receiver] = []
     sender_data[receiver].append(message_obj)
     save_user_data(sender, sender_data)
 
-    # 2. Save to Receiver's inbox
     receiver_data = load_user_data(receiver)
     if sender not in receiver_data:
         receiver_data[sender] = []
@@ -107,7 +104,6 @@ def save_user_data(username, data):
         f.write(spaced_json_string)
         
 def load_messages(current, target):
-    # Loads the specific conversation between two users."""
     data = load_user_data(current)
     return data.get(target, [])
 
@@ -128,21 +124,17 @@ def search():
     search_query = request.args.get('q', '')
     category_filter = request.args.get('category', 'all')
 
-    #grab the price filters from the URL (and convert them to floats/decimals)
     min_price = request.args.get('min_price', type=float)
     max_price = request.args.get('max_price', type=float)
 
     query = Products.query 
 
-    #category filter
     if category_filter and category_filter != 'all':
         query = query.filter(Products.item_category.ilike(category_filter))
 
-    #search filter
     if search_query:
         query = query.filter(Products.item_name.ilike(f'%{search_query}%'))
 
-    #Price Filters
     if min_price is not None:
         query = query.filter(Products.price >= min_price)
     if max_price is not None:
@@ -154,10 +146,8 @@ def search():
 @app.route('/chat')
 @login_required 
 def chat_list():
-    # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
     
-    #load and display active chats
     try:
         user_chat_data = load_user_data(current_user.username)
         active_chat_usernames = list(user_chat_data.keys())
@@ -166,13 +156,11 @@ def chat_list():
         active_chat_usernames = []
 
     if search_query:
-        # 2. If they searched for a name, filter the database
         users = User.query.filter(
             User.id != current_user.id,
             User.username.ilike(f"%{search_query}%")
         ).all()
     else:
-        # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
     return render_template('chat_list.html', users=users, active_chat_users=active_chat_users)
@@ -182,14 +170,12 @@ def chat_list():
 def chat_with(target_username):
     target_user = User.query.filter_by(username=target_username).first_or_404()
 
-    # Handle sending a new message
     if request.method == 'POST':
         content = request.form.get('content')
         if content:
             save_message(current_user.username, target_username, content)
         return redirect(url_for('chat_with', target_username=target_username) + '#bottom') # URL Anchor Hack
     
-    # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)
 
     try:
@@ -226,7 +212,6 @@ def register():
             flash('All fields are required.', 'error')
             return redirect(url_for('register'))
 
-        # Check if user already exists
         if User.query.filter_by(username=username).first():
             flash('Username already exist.')
             return redirect(url_for('register'))

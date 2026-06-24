@@ -146,9 +146,10 @@ input.item_pic_input{
     display: flex;
     width: 100%;
     position: absolute;
-    bottom: -69px;
+    bottom: -145px;
     flex-direction: column;
     align-items: center;
+    left: -15px;
 }
 
 .flash{

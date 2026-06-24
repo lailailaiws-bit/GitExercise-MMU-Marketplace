@@ -1,13 +1,12 @@
 import json
 import os
+import sqlite3
 from datetime import datetime
-
 from flask import Flask, flash, render_template, request, redirect, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from data import MOCK_PRODUCTS
 import uuid
 from datetime import datetime
 
@@ -15,7 +14,8 @@ app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get('DATABASE_URL', 'sqlite:///site.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 UPLOAD_FOLDER = 'static/css/pictures'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -48,6 +48,9 @@ class Products(db.Model):
     price = db.Column(db.Float, nullable=False)
     item_description = db.Column(db.String(150), nullable=False)
     item_category = db.Column(db.String(50), nullable=False)
+    location = db.Column(db.String(50), nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
+    latitude = db.Column(db.Float, nullable=True)
     date_created = db.Column(db.DateTime, nullable=True, default=datetime.now)
     item_pic = db.Column(db.String(), nullable=False)
     seller = db.relationship('User', backref='products')
@@ -57,7 +60,6 @@ def load_user(user_id):
     return db.session.get(User, int(user_id))
 
 
-# chat system
 CHAT_DIR = 'chats folder'
 os.makedirs(CHAT_DIR, exist_ok=True)
 
@@ -81,14 +83,12 @@ def save_message(sender, receiver, content):
         'time': datetime.now().strftime("%H:%M")
     }
 
-    # 1. Save to Sender's outbox
     sender_data = load_user_data(sender)
     if receiver not in sender_data:
         sender_data[receiver] = []
     sender_data[receiver].append(message_obj)
     save_user_data(sender, sender_data)
 
-    # 2. Save to Receiver's inbox
     receiver_data = load_user_data(receiver)
     if sender not in receiver_data:
         receiver_data[sender] = []
@@ -104,7 +104,6 @@ def save_user_data(username, data):
         f.write(spaced_json_string)
         
 def load_messages(current, target):
-    # Loads the specific conversation between two users."""
     data = load_user_data(current)
     return data.get(target, [])
 
@@ -125,15 +124,21 @@ def search():
     search_query = request.args.get('q', '')
     category_filter = request.args.get('category', 'all')
 
+    min_price = request.args.get('min_price', type=float)
+    max_price = request.args.get('max_price', type=float)
+
     query = Products.query 
 
-    #category filter
     if category_filter and category_filter != 'all':
         query = query.filter(Products.item_category.ilike(category_filter))
 
-    #search filter
     if search_query:
         query = query.filter(Products.item_name.ilike(f'%{search_query}%'))
+
+    if min_price is not None:
+        query = query.filter(Products.price >= min_price)
+    if max_price is not None:
+        query = query.filter(Products.price <= max_price)
 
     matching_items = query.all()
     return render_template('item_market.html', item_list=matching_items)
@@ -141,42 +146,36 @@ def search():
 @app.route('/chat')
 @login_required 
 def chat_list():
-    # 1. Grab the search query from the URL (e.g., ?q=Alice)
     search_query = request.args.get('q')
     
-    #load and display active chats
     try:
         user_chat_data = load_user_data(current_user.username)
         active_chat_usernames = list(user_chat_data.keys())
+        active_chat_users = User.query.filter(User.username.in_(active_chat_usernames)).all()
     except Exception as e:
         active_chat_usernames = []
 
-
     if search_query:
-        # 2. If they searched for a name, filter the database
         users = User.query.filter(
             User.id != current_user.id,
             User.username.ilike(f"%{search_query}%")
         ).all()
     else:
-        # 3. If the search bar is empty, load everyone normally
         users = User.query.filter(User.id != current_user.id).all()
 
-    return render_template('chat_list.html', users=users, active_chat_usernames=active_chat_usernames)
+    return render_template('chat_list.html', users=users, active_chat_users=active_chat_users)
 
 @app.route('/chat/<target_username>' , methods=['GET', 'POST'])
 @login_required
 def chat_with(target_username):
     target_user = User.query.filter_by(username=target_username).first_or_404()
 
-    # Handle sending a new message
     if request.method == 'POST':
         content = request.form.get('content')
         if content:
             save_message(current_user.username, target_username, content)
         return redirect(url_for('chat_with', target_username=target_username) + '#bottom') # URL Anchor Hack
     
-    # Load messages and display the chat
     user_messages = load_messages(current_user.username, target_username)
 
     try:
@@ -213,7 +212,6 @@ def register():
             flash('All fields are required.', 'error')
             return redirect(url_for('register'))
 
-        # Check if user already exists
         if User.query.filter_by(username=username).first():
             flash('Username already exist.')
             return redirect(url_for('register'))
@@ -275,24 +273,13 @@ def profile_edit():
             db.session.commit()
             flash("Update successful")
             return redirect(url_for("profile_edit"))
-        except:
+        except Exception as e:
             flash("Error")
+            print(f"Profile update failed: {e}")
             return redirect(url_for("profile_edit"))
     else:
         return render_template('profile_edit.html', user=current_user)
     
-# @app.route('/delete')
-# @login_required
-# def delete():
-#     try:
-#         db.session.delete(current_user)
-#         db.session.commit()
-#         flash('Account Deleted!')
-#         return redirect (url_for('home'))
-
-#     except:
-#         flash('Error...Process Unsuccessful!')
-#         return redirect (url_for('home'))
     
 @app.route('/item_post/', methods=['GET', 'POST'])
 @login_required
@@ -302,6 +289,9 @@ def item_post():
         price = request.form.get('price')
         description = request.form.get('item_description')
         item_category = request.form.get('item_category')
+        location = request.form.get('location')
+        longitude = request.form.get('longitude')
+        latitude = request.form.get('latitude')
 
         if not item_name or not price or not description:
             flash('Please fill out the item detail.')
@@ -324,7 +314,10 @@ def item_post():
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_picname
+            item_pic = item_picname,
+            location = location,
+            longitude = float(longitude) if longitude else None,
+            latitude = float(latitude) if latitude else None
         )
 
         try:
@@ -332,19 +325,12 @@ def item_post():
             flash('Item posted!')
             db.session.commit()
             return redirect (url_for('item_post'))
-        except:
+        except Exception as e:
+            flash('Failed to post item.')
+            print(f"Item post failed: {e}")
             return redirect (url_for('item_post'))
     else:
-        return render_template('item_post.html', user=current_user)
-
-@app.route('/product/<int:product_id>')
-def product_detail(product_id):
-    product = next((item for item in MOCK_PRODUCTS if item['id'] == product_id), None)
-
-    if product is None:
-        abort(404)
-
-    return render_template('product_detail.html', product=product, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
+        return render_template('item_post.html', user=current_user, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/cart')
 def cart():
@@ -356,7 +342,7 @@ def about():
 
 @app.route('/contact')
 def contact():
-    return render_template('footer/contact.html')
+    return render_template('footer/NV_contact.html')
 
 @app.route('/ourstores')
 def ourstores():
@@ -364,49 +350,105 @@ def ourstores():
 
 with app.app_context():
     db.create_all()
+
+    db_path = os.path.join(app.instance_path, 'site.db')
+    if os.path.exists(db_path):
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        cursor.execute("PRAGMA table_info(items)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+
+        if 'location' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN location VARCHAR(50)")
+        if 'longitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN longitude FLOAT")
+        if 'latitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN latitude FLOAT")
+
+        connection.commit()
+        connection.close()
     
 @app.route('/item_market/')
 @login_required
 def item_market():
     item_info = Products.query.all()
 
-    return render_template('item_market.html', item_list=item_info)
+    return render_template('item_market.html', item_list=item_info, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
     
 @app.route('/item/<item_id>')
 @login_required
 def item(item_id):
     target_item = Products.query.get_or_404(item_id)
+    seller = User.query.get(target_item.user_id)
 
-    return render_template('item.html', item=target_item)
+    
+    return render_template('item.html', item=target_item, seller=seller, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/item_edit/<item_id>', methods=['GET', 'POST'])
 @login_required
 def item_edit(item_id):
     target_item = Products.query.get_or_404(item_id)
 
+    seller = User.query.get(target_item.user_id)
+
     if request.method == 'POST':
-        target_item.item_name = request.form.get('item_name')
-        target_item.price = request.form.get('price')
-        target_item.item_description = request.form.get('item_description')
+        item_name = request.form.get('item_name')
+        if item_name is not None and item_name != '':
+            target_item.item_name = item_name
+
+        price_val = request.form.get('price')
+        if price_val is not None and price_val != '':
+            try:
+                target_item.price = float(price_val)
+            except ValueError:
+                flash('Invalid price value.')
+
+        item_description = request.form.get('item_description')
+        if item_description is not None:
+            target_item.item_description = item_description
+
+        item_category = request.form.get('item_category')
+        if item_category:
+            target_item.item_category = item_category
+
+        longitude_val = request.form.get('longitude')
+        latitude_val = request.form.get('latitude')
+        if longitude_val:
+            try:
+                target_item.longitude = float(longitude_val)
+            except ValueError:
+                pass
+        if latitude_val:
+            try:
+                target_item.latitude = float(latitude_val)
+            except ValueError:
+                pass
 
         if 'item_pic' in request.files:
             item_pic = request.files.get('item_pic')
 
             if item_pic and item_pic.filename != '':
-                item_filename = secure_filename(item_pic.filename)
-                item_picname = str (uuid.uuid1()) + '_' + item_filename
-                item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
-                target_item.item_pic = item_picname
+                try:
+                    item_filename = secure_filename(item_pic.filename)
+                    item_picname = str(uuid.uuid1()) + '_' + item_filename
+                    os.makedirs(app.config.get("UPLOAD_FOLDER", ""), exist_ok=True)
+                    item_pic.save(os.path.join(app.config["UPLOAD_FOLDER"], item_picname))
+                    target_item.item_pic = item_picname
+                except Exception as e:
+                    flash('Failed to save uploaded image.')
+                    print(f"Error saving uploaded image: {e}")
 
         try:
             db.session.commit()
             flash('Your item information has been edited successful')
             return redirect(url_for('item_edit', item_id=item_id))
-        except:
+        except Exception as e:
+            flash('Failed to update item.')
+            print(f"Item edit failed: {e}")
             return redirect(url_for('item_edit', item_id=item_id))
 
     else:
-        return render_template('item_edit.html', item = target_item)
+        return render_template('item_edit.html', item=target_item, mapbox_token=os.environ.get('MAPBOX_TOKEN', ''))
 
 @app.route('/delete/<item_id>')
 @login_required
@@ -417,7 +459,8 @@ def delete(item_id):
         db.session.commit()
         return redirect (url_for('home'))
 
-    except:
+    except Exception as e:
+        print(f"Delete failed: {e}")
         return redirect (url_for('home'))
     
 @app.route('/my_item/')
@@ -427,6 +470,8 @@ def my_item():
 
     return render_template('my_item.html', item=my_products)
     
+with app.app_context():
+    db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=True)

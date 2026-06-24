@@ -11,12 +11,20 @@
     {% include 'item_market_header.html' %}
 
     <div class="grid grid-cols-2 col-span-2 justify-center items-start bg-white pt-6 pb-6 pr-15 mx-auto max-w-7xl rounded-lg shadow-xl/30">
-            <div class="flex flex-col justify-center items-center">
+
+            <div class="flex flex-col justify-center items-center w-full px-4">
                 {% if item.item_pic %}
                 <img src="{{url_for('static', filename='css/pictures/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
                 {% else %}
                 <img src="{{url_for('static', filename='css/photos/user-icon')}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
-                {%  endif %}
+                {% endif %}
+
+                {% if current_user.id != item.user_id %}
+                <a href="{{ url_for('chat_with', target_username=seller.username) }}" class="mt-10 flex items-center justify-center gap-2 bg-rose-400 hover:bg-red-400 text-white font-bold py-3 px-4 rounded-lg" style="text-decoration: none;">
+                   <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat" class="w-6 h-6"> 
+                   Chat with {{ seller.username }}
+                </a>
+                {% endif %}
             </div>
             
             <div class="flex flex-col justify-start items-start gap-6 text-left">
@@ -24,19 +32,24 @@
                     <div class="text-4xl font-bold">{{item.item_name}}</div>
                     <a href="{{url_for('item_market')}}" class="text-blue-600 font-semibold hover:underline pl-10">← Back</a>
                 </div>
-                <div class="grid grid-cols-2 grid-rows-2 gap-6 space-x-6 border-t-2 border-black">
-                    <div class="text-2xl font-semibold">Price: RM{{item.price}}</div>
-                    <div class="text-2xl font-medium">Seller:- {{item.seller.username}}</div>
+                <div class="grid grid-cols-2 grid-rows-2 gap-6 space-x-6 border-t-2 border-black pt-6">
+                    <div class="text-2xl font-medium">Price: RM {{item.price}}</div>
+                    <div class="text-2xl font-medium">Seller: {{item.seller.username}}</div>
                     <div class="text-1xl font-medium">Category: {{item.item_category}}</div>
-                    <div class="text-1xl font-medium">Contact Number:- {{item.seller.contact_number}}</div>
+                    <div class="text-1xl font-medium">Contact Number: {{item.seller.contact_number}}</div>
                 </div>
                 <p class="font-semibold">Description:</p>
                 <div class="bg-gray-100 text-left w-full p-6 rounded-lg h-40">
                     <h3>{{item.item_description}}</h3>
                 </div>
 
+                <div class="text-1xl font-medium mt-4 pb-0">Item Location: </div>
+                <div class="w-full h-64 rounded-md overflow-hidden border-slate-700 border">
+                    <div id="map" class="w-full h-full bg-gray-100"></div>
+                </div>
+
                 {% if current_user.id == item.user_id %}
-                <div class="grid grid-cols-2 pl-2">
+                <div class="grid grid-cols-2 pl-2 mt-6">
                         <a href="{{url_for('delete', item_id=item.item_id)}}" class="text-red-600 font-semibold">
                         Delete item
                         </a>
@@ -57,18 +70,21 @@
     const itemLng = {{ item.longitude | default(101.6420, true) }};
     const itemLat = {{ item.latitude | default(2.9270, true) }};
 
-    const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v12', 
-        center: [itemLng, itemLat], 
-        zoom: 15 
-    });
+    if (typeof mapboxgl !== 'undefined' && mapboxgl.Map) {
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12', 
+            center: [itemLng, itemLat], 
+            zoom: 15 
+        });
 
-    const marker = new mapboxgl.Marker({ color: '#FF0000' })
-        .setLngLat([itemLng, itemLat])
-        .addTo(map);
+        const marker = new mapboxgl.Marker({ color: '#FF0000' })
+            .setLngLat([itemLng, itemLat])
+            .addTo(map);
 
-    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+        map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    }
+    
 </script>
 
 </body>

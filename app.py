@@ -314,10 +314,10 @@ def item_post():
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_picname,
             location = location,
             longitude = float(longitude) if longitude else None,
-            latitude = float(latitude) if latitude else None
+            latitude = float(latitude) if latitude else None,
+            item_pic = item_picname
         )
 
         try:

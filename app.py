@@ -212,7 +212,6 @@ def register():
             flash('All fields are required.', 'error')
             return redirect(url_for('register'))
 
-        # Check if user already exists
         if User.query.filter_by(username=username).first():
             flash('Username already exist.')
             return redirect(url_for('register'))
@@ -349,26 +348,6 @@ def contact():
 def ourstores():
     return render_template('home.html')
 
-with app.app_context():
-    db.create_all()
-
-    db_path = os.path.join(app.instance_path, 'site.db')
-    if os.path.exists(db_path):
-        connection = sqlite3.connect(db_path)
-        cursor = connection.cursor()
-        cursor.execute("PRAGMA table_info(items)")
-        existing_columns = {row[1] for row in cursor.fetchall()}
-
-        if 'location' not in existing_columns:
-            cursor.execute("ALTER TABLE items ADD COLUMN location VARCHAR(50)")
-        if 'longitude' not in existing_columns:
-            cursor.execute("ALTER TABLE items ADD COLUMN longitude FLOAT")
-        if 'latitude' not in existing_columns:
-            cursor.execute("ALTER TABLE items ADD COLUMN latitude FLOAT")
-
-        connection.commit()
-        connection.close()
-    
 @app.route('/item_market/')
 @login_required
 def item_market():
@@ -473,6 +452,24 @@ def my_item():
     
 with app.app_context():
     db.create_all()
+
+    db_path = os.path.join(app.instance_path, 'site.db')
+    if os.path.exists(db_path):
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        cursor.execute("PRAGMA table_info(items)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+
+        if 'location' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN location VARCHAR(50)")
+        if 'longitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN longitude FLOAT")
+        if 'latitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN latitude FLOAT")
+
+        connection.commit()
+        connection.close()
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

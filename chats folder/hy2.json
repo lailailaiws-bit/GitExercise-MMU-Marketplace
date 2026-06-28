@@ -1,5 +1,5 @@
 {
-    "hy2": [
+    "hy": [
         {
             "content": "HI",
             "recipient": "hy",
@@ -11,15 +11,6 @@
             "recipient": "hy2",
             "sender": "hy",
             "time": "18:30"
-        }
-    ],
-
-    "lws": [
-        {
-            "content": "hi",
-            "recipient": "lws",
-            "sender": "hy",
-            "time": "20:49"
         }
     ]
 }

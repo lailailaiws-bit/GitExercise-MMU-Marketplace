@@ -27,7 +27,7 @@
                     <div class="p-2 flex items-center gap-3 bg-white border-b border-gray-100">
 
                         {% if items.seller.profile_pic %}
-                        <img src="{{url_for('static', filename='css/Website_Icon/' + items.seller.profile_pic)}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover ">
+                        <img src="{{url_for('static', filename='css/pictures/' + items.seller.profile_pic)}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover ">
                         {% else %}
                         <img src="{{url_for('static', filename='css/Website_Icon/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
                         {% endif %}
@@ -38,7 +38,7 @@
                     </div>
                     
                     <div class="bg-gray-100 flex items-center justify-center overflow-hidden border-b border-gray-100" >
-                        <img src="{{ url_for('static', filename='css/Website_Icon/' + items.item_pic) }}" alt="Product Image" class="w-40 h-40 object-contain opacity-100 group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ url_for('static', filename='css/pictures/' + items.item_pic) }}" alt="Product Image" class="w-40 h-40 object-contain opacity-100 group-hover:scale-105 transition-transform duration-500">
                     </div>
                     
                     <div class="p-4 flex flex-col flex-grow">

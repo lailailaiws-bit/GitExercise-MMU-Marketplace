@@ -14,7 +14,7 @@
                     {% if chat_user.profile_pic %}
                         <img src="{{ url_for('static', filename='css/pictures/' + chat_user.profile_pic) }}" alt="Profile Icon" class="w-10 h-10 mr-2 object-cover rounded-full border-2 border-transparent shadow-sm shrink-0">
                     {% else %}
-                        <img src="{{ url_for('static', filename='css/photos/user-icon.png') }}" class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0">
+                        <img src="{{ url_for('static', filename='css/Website_Icon/user-icon.png') }}" class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0">
                     {% endif %}
                     <span class="font-bold text-gray-800 ">{{ chat_user.username }}</span>
                 </a>

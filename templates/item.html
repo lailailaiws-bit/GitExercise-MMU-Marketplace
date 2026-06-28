@@ -15,7 +15,7 @@
 
             <div class="flex flex-col justify-center items-center w-full px-4">
                 {% if item.item_pic %}
-                <img src="{{url_for('static', filename='css/Website_Icon/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
+                <img src="{{url_for('static', filename='css/pictures/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
                 {% else %}
                 <img src="{{url_for('static', filename='css/Website_Icon/user-icon.png')}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
                 {% endif %}

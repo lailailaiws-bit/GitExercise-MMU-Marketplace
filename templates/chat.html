@@ -23,7 +23,7 @@
             
             <a href="/profile" class="hover:opacity-90 transition-opacity" style="text-decoration: none;">
             {% if current_user.profile_pic %}
-                <img src="{{ url_for('static', filename='css/Website_Icon/' + current_user.profile_pic) }}" alt="Profile Icon" class="w-10 h-10 object-cover rounded-full sm:rounded-full md:rounded-full lg:rounded-full border-2 border-transparent">
+                <img src="{{ url_for('static', filename='css/pictures/' + current_user.profile_pic) }}" alt="Profile Icon" class="w-10 h-10 object-cover rounded-full sm:rounded-full md:rounded-full lg:rounded-full border-2 border-transparent">
             {% else %}
                 <img src="{{ url_for('static', filename='css/Website_Icon/user-icon.png') }}" alt="Profile Icon" class="rounded-full w-7.5 h-7.5 sm:w-8.5 sm:h-8.5 md:h-8.5 md:w-8.5 lg:w-8.5 lg:h-8.5 object-contain">
             {% endif %}
@@ -56,7 +56,7 @@
                  </div>
                 
                 {% if current_user.profile_pic %}
-                     <img src="{{url_for('static', filename='css/Website_Icon/' + current_user.profile_pic)}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0">
+                     <img src="{{url_for('static', filename='css/pictures/' + current_user.profile_pic)}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0">
                 {% else %}
                      <img src="{{url_for('static', filename='css/Website_Icon/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
                 {% endif %}
@@ -67,7 +67,7 @@
               <div class="flex items-end gap-2 mr-auto max-w-[80%]">
 
                 {% if target_user.profile_pic %}
-                    <img src="{{url_for('static', filename='css/Website_Icon/' + target_user.profile_pic)}}" class="w-10 h-10 object-cover rounded-full sm:rounded-full md:rounded-full lg:rounded-full border-2 border-transparent">
+                    <img src="{{url_for('static', filename='css/pictures/' + target_user.profile_pic)}}" class="w-10 h-10 object-cover rounded-full sm:rounded-full md:rounded-full lg:rounded-full border-2 border-transparent">
                 {% else %}
                     <img src="{{url_for('static', filename='css/Website_Icon/user-icon.png')}}" class="w-9 h-9 mr-0 mb-1 rounded-full object-cover shrink-0 shadow-sm">
                 {% endif %}

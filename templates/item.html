@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
-    <title>Item's name</title>
+    <link rel="icon" href="{{ url_for('static', filename='css/Website_Icon/favicon.png') }}" type="image/png" sizes="32x32">
+    <title>{{ item.item_name }} | MMU Marketplace</title>
 </head>
 <body>
     {% include 'item_market_header.html' %}
@@ -16,12 +17,12 @@
                 {% if item.item_pic %}
                 <img src="{{url_for('static', filename='css/pictures/' + item.item_pic)}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
                 {% else %}
-                <img src="{{url_for('static', filename='css/photos/user-icon')}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
+                <img src="{{url_for('static', filename='css/Website_Icon/user-icon.png')}}" class="w-100 h-100 rounded-xl border-4 border-gray-800">
                 {% endif %}
 
                 {% if current_user.id != item.user_id %}
                 <a href="{{ url_for('chat_with', target_username=seller.username) }}" class="mt-10 flex items-center justify-center gap-2 bg-rose-400 hover:bg-red-400 text-white font-bold py-3 px-4 rounded-lg" style="text-decoration: none;">
-                   <img src="{{ url_for('static', filename='css/photos/chat-icon.png') }}" alt="Chat" class="w-6 h-6"> 
+                   <img src="{{ url_for('static', filename='css/Website_Icon/chat-icon.png') }}" alt="Chat" class="w-6 h-6"> 
                    Chat with {{ seller.username }}
                 </a>
                 {% endif %}

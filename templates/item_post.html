@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/item_post.css')}}">
-    <title>Product Post</title>
+    <title>Post Item | MMU Marketplace</title>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="icon" href="{{ url_for('static', filename='css/Website_Icon/favicon.png') }}" type="image/png" sizes="32x32">
 </head>
 
 <body style="background-color: #f0f0f0;">
@@ -92,17 +93,6 @@
                     <input type="submit" class="button" value="Submit">
                 </p>
 
-                <div class="flash_container">
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        <div class="flash pt-20">
-                        {% for message in messages %}
-                            <p>{{ message }}</p>
-                        {% endfor %}
-                        </div>
-                        {% endif %}
-                    {% endwith %}
-                </div>
             </div>
         </form>
     </div>
@@ -126,7 +116,6 @@
     const locationSelect = document.getElementById('location');
     const inputLng = document.getElementById('longitude');
     const inputLat = document.getElementById('latitude');
-    const locationDisplay = document.getElementById('location-display');
 
     const landmarkData = {
         "dtc": { lng: 101.64203435895955, lat: 2.928933762357152 },
@@ -161,7 +150,6 @@
         } else {
             inputLng.value = "";
             inputLat.value = "";
-            locationDisplay.innerText = "";
         }
     });
 

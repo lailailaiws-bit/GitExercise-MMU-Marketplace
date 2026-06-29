@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Item</title>
+    <link rel="icon" href="{{ url_for('static', filename='css/Website_Icon/favicon.png') }}" type="image/png" sizes="32x32">
+    <title>My Items | MMU Marketplace</title>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                         {% if items.seller.profile_pic %}
                         <img src="{{url_for('static', filename='css/pictures/' + items.seller.profile_pic)}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover ">
                         {% else %}
-                        <img src="{{url_for('static', filename='css/photos/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
+                        <img src="{{url_for('static', filename='css/Website_Icon/user-icon.png')}}" class="w-10 h-10 mr-0 mb-1 rounded-full object-cover shrink-0">
                         {% endif %}
                         
                         <span class="text-sm font-bold text-gray-800 group-hover:text-blue-800 transition-colors">

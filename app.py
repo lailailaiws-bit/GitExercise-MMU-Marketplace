@@ -137,6 +137,7 @@ def search():
 
     if min_price is not None:
         query = query.filter(Products.price >= min_price)
+        
     if max_price is not None:
         query = query.filter(Products.price <= max_price)
 
@@ -174,8 +175,8 @@ def chat_with(target_username):
         content = request.form.get('content')
         if content:
             save_message(current_user.username, target_username, content)
-        return redirect(url_for('chat_with', target_username=target_username) + '#bottom') # URL Anchor Hack
-    
+        return redirect(url_for('chat_with', target_username=target_username) + '#bottom')
+
     user_messages = load_messages(current_user.username, target_username)
 
     try:
@@ -314,10 +315,10 @@ def item_post():
             item_description = description,
             user_id = current_user.id,
             item_category = item_category,
-            item_pic = item_picname,
             location = location,
             longitude = float(longitude) if longitude else None,
-            latitude = float(latitude) if latitude else None
+            latitude = float(latitude) if latitude else None,
+            item_pic = item_picname
         )
 
         try:
@@ -348,26 +349,6 @@ def contact():
 def ourstores():
     return render_template('home.html')
 
-with app.app_context():
-    db.create_all()
-
-    db_path = os.path.join(app.instance_path, 'site.db')
-    if os.path.exists(db_path):
-        connection = sqlite3.connect(db_path)
-        cursor = connection.cursor()
-        cursor.execute("PRAGMA table_info(items)")
-        existing_columns = {row[1] for row in cursor.fetchall()}
-
-        if 'location' not in existing_columns:
-            cursor.execute("ALTER TABLE items ADD COLUMN location VARCHAR(50)")
-        if 'longitude' not in existing_columns:
-            cursor.execute("ALTER TABLE items ADD COLUMN longitude FLOAT")
-        if 'latitude' not in existing_columns:
-            cursor.execute("ALTER TABLE items ADD COLUMN latitude FLOAT")
-
-        connection.commit()
-        connection.close()
-    
 @app.route('/item_market/')
 @login_required
 def item_market():
@@ -472,6 +453,24 @@ def my_item():
     
 with app.app_context():
     db.create_all()
+
+    db_path = os.path.join(app.instance_path, 'site.db')
+    if os.path.exists(db_path):
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        cursor.execute("PRAGMA table_info(items)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+
+        if 'location' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN location VARCHAR(50)")
+        if 'longitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN longitude FLOAT")
+        if 'latitude' not in existing_columns:
+            cursor.execute("ALTER TABLE items ADD COLUMN latitude FLOAT")
+
+        connection.commit()
+        connection.close()
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

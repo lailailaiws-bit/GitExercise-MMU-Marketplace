@@ -50,13 +50,11 @@
             <div class="flex flex-col gap-1">
                 <label class="font-bold text-gray-700">Item Category</label>
                 <select name="item_category" id="item_category" required class="px-4 py-2 border rounded-md">
-                    <option value="" disabled {% if not item.item_category %}selected{% endif %}>Select a category</option>
-                    <option value="Electronics" {% if item.item_category == 'Electronics' %}selected{% endif %}>Electronics</option>
-                    <option value="Books" {% if item.item_category == 'Books' %}selected{% endif %}>Books</option>
-                    <option value="Clothing" {% if item.item_category == 'Clothing' %}selected{% endif %}>Clothing</option>
-                    <option value="Furniture" {% if item.item_category == 'Furniture' %}selected{% endif %}>Furniture</option>
-                    <option value="Accessories" {% if item.item_category == 'Accessories' %}selected{% endif %}>Accessories</option>
-                    <option value="Other" {% if item.item_category == 'Other' %}selected{% endif %}>Other</option>
+                    <option value="" disabled selected>Select a Category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Home & Garden">Home & Garden</option>
+                    <option value="Accessories">Accessories</option>
                 </select>
             </div>
 

@@ -36,5 +36,20 @@
             "sender": "lws",
             "time": "22:43"
         }
+    ],
+
+    "swl": [
+        {
+            "content": "Hi, I'm interested in this PS5",
+            "recipient": "lws",
+            "sender": "swl",
+            "time": "20:02"
+        },
+        {
+            "content": "is it still available",
+            "recipient": "lws",
+            "sender": "swl",
+            "time": "20:02"
+        }
     ]
 }

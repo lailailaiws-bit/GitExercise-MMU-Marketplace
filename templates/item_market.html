@@ -24,8 +24,9 @@
                         <option value="all" {% if request.args.get('category') == 'all' %}selected{% endif %}>All</option>
                         <option value="electronics" {% if request.args.get('category') == 'electronics' %}selected{% endif %}>Electronics</option>
                         <option value="fashion" {% if request.args.get('category') == 'fashion' %}selected{% endif %}>Fashion</option>
-                        <option value="home & garden" {% if request.args.get('category') == 'home' %}selected{% endif %}>Home & Garden</option>
+                        <option value="home & garden" {% if request.args.get('category') == 'home & garden' %}selected{% endif %}>Home & Garden</option>
                         <option value="accessories" {% if request.args.get('category') == 'accessories' %}selected{% endif %}>Accessories</option>
+                        <option value="others" {% if request.args.get('category') == 'others' %}selected{% endif %}>Others</option>
                     </select>
                 </div>
 
